@@ -1,7 +1,7 @@
 {
   "name": "project-2",
   "version": "1.0.0",
-  "description": "",
+  "description": "I Intalled express, mysql, mysql2, sequelize, inquirer.",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -13,7 +13,17 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.3",
+    "materialize-css": "^1.0.0-rc.2",
     "mysql2": "^1.6.4",
     "sequelize": "^4.41.2"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GuitarGuy244/Project-2-.git"
+  },
+  "bugs": {
+    "url": "https://github.com/GuitarGuy244/Project-2-/issues"
+  },
+  "homepage": "https://github.com/GuitarGuy244/Project-2-#readme"
 }
