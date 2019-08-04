@@ -1,4 +1,9 @@
+/*$(document).ready(function(){
+  $('.parallax').parallax();
+});
+*/
 $(document).ready(function() {
+    $('.parallax').parallax();
     //references to elements on profile page
     var favRecipesList = $("#favorite-recipes-names");
     var madeRecipesList = $("#created-recipes-names");
