@@ -13,7 +13,7 @@ var Author = sequelize.define("Author", {
       type: DataTypes.STRING,
       allowNull: false
     },
-    favourate: {
+    favourite: {
       type: DataTypes.STRING,
       allowNull: true
     },
