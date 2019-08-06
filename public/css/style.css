@@ -4,9 +4,9 @@ body {
     flex-direction: column;
   }
 
-  /* main {
+  main {
     flex: 1 0 auto;
-  } */
+  }
 
   .logo {
     width: 60px;
@@ -29,5 +29,5 @@ body {
   }
 
   .top-image{
-    opacity: 0.6;
+    opacity: 0.75;
   }
