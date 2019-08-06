@@ -25,6 +25,18 @@ module.exports = function(app) {
     res.render("recipe");
   });
 
+  app.get("/profile-page", function(req, res) {
+    // db.Author.findOne({ where: { email: req.body.email,
+    //   password: req.body.email}}).then(function(dbAuthor) {
+    //   res.render("recipe", {
+    //     author: dbAuthor
+    //   });
+    // });
+    res.render("recipe");
+  });
+
+
+
   // Render 404 page for any unmatched routes
   app.get("*", function(req, res) {
     res.render("404");
