@@ -1,26 +1,31 @@
 module.exports = function(sequelize, DataTypes) {
-var Author = sequelize.define("Author", {
-  author_name: {
-    type: DataTypes.STRING,
-    allowNull: true,
-    defaultValue:""
-  },
-   email: {
+  var Recipe = sequelize.define("Recipe", {
+    recipe_name: {
       type: DataTypes.STRING,
       allowNull: false
     },
-   password: {
+    ingredients: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    favourate: {
+    steps: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    comments: {
       type: DataTypes.STRING,
       allowNull: true
     },
-    myrecipe: {
+    imgUrl: {
       type: DataTypes.STRING,
       allowNull: true
     }
   });
-  return Author;
+  return Recipe;
+
 };
+
+
+
+
+
