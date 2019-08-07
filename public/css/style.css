@@ -1,0 +1,33 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  /* main {
+    flex: 1 0 auto;
+  } */
+
+  .logo {
+    width: 60px;
+    height: 60px;
+    margin-top: 3px;
+    float: left;
+  }
+
+  .logo-name{
+    color: black;
+    float: left;
+  }
+
+  .nav-text{
+      color: black
+  }
+
+  .section{
+      background-image: url('../images/retina_wood.png');
+  }
+
+  .top-image{
+    opacity: 0.6;
+  }
