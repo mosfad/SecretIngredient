@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>CMS UPDATE RECIPE</title>
+    <title>UPDATE AUTHOR</title>
     <!-- Compiled and minified CSS -->
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
@@ -37,46 +37,32 @@
                         <div class="col s12 m8 offset-m2">
                             <div class="card">
                                 <div class="card-content black-text">
-                                  <span class="card-title"><h4 class="center-align">Update your Recipe!</h4></span>
+                                  <span class="card-title"><h4 class="center-align">Update your personal information!</h4></span>
                                   <form class="container" id="cms-form">
                                         <div class="row">
                                             <div class="input-field col s12">
-                                                <i class="material-icons prefix"><span class="left-align">local_dining</span></i> 
+                                                <i class="material-icons prefix"><span class="left-align">person</span></i> 
                                               <textarea id="recipe-name" class="materialize-textarea"></textarea>
-                                              <label for="recipe-name">Recipe</label>
+                                              <label for="recipe-name">Name</label>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="input-field col s12">
-                                                <i class="material-icons prefix">description</i>
+                                                <i class="material-icons prefix">email</i>
                                                 <textarea id="recipe-ingredients" class="materialize-textarea"></textarea>
-                                                <label for="recipe-ingredients">Ingredients</label>
+                                                <label for="recipe-ingredients">Email</label>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="input-field col s12">
-                                                <i class="material-icons prefix">directions</i>
+                                                <i class="material-icons prefix">lock</i>
                                                 <textarea id="recipe-steps" class="materialize-textarea"></textarea>
-                                                <label for="recipe-steps">Steps</label>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="input-field col s12">
-                                                <i class="material-icons prefix">insert_comment</i>
-                                                <textarea id="recipe-comments" class="materialize-textarea"></textarea>
-                                                <label for="recipe-comments">Comments</label>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="input-field col s12">
-                                                <i class="material-icons prefix">image</i>
-                                                <textarea id="recipe-img-url" class="materialize-textarea"></textarea>
-                                                <label for="recipe-img-url">Image URL</label>
+                                                <label for="recipe-steps">Password</label>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="input-field col m6">
-                                                <button class="btn-large waves-effect waves-light blue right" id ="update-recipe" type="submit" name="action">
+                                                <button class="btn-large waves-effect waves-light red lighten-1 right" id ="update-recipe" type="submit" name="action">
                                                     Submit <i class="material-icons right">send</i>
                                                 </button>
                                             </div>
@@ -90,6 +76,7 @@
                             </div>
                         </div>
                     </div>
+    </main>
             <!-- End of Sign Up Card row -->
     <footer>
     <div class="container">
