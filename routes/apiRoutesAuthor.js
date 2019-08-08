@@ -32,18 +32,20 @@ module.exports = function(app) {
     });
   });
 
-  //Might need an update(app.put route) to change fav or made recipes****
+  //Update author's personal info.
   app.put("/api/authors/:id", function(req, res) {
-    db.Author.update({
-      favourite: req.body,
-      myrecipe: req.body
-    }, {
+    db.Author.update(
+      req.body,
+      {
       where: {
-        id: req.params.id
+        id: req.params.id   //should it be req.body.id??????
       }
-    })
+    }).then(function(dbAuthor) {
+      res.json(dbAuthor);
+    });
   })
 
+  /*
   app.delete("/api/authors/:id", function(req, res) {
     db.Author.destroy({
       where: {
@@ -52,7 +54,7 @@ module.exports = function(app) {
     }).then(function(dbAuthor) {
       res.json(dbAuthor);
     });
-  });
+  });*/
 
 };
 

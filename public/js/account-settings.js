@@ -6,7 +6,7 @@ $(document).ready(function() {
     var numAuthorRecipes = $("#recipe-number");
     //references to buttons.
     var editPersonal = $(".update-personal");
-    var editRecipes = $(".update-recipes");
+    var editRecipes = $("#update-recipe");
     //how do I get the author name or id from signup???
     var authorId = 2;
     var numOfRecipes;
@@ -33,15 +33,16 @@ $(document).ready(function() {
     };
 
     //populates the table with the author's total number of recipes with an API request.
-    var countRecipes = function() {
+   /* var countRecipes = function() {
         API.getRecipes().then(function(data) {
           console.log("Here is the data from the server: ");
           console.log(data);
-          numOfRecipes = data.length;
+          //numOfRecipes = data[0].Recipes.length;
+          numAuthorRecipes = 11;
           numAuthorRecipes.text("You have " + numOfRecipes + " recipes!");
         
         });
-    };
+    };*/
 
     //populates the table with the author's personal details with an API request.
      var showAuthorDetails = function() {
@@ -57,12 +58,17 @@ $(document).ready(function() {
           authorName.text(authorTable.author_name);
           authorEmail.text(authorTable.email);
           authorPassword.text(authorTable.password);
+          //Get the author's number of recipes
+          console.log(data[0].Recipes.length);
+          numOfRecipes = authorTable.Recipes.length;
+          numAuthorRecipes.text("You have " + numOfRecipes + " recipes!");
+
         });
     };
     //==========================================================================================================
     // handleFormSubmit is called whenever we add(submit) a new recipe
     // Save the new example to the db and refresh the list
-    var handleFormSubmit = function(event) {       //FORM SUBMIT ISN'T BEING HANDLED!
+    /*var handleFormSubmit = function(event) {       //FORM SUBMIT ISN'T BEING HANDLED!
         event.preventDefault();
         console.log("I was called....");
         var recipe = {
@@ -87,13 +93,24 @@ $(document).ready(function() {
         recipeSteps.val("");
         recipeComments.val("");
         recipeImgUrl.val("");
-    };
+    };*/
 
+    var handleEditPersonal = function(event) {
+        event.preventDefault();
+        console.log("I am editing personal info")
+        window.location.href = "/author";
+    }
+
+    var handleEditRecipes = function(event) {
+        event.preventDefault();
+        console.log("I am editing recipes");
+        window.location.href = "/recipe-list";
+    }
     
 
     //show author's personal details
     showAuthorDetails();
-    countRecipes();
+    //countRecipes();
 
     //add event listeners to the edit buttons
     editPersonal.on("click", handleEditPersonal);
