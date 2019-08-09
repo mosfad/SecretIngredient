@@ -22,21 +22,21 @@ function signup(event){
 });
 
 // Force the user to input their information.
-function submitform() {
-  if (username === "" || password === "" || contact === "" || destination === "") {
-    $('#formModal').modal('show');
-  }
-  else {
-    signup();
+// function submitform() {
+//   if (username === "" || password === "" || contact === "" || destination === "") {
+//     $('#formModal').modal('show');
+//   }
+//   else {
+//     signup();
 
 
-    // Clear form after submitting 
-    $("#username").val("");
-    $("#contact").val("");
-    $("#destination").val("");
-    $("#login").hide();
-  }
-}
+//     // Clear form after submitting 
+//     $("#username").val("");
+//     $("#contact").val("");
+//     $("#destination").val("");
+//     $("#login").hide();
+//   }
+// }
 
     $.ajax("/api/signup", {
         type: "POST",
