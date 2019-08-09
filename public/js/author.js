@@ -1,11 +1,12 @@
 $(document).ready(function() {
+    console.log("I am inside the js for the author update!")
     //references to personal elements.
     var authorName = $("#author-name");
     var authorEmail = $("#author-email");
-    var authorPassword = $("#update-personal-account");
+    var authorPassword = $("#author-password");
    
     //references to buttons.
-    var updateAccount = $("#update-personal-account");
+    var updateButton= $("#update-account");
     //how do I get the author name or id from signup???
     var authorId = 2;
     var numOfRecipes;
@@ -44,7 +45,7 @@ $(document).ready(function() {
     };*/
 
     //populates the table with the author's personal details with an API request.
-     var showAuthorDetails = function() {
+    /* var showAuthorDetails = function() {
         API.getAuthor().then(function(data) {
           console.log("Here is the data from the server: ");
           console.log(data);
@@ -63,8 +64,9 @@ $(document).ready(function() {
           numAuthorRecipes.text("You have " + numOfRecipes + " recipes!");
 
         });
-    };
+    };*/
     //==========================================================================================================
+    
     // handleFormSubmit is called when we update the user's account
     // Save the new example to the db and refresh the list
     var handleFormSubmit = function(event) {       //FORM SUBMIT ISN'T BEING HANDLED!
@@ -84,15 +86,15 @@ $(document).ready(function() {
         //clear the form after posting new recipe to the server.
         authorName.val("");
         authorEmail.val("");
-        authorPassword.val("")
+        authorPassword.val("");
 
         //redirect back to the account page or profile page.
-        window.location.href = "/account-settings"
+        window.location.href = "/account-settings";
     };
     
 
     //add event listeners to the edit buttons
-    updateAccount.on("click", handleFormSubmit);
+    updateButton.on("click", handleFormSubmit);
 
     //I AM HERE: Write the code to handle click events. *Think of how to pass author's id to the webpage you will be redirected to.
 });
