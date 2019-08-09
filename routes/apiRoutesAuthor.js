@@ -46,6 +46,28 @@ module.exports = function(app) {
     });
   })
 
+  //Sign into the author's account
+  app.post("/api/signin", function(req, res) {
+    console.log("Signing in by executing the correct route.....");
+    console.log(req.body);
+    db.Author.findOne({
+      where: {
+        email: req.body.email,
+        password:req.body.password
+      }
+    })
+      .then(function(dbAuthor) {
+      
+         console.log(dbAuthor);
+        // res.json(dbAuthor);
+        if (dbAuthor === null){
+          return res.status(401).send(false);
+        }else{
+        res.send(true);
+        }
+      });
+  });
+
   /*
   app.delete("/api/authors/:id", function(req, res) {
     db.Author.destroy({
