@@ -40,7 +40,7 @@ body {
     font-weight: bold;
   }
 
- #cms-form{
+ #cms-form, #profile-form{
     margin-left: 0;
     width: 100%;
  }
