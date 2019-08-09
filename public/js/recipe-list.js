@@ -1,8 +1,8 @@
 $(document).ready(function() {
-    $('.parallax').parallax();
     //references to unordered list that will display all user's recipes.
     var allRecipesList = $("#all-recipes");
     //
+    /*
     var favRecipesList = $("#favorite-recipes");
     var madeRecipesList = $("#made-recipes");
    //references to form elements
@@ -14,7 +14,7 @@ $(document).ready(function() {
     //references to icons and buttons that trigger events
     var buttonSubmitRecipe = $("#submit-recipe");
     var iRevealMadeRecipe = $("#reveal-made-recipes");
-    var iRevealFavRecipe = $("#reveal-fav-recipes");
+    var iRevealFavRecipe = $("#reveal-fav-recipes");*/
 
     authorId = 2;
     // The API object contains methods for each kind of request we'll make
@@ -24,14 +24,14 @@ $(document).ready(function() {
             headers: {
               "Content-Type": "application/json"
             },
-            type: "POST",
+            type: "PUT",
             url: "/api/recipes" + authorId,
             data: JSON.stringify(recipe)
           });
         },
         getRecipes: function() {
           return $.ajax({
-            url: "/api/authors/" + authorId,
+            url: "/api/recipes" + authorId,
             type: "GET"
           });
         },
@@ -45,38 +45,41 @@ $(document).ready(function() {
           var recipes = data.map(function(recipe) {
             console.log("Trying to figure out what data.map does; recipe = ");
             console.log(recipe);
-            if (cardList === madeRecipesList) {
-              var i = $("<i>")
-                .text("cake")
-                .attr({
-                  class: "material-icons"
-                })
-              var li = $("<li>")                   
-                .text(" " + recipe.myrecipe)   
-                .attr({
-                  class: "collection-item"
-                })
-                .prepend(i)
-                return li;
-            }
-            else {
-              var i = $("<i>")
-                .text("favorite")
-                .attr({
-                  class: "material-icons"
-                })
 
-              var li = $("<li>")                    
-                .text(" " + recipe.favourite)   
+            var iButton = $("<i>")
+                .text("Send")
+                .attr({
+                    class: "material-icons right"
+                })
+            
+            var editButton = $("<button>")
+                .text("Edit")
+                .attr({
+                    class: "btn waves-effect waves-light blue right edit-recipe",
+                    type: "submit",
+                    name: "action"
+
+                })
+            
+            var i = $("<i>")
+                .text("label")
+                .attr({
+                  class: "material-icons"
+                })
+            var li = $("<li>")                   
+                .text("    " + recipe.recipe_name)   
                 .attr({
                   class: "collection-item"
                 })
                 .prepend(i)
+                .append(editButton)
                 return li;
-            } 
-          }); 
+            })
+          
           console.log("Extracting favorite recipe from data: ");
           console.log(recipes);
+          //editButton.append(iButton);
+
           recipeList.empty();// I AM RIGHT HERE !
           recipeList.append(recipes);// I AM RIGHT HERE !
         });
@@ -84,7 +87,7 @@ $(document).ready(function() {
 
     // handleFormSubmit is called whenever we add(submit) a new recipe
     // Save the new example to the db and refresh the list
-    var handleFormSubmit = function(event) {       //FORM SUBMIT ISN'T BEING HANDLED!
+    /*var handleFormSubmit = function(event) {       //FORM SUBMIT ISN'T BEING HANDLED!
         event.preventDefault();
         console.log("I was called....");
         var recipe = {
@@ -115,9 +118,18 @@ $(document).ready(function() {
     buttonSubmitRecipe.on("click", handleFormSubmit);
     //Add event listener for icons to reveal recipes
     iRevealFavRecipe.on("click", showRecipes(favRecipesList));
-    iRevealMadeRecipe.on("click", showRecipes(madeRecipesList));
+    iRevealMadeRecipe.on("click", showRecipes(madeRecipesList)); */
 
-    //MAKE SURE THAT THE DATABASE HAS COLUMN NAMES `favorite` and `made`......
-    //WORK ON THE ELEMENTS FOR THE LISTS favorite and made. DONE
-    //WORK ON THE SUMBIT FORM AND ITS ELEMENTS. DONE
+    var handleFormSubmit = function(event) {       //FORM SUBMIT ISN'T BEING HANDLED!
+        event.preventDefault();
+        console.log("I was called....");
+        //HOW DO I ADD RECIPE ID TO CMS???????
+        //REDIRECTING ISN'T WORKING!!!
+        window.location.href = "/cms"
+    };
+    //show all the recipes the user can choose to update
+    showRecipes(allRecipesList);
+    //HANDLE BUTTON EVENTS FOR ONES CREATED DYNAMICALLY***************
+    allRecipesList.on("click", ".edit-recipe", handleFormSubmit);
+
 });

@@ -12,9 +12,11 @@ module.exports = function(app) {
   app.get("/api/recipes:id", function(req, res) {
     db.Recipe.findAll({
       where: {
-        id: req.params.id
+        AuthorId: req.params.id
       }
     }).then(function(dbRecipe) {
+      console.log("Getting recipes from the database....");
+      console.log(dbRecipe);
       res.json(dbRecipe);
     });
   });

@@ -34,6 +34,7 @@ module.exports = function(app) {
 
   //Update author's personal info.
   app.put("/api/authors/:id", function(req, res) {
+    console.log("API WAS CALLED TO UPDATE AUTHOR'S INFO!");
     db.Author.update(
       req.body,
       {
