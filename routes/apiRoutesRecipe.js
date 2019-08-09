@@ -9,12 +9,15 @@ module.exports = function(app) {
   });
 
   app.get("/api/search-keyword/:term", function(req, res){
-    console.log(req.params);
-    res.send(true);
+    // console.log(req.params);
+    // res.send(true);
     if(req.params.term){
       db.Recipe.findAll({
         where:{
-          recipe_name: req.params.term
+          recipe_name:
+          {
+            $like: '%'+req.params.term+'%'
+          }
         }
       }).then(function(result){
         return res.json(result);
