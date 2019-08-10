@@ -1,3 +1,4 @@
+var bcrypt = require("bcryptjs");
 module.exports = function(sequelize, DataTypes) {
 var Author = sequelize.define("Author", {
   author_name: {
@@ -5,10 +6,14 @@ var Author = sequelize.define("Author", {
     allowNull: true,
     defaultValue:""
   },
-   email: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+    validate: {
+      isEmail: true
+    }
+  },
    password: {
       type: DataTypes.STRING,
       allowNull: false
@@ -30,6 +35,19 @@ var Author = sequelize.define("Author", {
       onDelete: "cascade"
     });
   };
+
+  // User.beforeCreate(user => {
+  //   user.password = bcrypt.hashSync(
+  //     user.password,
+  //     bcrypt.genSaltSync(10),
+  //     null
+  //   );
+  // });
+
+
+  // Author.prototype.validPassword = function (password) {
+  //   return bcrypt.compareSync(password, this.password);
+  // };
   
   return Author;
 };

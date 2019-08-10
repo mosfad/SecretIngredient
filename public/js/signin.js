@@ -34,6 +34,7 @@ function signin(event){
               window.location.href = "/profile-page"; 
           }else{
               console.log("Login Incorrect")
+              alert("Incorrect email or password");
           }
 
       }

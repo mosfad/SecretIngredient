@@ -61,7 +61,7 @@ module.exports = function(app) {
          console.log(dbAuthor);
         // res.json(dbAuthor);
         if (dbAuthor === null){
-          return res.status(401).send(false);
+          return res.json(401).send(false);
         }else{
         res.send(true);
         }
