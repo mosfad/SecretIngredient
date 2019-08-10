@@ -29,10 +29,12 @@ $("#search-button").on("click", function(event){
             var ingredientsArr = res[recipe].ingredients.split(',');
             var stepsArr = res[recipe].steps.split(';');
             console.log(ingredientsArr);
+            $("#recipe-view").append("<h4>Ingridients</h4>");
             for (var i =0; i < ingredientsArr.length; i++){
                 console.log(ingredientsArr[i]);
-                $(".card-panel").append("<p>-"+ingredientsArr[i]+"</p>");
+                $("#recipe-view").append("<p>-"+ingredientsArr[i]+"</p>");
             }
+            $("#recipe-view").append("<h4>Steps</h4>");
             for (var i =0; i < stepsArr.length; i++){
                 console.log(stepsArr[i]);
                 $("#recipe-view").append("<p>-"+stepsArr[i]+"</p>");
