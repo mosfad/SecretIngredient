@@ -32,18 +32,43 @@ module.exports = function(app) {
     });
   });
 
-  //Might need an update(app.put route) to change fav or made recipes****
+  //Update author's personal info.
   app.put("/api/authors/:id", function(req, res) {
-    db.Author.update({
-      favourite: req.body,
-      myrecipe: req.body
-    }, {
+    console.log("API WAS CALLED TO UPDATE AUTHOR'S INFO!");
+    db.Author.update(
+      req.body,
+      {
       where: {
-        id: req.params.id
+        id: req.params.id   //should it be req.body.id??????
       }
-    })
+    }).then(function(dbAuthor) {
+      res.json(dbAuthor);
+    });
   })
 
+  //Sign into the author's account
+  app.post("/api/signin", function(req, res) {
+    console.log("Signing in by executing the correct route.....");
+    console.log(req.body);
+    db.Author.findOne({
+      where: {
+        email: req.body.email,
+        password:req.body.password
+      }
+    })
+      .then(function(dbAuthor) {
+      
+         console.log(dbAuthor);
+        // res.json(dbAuthor);
+        if (dbAuthor === null){
+          return res.status(401).send(false);
+        }else{
+        res.send(true);
+        }
+      });
+  });
+
+  /*
   app.delete("/api/authors/:id", function(req, res) {
     db.Author.destroy({
       where: {
@@ -52,7 +77,7 @@ module.exports = function(app) {
     }).then(function(dbAuthor) {
       res.json(dbAuthor);
     });
-  });
+  });*/
 
 };
 

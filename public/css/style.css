@@ -31,3 +31,22 @@ body {
   .top-image{
     opacity: 0.6;
   }
+
+  #body-settings, #body-cms{
+    background-image: url('../images/floor-tile.png');
+  }
+
+  #heading-settings{
+    font-weight: bold;
+  }
+
+ #cms-form-name, #cms-form-email, #cms-form-password, #profile-form{
+    margin-left: 0;
+    width: 100%;
+ }
+
+ /*
+#main-settings{
+  display: flex;
+  justify-content: center;
+}*/

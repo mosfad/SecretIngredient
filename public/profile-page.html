@@ -22,7 +22,7 @@
         <div class="nav-wrapper purple accent-2">
         <a href="#" class="brand-logo">Logo</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="sass.html">Sass</a></li>
+            <li><a href="account-settings.html">Settings</a></li>
             <li><a href="badges.html">Components</a></li>
             <li><a href="collapsible.html">JavaScript</a></li>
         </ul>
@@ -42,8 +42,8 @@
                       <img class="activator" src="images/brooke-lark-08bOYnH_r_E-unsplash.jpg">
                     </div>
                     <div class="card-content">
-                      <span class="card-title activator grey-text text-darken-4"><h5>Recipes Made</h5><i class="material-icons right">more_vert</i></span>
-                      <p><a href="#">This is a link</a></p>
+                      <span class="card-title activator grey-text text-darken-4"><h5>Recipes Made</h5><i class="material-icons right">more</i></span>
+                      <p><a href="#"></a></p>
                     </div>
                     <div class="card-reveal">
                       <span class="card-title grey-text text-darken-4"><h5>Recipes Made</h5><i class="material-icons right" id="reveal-made-recipes">close</i></span>
@@ -65,8 +65,8 @@
                       <img class="activator" src="images/brooke-lark-lcZ9NxhOSlo-unsplash.jpg">
                     </div>
                     <div class="card-content">
-                      <span class="card-title activator grey-text text-darken-4"><h5>Favorite Recipes</h5><i class="material-icons right" id="reveal-fav-recipes">more_vert</i></span>
-                      <p><a href="#">This is a link</a></p>
+                      <span class="card-title activator grey-text text-darken-4"><h5>Favorite Recipes</h5><i class="material-icons right" id="reveal-fav-recipes">more</i></span>
+                      <p><a href="#"></a></p>
                     </div>
                     <div class="card-reveal">
                       <span class="card-title grey-text text-darken-4"><h5>Favorite Recipes</h5><i class="material-icons right">close</i></span>
@@ -89,11 +89,11 @@
         <div class="section purple lighten-4">
             <!-- Sign Up Card row -->
             <div class="row">
-                <div class="col s12 m10">
+                <div class="col s12 m8 offset-m2">
                     <div class="card amber lighten-5">
                         <div class="card-content black-text">
-                          <span class="card-title"><h4>Add New Recipe!</h4></span>
-                          <form class="container">
+                          <span class="card-title"><h4 class="center-align">Add New Recipe!</h4></span>
+                          <form class="container" id="profile-form">
                                 <div class="row">
                                     <div class="input-field col s12">
                                         <i class="material-icons prefix">local_dining</i> 
@@ -125,13 +125,13 @@
                                 <div class="row">
                                     <div class="input-field col s12">
                                         <i class="material-icons prefix">image</i>
-                                        <textarea id="recipe-img-url" class="materialize-textarea"></textarea>
+                                        <textarea disabled value="Coming soon..." id="recipe-img-url" class="materialize-textarea"></textarea>
                                         <label for="recipe-img-url">Image URL</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col m6">
-                                        <button class="btn-large waves-effect waves-light deep-orange" id ="submit-recipe" type="submit" name="action">
+                                        <button class="btn-large waves-effect waves-light deep-orange right" id ="submit-recipe" type="submit" name="action">
                                             Submit <i class="material-icons right">send</i>
                                         </button>
                                     </div>
