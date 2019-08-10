@@ -1,16 +1,16 @@
 function signup(event){
 
     // event.preventDefault();
-    var userEmail = $('#userName').val();
-    var userPass= $('#password').val();
-    console.log(userEmail);
-    console.log(userPass);
+    // var userEmail = $('#userName').val();
+    // var userPass= $('#password').val();
+    // console.log(userEmail);
+    // console.log(userPass);
     console.log('SignUp function')
 
     // Send the POST request.
     var newAuthor = {
-        email: $("#userName").val().trim(),
-        password:$("#password").val().trim()
+        email: $("#user-email").val().trim(),
+        password:$("#user-password").val().trim()
     };
 
     $.ajax("/api/signup", {
@@ -25,4 +25,4 @@ function signup(event){
       );
 
     }
-$("#signup").on('click', signup);
+$("#user-signup").on('click', signup);

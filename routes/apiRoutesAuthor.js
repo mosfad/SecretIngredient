@@ -66,6 +66,19 @@ module.exports = function(app) {
         res.send(true);
         }
       });
+
+  });
+
+  app.post("/api/signup", function(req, res) {
+    console.log("signup");
+
+    db.Author.create({
+      email: req.body.email,
+      password: req.body.password,
+      
+    }).then(function(dbExample) {
+      res.json(dbExample);
+    });
   });
 
   /*
