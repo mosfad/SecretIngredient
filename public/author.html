@@ -32,41 +32,29 @@
     <main id="main-settings">
             <!-- Sign Up Card row -->
             <br><br><br><br><br><br>
+            <div class="row">
+                    <div class="col s12 m12">
+                        <h3 class="center-align" id="update-heading">Update your personal information!</h3>
+                    </div>
+            </div>
                     <!-- Sign Up Card row -->
                     <div class="row">
                         <div class="col s12 m8 offset-m2">
                             <div class="card">
                                 <div class="card-content black-text">
-                                  <span class="card-title"><h4 class="center-align">Update your personal information!</h4></span>
-                                  <form class="container" id="cms-form">
+                                  <form class="container" id="cms-form-name">
                                         <div class="row">
                                             <div class="input-field col s12">
                                                 <i class="material-icons prefix"><span class="left-align">person</span></i> 
                                               <textarea id="author-name" class="materialize-textarea"></textarea>
                                               <label for="author-name">Name</label>
+                                              <button class="btn-small waves-effect waves-light red lighten-1 right" id ="update-name" type="submit" name="action">
+                                                Submit <i class="material-icons right">cloud</i>
+                                              </button>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="input-field col s12">
-                                                <i class="material-icons prefix">email</i>
-                                                <textarea id="author-email" class="materialize-textarea"></textarea>
-                                                <label for="author-email">Email</label>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="input-field col s12">
-                                                <i class="material-icons prefix">lock</i>
-                                                <textarea id="author-password" class="materialize-textarea"></textarea>
-                                                <label for="author-password">Password</label>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="input-field col m6">
-                                                <button class="btn-large waves-effect waves-light red lighten-1 right" id ="update-account" type="submit" name="action">
-                                                    Submit <i class="material-icons right">send</i>
-                                                </button>
-                                            </div>
-                                        </div>
+                                        
+                                       
         
                                         
                                         
@@ -76,6 +64,55 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col s12 m8 offset-m2">
+                            <div class="card">
+                                <div class="card-content black-text">
+                                 
+                                  <form class="container" id="cms-form-email">
+                                        
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <i class="material-icons prefix">email</i>
+                                                <textarea id="author-email" class="materialize-textarea"></textarea>
+                                                <label for="author-email">Email</label>
+                                                <button class="btn-small waves-effect waves-light red lighten-1 right" id ="update-email" type="submit" name="action">
+                                                    Submit <i class="material-icons right">cloud</i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+        
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                            <div class="col s12 m8 offset-m2">
+                                <div class="card">
+                                    <div class="card-content black-text">
+                                     
+                                      <form class="container" id="cms-form-password">
+                                            
+                                            <div class="row">
+                                                <div class="input-field col s12">
+                                                    <i class="material-icons prefix">lock</i>
+                                                    <textarea id="author-password" class="materialize-textarea"></textarea>
+                                                    <label for="author-password">password</label>
+                                                    <button class="btn-small waves-effect waves-light red lighten-1 right" id ="update-password" type="submit" name="action">
+                                                        Submit <i class="material-icons right">cloud</i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+            
+                                </div>
+                            </div>
+                    </div>
+                    
     </main>
             <!-- End of Sign Up Card row -->
     <footer>

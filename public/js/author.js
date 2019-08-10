@@ -6,8 +6,10 @@ $(document).ready(function() {
     var authorPassword = $("#author-password");
    
     //references to buttons.
-    var updateButton= $("#update-account");
-    //how do I get the author name or id from signup???
+    var buttonUpdateName = $("#update-name");
+    var buttonUpdateEmail = $("#update-email");
+    var buttonUpdatePassword = $("#update-password");
+    //how do I get the author name or id from signup??? LOCAL STORAGE SHOULD HAPPEN HERE!
     var authorId = 2;
     var numOfRecipes;
     
@@ -71,16 +73,39 @@ $(document).ready(function() {
     // Save the new example to the db and refresh the list
     var handleFormSubmit = function(event) {       //FORM SUBMIT ISN'T BEING HANDLED!
         event.preventDefault();
-        console.log("I was called....");
-        var authorInfo = {
+        var authorInfo;
+        console.log("Handling the form submit....");
+        //console.log(this.id);
+        if (this.id == buttonUpdateName[0].id) {
+          console.log("name change starts....")
+          authorInfo = {
+            author_name: authorName.val().trim()
+          }
+          console.log(authorInfo);
+        }
+        else if (this.id == buttonUpdateEmail[0].id) {
+          console.log("email change starts....")
+          authorInfo = {
+            email: authorEmail.val().trim()
+          }
+          console.log(authorInfo);
+        }
+        else if (this.id == buttonUpdatePassword[0].id) {
+          console.log("password chang starts....")
+          authorInfo = {
+            password: authorPassword.val().trim()
+          }
+          console.log(authorInfo);
+        }
+        /*var authorInfo = {
           author_name: authorName.val().trim(),
           email: authorEmail.val().trim(),
           password: authorPassword.val().trim()
-        };
+        };*/
         console.log(authorInfo);
         API.updateAccount(authorInfo).then(function() {
             //Show a success message here
-            console.log("Recipe was successfully posted");
+            console.log("Author was successfully added");
         });
         
         //clear the form after posting new recipe to the server.
@@ -94,7 +119,9 @@ $(document).ready(function() {
     
 
     //add event listeners to the edit buttons
-    updateButton.on("click", handleFormSubmit);
+    buttonUpdateName.on("click", handleFormSubmit);
+    buttonUpdateEmail.on("click", handleFormSubmit);
+    buttonUpdatePassword.on("click", handleFormSubmit);
 
     //I AM HERE: Write the code to handle click events. *Think of how to pass author's id to the webpage you will be redirected to.
 });
