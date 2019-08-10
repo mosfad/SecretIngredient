@@ -10,7 +10,7 @@ $(document).ready(function() {
     var buttonUpdateEmail = $("#update-email");
     var buttonUpdatePassword = $("#update-password");
     //how do I get the author name or id from signup??? LOCAL STORAGE SHOULD HAPPEN HERE!
-    var authorId = 2;
+    authorId = sessionStorage.getItem("userIdSession");
     var numOfRecipes;
     
    

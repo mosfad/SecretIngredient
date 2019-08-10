@@ -1,13 +1,13 @@
 $(document).ready(function() {
 function signin(event){
 
-  // event.preventDefault();
+  event.preventDefault();
   var userEmail = $('#user-email').val();
   var userPass= $('#user-password').val();
   //just checking to see that user inputs are captured.
   console.log(userEmail);
   console.log(userPass);
-  console.log('Signin function')
+  console.log('Signin function');
 
   // Send the POST request.
   var author = {
@@ -29,16 +29,30 @@ function signin(event){
           // location.reload();
           //window.location.href = '/profile-page';
 
-          if (response === true){
+          if (response){
               console.log("Response is true, so redirecting to profile-page....");
+              //Set the sessions storage here
+              if (sessionStorage) {
+                  sessionStorage.setItem("userIdSession", response.id);
+                  sessionStorage.setItem("userEmailSession", response.email);
+              }
+              //clear form
+              $("#user-email").val("");
+              $("#user-password").val("");
               window.location.href = "/profile-page"; 
           }else{
               console.log("Login Incorrect")
+              //clear form
+              location.reload();
           }
 
       }
     );
     
   }
-$("#user-signin").on('click', signin);
+$("#user-signin").on("click", signin);
+/*function handleSignin(event) {
+  event.preventDefault();
+  console.log("I am inside handler!");
+}*/
 })

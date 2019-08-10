@@ -16,7 +16,7 @@ $(document).ready(function() {
     var iRevealMadeRecipe = $("#reveal-made-recipes");
     var iRevealFavRecipe = $("#reveal-fav-recipes");*/
 
-    authorId = 2;
+    authorId = sessionStorage.getItem("userIdSession");
     // The API object contains methods for each kind of request we'll make
     var API = {
         addRecipes: function(recipe) {
