@@ -35,16 +35,14 @@ module.exports = function(app) {
   //Update author's personal info.
   app.put("/api/authors/:id", function(req, res) {
     console.log("API WAS CALLED TO UPDATE AUTHOR'S INFO!");
-    db.Author.update(
-      req.body,
-      {
+    db.Author.update(req.body, {
       where: {
-        id: req.params.id   //should it be req.body.id??????
+        id: req.params.id //should it be req.body.id??????
       }
     }).then(function(dbAuthor) {
       res.json(dbAuthor);
     });
-  })
+  });
 
   //Sign into the author's account
   app.post("/api/signin", function(req, res) {
@@ -53,20 +51,12 @@ module.exports = function(app) {
     db.Author.findOne({
       where: {
         email: req.body.email,
-        password:req.body.password
+        password: req.body.password
       }
-    })
-      .then(function(dbAuthor) {
-      
-         console.log(dbAuthor);
-        // res.json(dbAuthor);
-        if (dbAuthor === null){
-          return res.json(401).send(false);
-        }else{
-        res.send(true);
-        }
-      });
-
+    }).then(function(dbAuthor) {
+      console.log(dbAuthor);
+      res.json(dbAuthor);
+    });
   });
 
   app.post("/api/signup", function(req, res) {
@@ -74,11 +64,15 @@ module.exports = function(app) {
 
     db.Author.create({
       email: req.body.email,
-      password: req.body.password,
-      
-    }).then(function(dbExample) {
-      res.json(dbExample);
-    });
+      password: req.body.password
+    })
+      .then(function(dbExample) {
+        res.json(dbExample);
+      })
+      .catch(function(error) {
+        console.log("This is an error");
+        res.json({ error: "error" });
+      });
   });
 
   /*
@@ -91,31 +85,7 @@ module.exports = function(app) {
       res.json(dbAuthor);
     });
   });*/
-
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*module.exports = function(app) {
   // Get all examples
