@@ -98,6 +98,16 @@ module.exports = function(app) {
     res.sendFile(path.join(__dirname, "../public/recipe-list.html"));
   });
 
+  // authors route loads author-manager.html
+  app.get("/profile-page", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/profile-page.html"));
+  });
+  // authors route loads author-manager.html
+  /*
+  app.get("/sign-in", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/sign-in.html"));
+  });*/
+
   // Render 404 page for any unmatched routes
   app.get("*", function(req, res) {
     res.render("404");

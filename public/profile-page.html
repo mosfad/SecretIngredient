@@ -81,12 +81,12 @@
         <!-- put the cards here!-->
         <div class="section purple lighten-4">
             <!-- Sign Up Card row -->
-            <div class="row center">
-                <div class="center col s12 m10">
-                    <div class="card center amber lighten-5">
+            <div class="row">
+                <div class="col s12 m8 offset-m2">
+                    <div class="card amber lighten-5">
                         <div class="card-content black-text">
-                          <span class="card-title"><h4>Add New Recipe!</h4></span>
-                          <form class="container">
+                          <span class="card-title"><h4 class="center-align">Add New Recipe!</h4></span>
+                          <form class="container" id="profile-form">
                                 <div class="row">
                                     <div class="input-field col s12">
                                         <i class="material-icons prefix">local_dining</i> 
@@ -118,13 +118,13 @@
                                 <div class="row">
                                     <div class="input-field col s12">
                                         <i class="material-icons prefix">image</i>
-                                        <textarea id="recipe-img-url" class="materialize-textarea"></textarea>
+                                        <textarea disabled value="Coming soon..." id="recipe-img-url" class="materialize-textarea"></textarea>
                                         <label for="recipe-img-url">Image URL</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col m6">
-                                        <button class="btn-large waves-effect waves-light deep-orange" id ="submit-recipe" type="submit" name="action">
+                                        <button class="btn-large waves-effect waves-light deep-orange right" id ="submit-recipe" type="submit" name="action">
                                             Submit <i class="material-icons right">send</i>
                                         </button>
                                     </div>

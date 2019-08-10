@@ -57,7 +57,7 @@ $(document).ready(function() {
           //filling table cells with author's data from the API.
           authorName.text(authorTable.author_name);
           authorEmail.text(authorTable.email);
-          authorPassword.text(authorTable.password);
+          authorPassword.text("************");
           //Get the author's number of recipes
           console.log(data[0].Recipes.length);
           numOfRecipes = authorTable.Recipes.length;
