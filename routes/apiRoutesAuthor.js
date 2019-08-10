@@ -46,7 +46,7 @@ module.exports = function(app) {
 
   //Sign into the author's account
   app.post("/api/signin", function(req, res) {
-    console.log("Signing in by executing the correct route.....");
+    console.log("Signing in by executing the correct route...");
     console.log(req.body);
     db.Author.findOne({
       where: {
@@ -66,12 +66,15 @@ module.exports = function(app) {
       email: req.body.email,
       password: req.body.password
     })
-      .then(function(dbExample) {
-        res.json(dbExample);
-      })
-      .catch(function(error) {
-        console.log("This is an error");
-        res.json({ error: "error" });
+      .then(function(dbAuthor) {
+      
+         console.log(dbAuthor);
+        // res.json(dbAuthor);
+        if (dbAuthor === null){
+         res.send(false);
+        }else{
+        res.json(dbAuthor);
+        }
       });
   });
 
