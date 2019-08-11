@@ -21,6 +21,31 @@ module.exports = function(app) {
     });
   });
 
+  app.get("/api/search-keyword/:term", function(req, res){
+    // console.log(req.params);
+    // res.send(true);
+    if(req.params.term){
+      db.Recipe.findAll({
+        where:{
+          recipe_name:
+          {
+            $like: '%'+req.params.term+'%'
+          }
+        }
+      }).then(function(result){
+        return res.json(result);
+      })
+    }else {
+      db.Recipe.findOne({
+        where:{
+          recipe_name: req.params.term
+        }
+      }).then(function(result) {
+        return res.json(result);
+      });
+    }
+  });
+
   // Create a new recipe for a specific authorId
   app.post("/api/recipes:id", function(req, res) {
     console.log("Post api was successfully called");

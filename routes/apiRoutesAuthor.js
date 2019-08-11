@@ -68,6 +68,26 @@ module.exports = function(app) {
       });
   });
 
+  app.post("/api/signup", function(req, res) {
+    console.log("signup");
+
+    db.Author.create({
+      email: req.body.email,
+      password: req.body.password
+    })
+      .then(function(dbAuthor) {
+      
+         console.log(dbAuthor);
+        // res.json(dbAuthor);
+        if (dbAuthor === null){
+         res.send(false);
+        }else{
+        res.json(dbAuthor);
+        }
+      });
+  });
+
+
   /*
   app.delete("/api/authors/:id", function(req, res) {
     db.Author.destroy({

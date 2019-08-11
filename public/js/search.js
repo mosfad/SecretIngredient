@@ -9,6 +9,7 @@ $("#search-button").on("click", function(event){
     search = $("#search-bar").val().trim();
     console.log(search);
     $.get(`/api/search-keyword/${search}`, {search: search}).then(function(res){
+        console.log(res);
         console.log(res[0].recipe_name);
         $("#recipe-view").empty();
         $("#recipe-view").append('<ul class="collection with-header"></ul>');
@@ -27,10 +28,10 @@ $("#search-button").on("click", function(event){
             // var ingredients = res[].ingredients;
             // var
             //MIGHT NEED TO CHANGE THE OPTION FOR THE 'split()' METHOD BASED ON USER INPUT.
-            var ingredientsArr = res[recipe].ingredients.split(',');
-            var stepsArr = res[recipe].steps.split(';');
+            var ingredientsArr = res[recipe].ingredients.split(', ');
+            var stepsArr = res[recipe].steps.split('.');
             console.log(ingredientsArr);
-            $("#recipe-view").append("<h4>Ingridients</h4>");
+            $("#recipe-view").append("<h4>Ingredients</h4>");
             for (var i =0; i < ingredientsArr.length; i++){
                 console.log(ingredientsArr[i]);
                 $("#recipe-view").append("<p>-"+ingredientsArr[i]+"</p>");

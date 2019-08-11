@@ -29,7 +29,12 @@ body {
   }
 
   .top-image{
-    opacity: 0.6;
+    opacity: 0.85;
+  }
+
+  .alt-heading {
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
   }
 
   #body-settings, #body-cms{
