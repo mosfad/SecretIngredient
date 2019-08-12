@@ -164,27 +164,29 @@ main {
 @media screen and (max-width: 980px) {
   .brand-logo {
     width: 100%;
-    margin-left: 20px;
+    margin-left: 40px;
   }
   #nav-mobile {
-    width: 100%;
+    float: right;
   }
 }
 
 @media screen and (max-width: 768px) {
   .brand-logo {
     width: 100%;
-    margin-left: 20px;
+    margin-left: 40px;
   }
   #nav-mobile {
+    float: right;
   }
 }
 
 @media screen and (max-width: 640) {
   .brand-logo {
     width: 100%;
-    margin-left: 20px;
+    margin-left: 40px;
   }
   #nav-mobile {
+    float: right;
   }
 }
