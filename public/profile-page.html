@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Profile</title>
     <!-- Compiled and minified CSS -->
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
-     <!--Import Google Icon Font-->
-     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/materialize.css">
@@ -18,22 +19,23 @@
 
 
 <body>
-  <nav>
-    <div class="nav-wrapper pink darken-3">
-    <a href="index.html" class="brand-logo">
-        <img class="logo" src="images/logo.png">
-        <div class="logo-name">
-            Secret Ingredient
+    <nav>
+        <div class="nav-wrapper pink darken-3">
+            <a href="index.html" class="brand-logo">
+                <img class="logo" src="images/logo.png">
+                <div class="logo-name">
+                    Secret Ingredient
+                </div>
+            </a>
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a class="nav-text" href="index.html">Home</a></li>
+                <li><a class="nav-text" href="sign-in.html">Sign In</a></li>
+                <li><a class="nav-text" href="profile-page.html">Profile</a></li>
+                <li><a class="nav-text" href="search.html">Search</a></li>
+            </ul>
         </div>
-    </a>
-    <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a class="nav-text" href="index.html">Home</a></li>
-        <li><a class="nav-text" href="sign-in.html">Sign In</a></li>
-        <li><a class="nav-text" href="profile-page.html">Profile</a></li>
-        <li><a class="nav-text" href="search.html">Search</a></li>
-    </ul>
-    </div>
-</nav>
+    </nav>
 
     <main>
         <div class="parallax-container">
@@ -41,39 +43,48 @@
         </div>
         <div class="section purple lighten-3">
             <div class="row container">
-              <div class="row">
-                <!--Made Recipes Card-->
-                <div class="card col s5">
-                    <div class="card-image waves-effect waves-block waves-light">
-                      <img class="activator" src="images/brooke-lark-08bOYnH_r_E-unsplash.jpg">
+                <div class="row">
+                    <!--Made Recipes Card-->
+                    <div class="card col s5">
+                        <div class="card-image waves-effect waves-block waves-light">
+                            <img class="activator" src="images/brooke-lark-08bOYnH_r_E-unsplash.jpg">
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title activator grey-text text-darken-4">
+                                <h5>Recipes Made</h5><i class="material-icons right">more_vert</i>
+                            </span>
+                        </div>
+                        <div class="card-reveal">
+                            <span class="card-title grey-text text-darken-4">
+                                <h5>Recipes Made</h5><i class="material-icons right" id="reveal-made-recipes">close</i>
+                            </span>
+                            <ul class="collection" id="made-recipes">
+                            </ul>
+                        </div>
                     </div>
-                    <div class="card-content">
-                      <span class="card-title activator grey-text text-darken-4"><h5>Recipes Made</h5><i class="material-icons right">more_vert</i></span>
-                    </div>
-                    <div class="card-reveal">
-                      <span class="card-title grey-text text-darken-4"><h5>Recipes Made</h5><i class="material-icons right" id="reveal-made-recipes">close</i></span>
-                      <ul class="collection" id="made-recipes">
-                      </ul>
-                    </div>
-                </div>
-        
-                <!--Favorite Recipes Card-->
-                <div class="card col s5 offset-s2">
-                    <div class="card-image waves-effect waves-block waves-light">
-                      <img class="activator" src="images/brooke-lark-lcZ9NxhOSlo-unsplash.jpg">
-                    </div>
-                    <div class="card-content">
-                      <span class="card-title activator grey-text text-darken-4"><h5>Favorite Recipes</h5><i class="material-icons right" id="reveal-fav-recipes">more_vert</i></span>
-                    </div>
-                    <div class="card-reveal">
-                      <span class="card-title grey-text text-darken-4"><h5>Favorite Recipes</h5><i class="material-icons right">close</i></span>
-                      <ul class="collection" id="favorite-recipes">
-                      </ul>
-                    </div>
-                </div>
-              </div>
 
-          </div>
+                    <!--Favorite Recipes Card-->
+                    <div class="card col s5 offset-s2">
+                        <div class="card-image waves-effect waves-block waves-light">
+                            <img class="activator" src="images/brooke-lark-lcZ9NxhOSlo-unsplash.jpg">
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title activator grey-text text-darken-4">
+                                <h5>Favorite Recipes</h5><i class="material-icons right"
+                                    id="reveal-fav-recipes">more_vert</i>
+                            </span>
+                        </div>
+                        <div class="card-reveal">
+                            <span class="card-title grey-text text-darken-4">
+                                <h5>Favorite Recipes</h5><i class="material-icons right">close</i>
+                            </span>
+                            <ul class="collection" id="favorite-recipes">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
         <div class="parallax-container">
             <div class="parallax"><img src="images/Home_Image_2.jpg"></div>
@@ -85,13 +96,15 @@
                 <div class="col s12 m8 offset-m2">
                     <div class="card amber lighten-5">
                         <div class="card-content black-text">
-                          <span class="card-title"><h4 class="center-align">Add New Recipe!</h4></span>
-                          <form class="container" id="profile-form">
+                            <span class="card-title">
+                                <h4 class="center-align">Add New Recipe!</h4>
+                            </span>
+                            <form class="container" id="profile-form">
                                 <div class="row">
                                     <div class="input-field col s12">
-                                        <i class="material-icons prefix">local_dining</i> 
-                                      <textarea id="recipe-name" class="materialize-textarea"></textarea>
-                                      <label for="recipe-name">Recipe</label>
+                                        <i class="material-icons prefix">local_dining</i>
+                                        <textarea id="recipe-name" class="materialize-textarea"></textarea>
+                                        <label for="recipe-name">Recipe</label>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -118,20 +131,22 @@
                                 <div class="row">
                                     <div class="input-field col s12">
                                         <i class="material-icons prefix">image</i>
-                                        <textarea disabled value="Coming soon..." id="recipe-img-url" class="materialize-textarea">Coming soon...</textarea>
+                                        <textarea disabled value="Coming soon..." id="recipe-img-url"
+                                            class="materialize-textarea">Coming soon...</textarea>
                                         <label for="recipe-img-url">Image URL</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col m6">
-                                        <button class="btn-large waves-effect waves-light deep-orange right" id ="submit-recipe" type="submit" name="action">
+                                        <button class="btn-large waves-effect waves-light deep-orange right"
+                                            id="submit-recipe" type="submit" name="action">
                                             Submit <i class="material-icons right">send</i>
                                         </button>
                                     </div>
                                 </div>
 
-                                
-                                
+
+
                             </form>
                         </div>
 
@@ -144,19 +159,21 @@
             <div class="parallax"><img src="images/Home_Image_3.jpg"></div>
         </div>
     </main>
-    
+
     <footer class="page-footer pink darken-3">
-      <div class="container">
-            <a href="account-settings.html" class="center"><h4>Account Settings</h4></a>
-        <div class="row">
-        </div>
-      </div>
-      <div class="footer-copyright">
         <div class="container">
-        © 2019 Copyright Text
-        <a class="grey-text text-lighten-4 right">Made by Dupe, Mesi, Tiffany, and Ricardo</a>
+            <a href="account-settings.html" class="center">
+                <h4>Account Settings</h4>
+            </a>
+            <div class="row">
+            </div>
         </div>
-      </div>
+        <div class="footer-copyright">
+            <div class="container">
+                © 2019 Copyright Text
+                <a class="grey-text text-lighten-4 right">Made by Dupe, Mesi, Tiffany, and Ricardo</a>
+            </div>
+        </div>
     </footer>
 </body>
 
