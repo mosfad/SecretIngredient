@@ -1,81 +1,84 @@
 body {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
-  }
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
 
-  main {
-    flex: 1 0 auto;
-  }
+main {
+  flex: 1 0 auto;
+}
 
-  .logo {
-    width: 60px;
-    height: 60px;
-    margin-top: 3px;
-    float: left;
-  }
+.logo {
+  width: 60px;
+  height: 60px;
+  margin-top: 3px;
+  float: left;
+}
 
-  .logo-name{
-    color: black;
-    float: left;
-  }
+.logo-name {
+  color: black;
+  float: left;
+}
 
-  .nav-text{
-      color: black
-  }
+.nav-text {
+  color: black;
+}
 
-  .section{
-      background-image: url('../images/retina_wood.png');
-  }
+.section {
+  background-image: url("../images/retina_wood.png");
+}
 
-  .top-image{
-    opacity: 0.75;
-  }
-    /* opacity: 0.6;
+.top-image {
+  opacity: 0.75;
+}
+/* opacity: 0.6;
   } */
 
-  #body-settings, #body-cms{
-    background-image: url('../images/floor-tile.png');
-  }
+#body-settings,
+#body-cms {
+  background-image: url("../images/floor-tile.png");
+}
 
-  #heading-settings{
-    font-weight: bold;
-  }
+#heading-settings {
+  font-weight: bold;
+}
 
- #cms-form-name, #cms-form-email, #cms-form-password, #profile-form{
-    margin-left: 0;
-    width: 100%;
- }
+#cms-form-name,
+#cms-form-email,
+#cms-form-password,
+#profile-form {
+  margin-left: 0;
+  width: 100%;
+}
 
- /*
+/*
 #main-settings{
   display: flex;
   justify-content: center;
 }*/
 
-  /* .form-control {
+/* .form-control {
     min-height: 41px;
     background: #fff;
     box-shadow: none !important;
     border-color: #e3e3e3;
  } */
- 
- /* .form-control:focus {
+
+/* .form-control:focus {
     border-color: #70c5c0;
  } */
- 
- /* .form-control, .btn {        
+
+/* .form-control, .btn {        
     border-radius: 2px;
  } */
- 
- .login-form {
-    width: 350px;
-    margin: 0 auto;
-    padding: 100px 0 30px;		
- }
 
- 
- /* .login-form form {
+.login-form {
+  width: 350px;
+  margin: 0 auto;
+  padding: 100px 0 30px;
+}
+
+/* .login-form form {
     color: whitesmoke;
     opacity: 0.8;
     border-radius: 2px;
@@ -92,8 +95,8 @@ body {
     margin: 35px 0 25px;
     color: #ec7b73f1;
   } */
- 
- /* .login-form .avatar {
+
+/* .login-form .avatar {
     position: absolute;
     margin: 0 auto;
     left: 0;
@@ -107,16 +110,16 @@ body {
     padding: 15px;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
  } */
- 
- /* .login-form .avatar img {
+
+/* .login-form .avatar img {
     width: 100%;
  }	 */
- 
- /* .login-form input[type="checkbox"] {
+
+/* .login-form input[type="checkbox"] {
     margin-top: 2px;
  } */
- 
- /* .login-form .btn {        
+
+/* .login-form .btn {        
     font-size: 16px;
     font-weight: bold;
     background: #ec7b73f1;
@@ -124,13 +127,13 @@ body {
     margin-bottom: 20px;
     width: 350px;
  } */
- 
- /* .login-form .btn:hover, .login-form .btn:focus {
+
+/* .login-form .btn:hover, .login-form .btn:focus {
     background: #ec7b73f1;
     outline: none !important;
  }   */
- 
- /* .login-form a {
+
+/* .login-form a {
     color: #fff;
     text-decoration: underline;
  }
@@ -149,14 +152,39 @@ body {
  }
   */
 
-  #recipe-view
-{
-    /* display: flex;
+#recipe-view {
+  /* display: flex;
     flex-wrap: wrap; */
-    margin: auto;
-    padding:10px;
-    padding-bottom:60px;
-    width: 1100px;
-    clear: both;
-    
+  margin: auto;
+  padding: 10px;
+  padding-bottom: 60px;
+  width: 1100px;
+  clear: both;
+}
+@media screen and (max-width: 980px) {
+  .brand-logo {
+    width: 100%;
+    margin-left: 20px;
+  }
+  #nav-mobile {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .brand-logo {
+    width: 100%;
+    margin-left: 20px;
+  }
+  #nav-mobile {
+  }
+}
+
+@media screen and (max-width: 640) {
+  .brand-logo {
+    width: 100%;
+    margin-left: 20px;
+  }
+  #nav-mobile {
+  }
 }
