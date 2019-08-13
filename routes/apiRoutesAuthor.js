@@ -16,7 +16,7 @@ module.exports = function(app) {
     // Here we add an "include" property to our options in our findOne query
     // We set the value to an array of the models we want to include in a left outer join
     // In this case, just db.Recipe
-    db.Author.findAll({
+    db.Author.findOne({
       where: {
         id: req.params.id
       },
@@ -59,26 +59,24 @@ module.exports = function(app) {
   //   });
   // });
 
-   //Sign into the author's account
-   app.post("/api/signin", function(req, res) {
+  //Sign into the author's account
+  app.post("/api/signin", function(req, res) {
     console.log("Signing in by executing the correct route...");
     console.log(req.body);
     db.Author.findOne({
       where: {
         email: req.body.email,
-        password:req.body.password
+        password: req.body.password
       }
-    })
-      .then(function(dbAuthor) {
-      
-         console.log(dbAuthor);
-        // res.json(dbAuthor);
-        if (dbAuthor === null){
-         res.send(false);
-        }else{
+    }).then(function(dbAuthor) {
+      console.log(dbAuthor);
+      // res.json(dbAuthor);
+      if (dbAuthor === null) {
+        res.send(false);
+      } else {
         res.json(dbAuthor);
-        }
-      });
+      }
+    });
   });
 
   app.post("/api/signup", function(req, res) {
@@ -87,17 +85,15 @@ module.exports = function(app) {
     db.Author.create({
       email: req.body.email,
       password: req.body.password
-    })
-      .then(function(dbAuthor) {
-      
-         console.log(dbAuthor);
-        // res.json(dbAuthor);
-        if (dbAuthor === null){
-         res.send(false);
-        }else{
+    }).then(function(dbAuthor) {
+      console.log(dbAuthor);
+      // res.json(dbAuthor);
+      if (dbAuthor === null) {
+        res.send(false);
+      } else {
         res.json(dbAuthor);
-        }
-      });
+      }
+    });
   });
 
   /*
