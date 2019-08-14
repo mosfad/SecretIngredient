@@ -28,25 +28,25 @@ module.exports = function(sequelize, DataTypes) {
     }
   });
 
-  // Author.associate = function(models) {
-  //   // Associating Author with Posts
-  //   // When an Author is deleted, also delete any associated Posts
-  //   Author.hasMany(models.Recipe, {
-  //     onDelete: "cascade"
-  //   });
-  // };
+  Author.associate = function(models) {
+    // Associating Author with Posts
+    // When an Author is deleted, also delete any associated Posts
+    Author.hasMany(models.Recipe, {
+      onDelete: "cascade"
+    });
+  };
 
-  // Author.beforeCreate(autor => {
-  //   autor.password = bcrypt.hashSync(
-  //     autor.password,
-  //     bcrypt.genSaltSync(10),
-  //     null
-  //   );
-  // });
+  Author.beforeCreate(autor => {
+    autor.password = bcrypt.hashSync(
+      autor.password,
+      bcrypt.genSaltSync(10),
+      null
+    );
+  });
 
-  // Author.prototype.validPassword = function (password) {
-  //   return bcrypt.compareSync(password, this.password);
-  // };
+  Author.prototype.validPassword = function(password) {
+    return bcrypt.compareSync(password, this.password);
+  };
 
   return Author;
 };
