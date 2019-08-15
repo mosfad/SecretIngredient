@@ -8,23 +8,22 @@ module.exports = function(app) {
     });
   });
 
-  app.get("/api/search-keyword/:term", function(req, res){
+  app.get("/api/search-keyword/:term", function(req, res) {
     // console.log(req.params);
     // res.send(true);
-    if(req.params.term){
+    if (req.params.term) {
       db.Recipe.findAll({
-        where:{
-          recipe_name:
-          {
-            $like: '%'+req.params.term+'%'
+        where: {
+          recipe_name: {
+            $like: "%" + req.params.term + "%"
           }
         }
-      }).then(function(result){
+      }).then(function(result) {
         return res.json(result);
-      })
-    }else {
+      });
+    } else {
       db.Recipe.findOne({
-        where:{
+        where: {
           recipe_name: req.params.term
         }
       }).then(function(result) {
@@ -36,13 +35,15 @@ module.exports = function(app) {
   // Create a new example
   // Get recipes for a specific authorId
   app.get("/api/recipes:id", function(req, res) {
+    console.log(req.params.id);
+
     db.Recipe.findAll({
       where: {
         AuthorId: req.params.id
       }
     }).then(function(dbRecipe) {
       console.log("Getting recipes from the database....");
-      console.log(dbRecipe);
+      // console.log(dbRecipe);
       res.json(dbRecipe);
     });
   });
@@ -51,32 +52,30 @@ module.exports = function(app) {
   app.post("/api/recipes:id", function(req, res) {
     console.log("Post api was successfully called");
     //var authorId = req.params.id;
-    console.log(req.body);
+    // console.log(req.body);
     db.Recipe.create({
-      recipe_name:req.body.recipe_name,
-      ingredients:req.body.ingredients,
-      steps:req.body.steps,
-      comments:req.body.comments,
-      imgUrl:req.body.imgUrl,
+      recipe_name: req.body.recipe_name,
+      ingredients: req.body.ingredients,
+      steps: req.body.steps,
+      comments: req.body.comments,
+      imgUrl: req.body.imgUrl,
       AuthorId: req.params.id
     }).then(function(dbRecipe) {
       console.log("Post was successfully made");
       res.json(dbRecipe);
     });
   });
-/*
+  /*
   app.post("/api/recipe:id", function(req, res) {
 
   })*/
 
   // Delete an example by id
   app.delete("/api/examples/:id", function(req, res) {
-    db.Example.destroy({ where: { id: req.params.id } }).then(function(dbExample) {
+    db.Example.destroy({ where: { id: req.params.id } }).then(function(
+      dbExample
+    ) {
       res.json(dbExample);
     });
   });
 };
-
-
-
-

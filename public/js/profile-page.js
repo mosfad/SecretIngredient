@@ -46,6 +46,7 @@ $(document).ready(function() {
     API.getFavRecipes().then(function(data) {
       console.log("Here is the data from the server: ");
       console.log(data);
+      data = [data];
       var recipes = data.map(function(recipe) {
         console.log("Trying to figure out what data.map does; recipe = ");
         console.log(recipe);
@@ -56,28 +57,12 @@ $(document).ready(function() {
             class: "material-icons"
           });
         var li = $("<li>")
-          .text(" " + recipe.myrecipe)
+          .text(" " + recipe.favourite)
           .attr({
             class: "collection-item"
           })
           .prepend(i);
         return li;
-
-        /*else {
-              var i = $("<i>")
-                .text("favorite")
-                .attr({
-                  class: "material-icons"
-                })
-
-              var li = $("<li>")                    
-                .text(" " + recipe.favourite)   
-                .attr({
-                  class: "collection-item"
-                })
-                .prepend(i)
-                return li;
-            } */
       });
       console.log("Extracting favorite recipe from data: ");
       console.log(recipes);
@@ -148,18 +133,22 @@ $(document).ready(function() {
   // Add event listener to the submit button
   buttonSubmitRecipe.on("click", handleFormSubmit);
   //Add event listener for icons to reveal recipes
-  iRevealFavRecipe.on("click", function() {
-    console.log("clicked");
-    $.ajax({
-      method: "Get",
-      url: "/api/authors/" + sessionStorage.getItem("userIdSession")
-    }).then(function(user) {
-      console.log("user");
-    });
-  });
+  // iRevealFavRecipe.on("click", function() {
+  //   console.log("clicked");
+  //   $.ajax({
+  //     method: "Get",
+  //     url: "/api/authors/" + sessionStorage.getItem("userIdSession")
+  //   }).then(function(user) {
+  //     console.log("user");
+  //   });
+  // });
+  iRevealFavRecipe.on("click", showFavRecipes(favRecipesList));
   iRevealMadeRecipe.on("click", showMadeRecipes(madeRecipesList));
 
   //MAKE SURE THAT THE DATABASE HAS COLUMN NAMES `favorite` and `made`......
   //WORK ON THE ELEMENTS FOR THE LISTS favorite and made. DONE
   //WORK ON THE SUMBIT FORM AND ITS ELEMENTS. DONE
+});
+$(document).ready(function() {
+  $(".sidenav").sidenav();
 });

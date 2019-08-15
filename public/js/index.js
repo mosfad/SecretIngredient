@@ -3,9 +3,9 @@
 //     var instances = M.Parallax.init(elems, options);
 //   });
 
-  $(document).ready(function(){
-    $('.parallax').parallax();
-  });
+$(document).ready(function() {
+  $(".parallax").parallax();
+});
 // Get references to page elements
 var $exampleText = $("#example-text");
 var $exampleDescription = $("#example-description");
@@ -105,3 +105,7 @@ var handleDeleteBtnClick = function() {
 // Add event listeners to the submit and delete buttons
 $submitBtn.on("click", handleFormSubmit);
 $exampleList.on("click", ".delete", handleDeleteBtnClick);
+
+$(document).ready(function() {
+  $(".sidenav").sidenav();
+});

@@ -1,4 +1,3 @@
-// var bcrypt = require("bcryptjs");
 module.exports = function(sequelize, DataTypes) {
   var Author = sequelize.define("Author", {
     author_name: {
@@ -36,17 +35,17 @@ module.exports = function(sequelize, DataTypes) {
     });
   };
 
-  Author.beforeCreate(autor => {
-    autor.password = bcrypt.hashSync(
-      autor.password,
-      bcrypt.genSaltSync(10),
-      null
-    );
-  });
+  // Author.beforeCreate(autor => {
+  //   autor.password = bcrypt.hashSync(
+  //     autor.password,
+  //     bcrypt.genSaltSync(10),
+  //     null
+  //   );
+  // });
 
-  Author.prototype.validPassword = function(password) {
-    return bcrypt.compareSync(password, this.password);
-  };
+  // Author.prototype.validPassword = function(password) {
+  //   return bcrypt.compareSync(password, this.password);
+  // };
 
   return Author;
 };

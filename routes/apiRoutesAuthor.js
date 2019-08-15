@@ -13,6 +13,7 @@ module.exports = function(app) {
   });
 
   app.get("/api/authors/:id", function(req, res) {
+    console.log("Hello");
     // Here we add an "include" property to our options in our findOne query
     // We set the value to an array of the models we want to include in a left outer join
     // In this case, just db.Recipe
@@ -62,14 +63,14 @@ module.exports = function(app) {
   //Sign into the author's account
   app.post("/api/signin", function(req, res) {
     console.log("Signing in by executing the correct route...");
-    console.log(req.body);
+    // console.log(req.body);
     db.Author.findOne({
       where: {
         email: req.body.email,
         password: req.body.password
       }
     }).then(function(dbAuthor) {
-      console.log(dbAuthor);
+      // console.log(dbAuthor);
       // res.json(dbAuthor);
       if (dbAuthor === null) {
         res.send(false);
