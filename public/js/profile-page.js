@@ -57,7 +57,7 @@ $(document).ready(function() {
                   class: "material-icons"
                 })
               var li = $("<li>")                   
-                .text(" " + recipe.myrecipe)   
+                .text(" " + recipe.favourite)   
                 .attr({
                   class: "collection-item"
                 })
@@ -134,6 +134,7 @@ $(document).ready(function() {
         console.log(recipe);
         API.addRecipes(recipe).then(function() {
             //show updated displays of favorite recipes and made recipes.
+            location.reload();
             showRecipes(favRecipesList);
             showRecipes(madeRecipesList);
             console.log("Recipe was successfully posted");
