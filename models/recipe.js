@@ -4,18 +4,17 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false
     },
-    ingredients: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    steps: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
+
     comments: {
       type: DataTypes.STRING,
       allowNull: true
     },
+
+    owner: {
+      type: DataTypes.STRING /*not sure of datatype to use*/,
+      allowNull: false
+    },
+
     imgUrl: {
       type: DataTypes.STRING,
       allowNull: true
@@ -25,7 +24,25 @@ module.exports = function(sequelize, DataTypes) {
   Recipe.associate = function(models) {
     // We're saying that a Recipe should belong to an Author
     // A Recipe can't be created without an Author due to the foreign key constraint
-    Recipe.belongsTo(models.Author, {
+    Recipe.hasMany(models.Favorite, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
+
+    // Recipe.hasMany(models.Made, {
+    //   foreignKey: {
+    //     allowNull: false
+    //   }
+    // });
+
+    Recipe.hasMany(models.Ingredient, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
+
+    Recipe.hasMany(models.Step, {
       foreignKey: {
         allowNull: false
       }
