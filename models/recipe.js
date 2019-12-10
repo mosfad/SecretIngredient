@@ -11,7 +11,8 @@ module.exports = function(sequelize, DataTypes) {
     },
 
     owner: {
-      type: DataTypes.STRING /*not sure of datatype to use*/,
+      type:
+        DataTypes.STRING /*not sure of datatype to use. Boolean should work since we have author's ID!!!*/,
       allowNull: false
     },
 

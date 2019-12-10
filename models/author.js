@@ -1,3 +1,4 @@
+var bcrypt = require("bcryptjs");
 module.exports = function(sequelize, DataTypes) {
   var Author = sequelize.define("Author", {
     author_name: {
