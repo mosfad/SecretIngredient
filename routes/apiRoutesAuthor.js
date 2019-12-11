@@ -51,22 +51,37 @@ module.exports = function(app) {
       });
     }
   });
+
+  //Route for getting favorite recipes and created recipes.
+  app.get("/api/authors/:id", function(req, res) {
+    // Here we add an "include" property to our options in our findOne query
+    // We set the value to an array of the models we want to include in a left outer join
+    // In this case, just db.favorite
+    db.Author.findOne({
+      where: {
+        id: req.params.id
+      },
+      include: [db.Favorite, db.Recipe]
+    }).then(function(dbAuthor) {
+      res.json(dbAuthor);
+    });
+  });
 };
 
-// Route for getting some recipe info about our user to use on client side.
-app.get("/api/author/:id", function(req, res) {
-  // Here we add an "include" property to our options in our findOne query
-  // We set the value to an array of the models we want to include in a left outer join
-  // In this case, just db.favorite
-  db.Author.findOne({
-    where: {
-      id: req.params.id
-    },
-    include: [db.Favorite, db.Recipe]
-  }).then(function(dbAuthor) {
-    res.json(dbAuthor);
-  });
-});
+// // Route for getting some recipe info about our user to use on client side.
+// app.get("/api/author/:id", function(req, res) {
+//   // Here we add an "include" property to our options in our findOne query
+//   // We set the value to an array of the models we want to include in a left outer join
+//   // In this case, just db.favorite
+//   db.Author.findOne({
+//     where: {
+//       id: req.params.id
+//     },
+//     include: [db.Favorite, db.Recipe]
+//   }).then(function(dbAuthor) {
+//     res.json(dbAuthor);
+//   });
+// });
 
 // Route for deleting user account.
 
