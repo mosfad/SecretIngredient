@@ -1,5 +1,6 @@
 $(document).ready(function() {
   $(".modal").modal();
+  $(".sidenav").sidenav();
   //references to unordered lists that will display recipes.
   var favRecipesList = $("#favorite-recipes");
   var madeRecipesList = $("#made-recipes");
@@ -10,37 +11,99 @@ $(document).ready(function() {
   var recipeComments = $("#recipe-comments");
   var recipeImgUrl = $("#recipe-img-url");
   //references to icons and buttons that trigger events
-  var buttonSubmitRecipe = $("#submit-recipe");
+  var buttonSubmitRecipe = $("#submit-recipe"); //now using***
+  var modalSubmitRecipe = $("#modal-submit");
   var iRevealMadeRecipe = $("#reveal-made-recipes");
   var iRevealFavRecipe = $("#reveal-fav-recipes");
 
-  authorId = sessionStorage.getItem("userIdSession");
-  // The API object contains methods for each kind of request we'll make
+  //var authorId = sessionStorage.getItem("userIdSession");
+  var authorId;
+  var recipeId;
+  //   var recipeFormData = {
+  //     recipe_name: recipeName.val().trim(),
+  //     comments: recipeComments.val().trim(),
+  //     imgUrl: recipeImgUrl.val().trim()
+  //   };
+  $.ajax({
+    type: "GET",
+    url: "/api/author_data"
+  })
+    .done(function(authorData) {
+      console.log(authorData);
+      authorId = authorData.id;
+      console.log(authorId);
+    })
+    .fail(function(jqXHR, textStatus) {
+      console.log(textStatus);
+    });
+
+  //=============I AM HERE!!!!==========================================================
+
   var API = {
-    addRecipes: function(recipe) {
+    addMyRecipe: function(recipe) {
       return $.ajax({
         headers: {
           "Content-Type": "application/json"
         },
         type: "POST",
-        url: "/api/recipes" + authorId,
+        url: "/api/recipes/" + authorId,
+        data: JSON.stringify(recipe)
+      });
+    },
+    addIngredients: function(ingredients) {
+      return $.ajax({
+        headers: {
+          "Content-Type": "application/json"
+        },
+        type: "POST",
+        url: "/api/recipe/ingredients/" + recipeId,
+        data: JSON.stringify(ingredients)
+      });
+    },
+    addDirections: function(directions) {
+      return $.ajax({
+        headers: {
+          "Content-Type": "application/json"
+        },
+        type: "POST",
+        url: "/api/recipe/directions/" + recipeId,
+        data: JSON.stringify(directions)
+      });
+    },
+    getMyRecipes: function() {
+      return $.ajax({
+        type: "GET",
+        url: "/api/recipes/" + authorId
+      });
+    },
+    addFavRecipe: function(recipe) {
+      return $.ajax({
+        headers: {
+          "Content-Type": "application/json"
+        },
+        type: "POST",
+        url: "/api/recipes/" + userId + "/" + recipeId,
         data: JSON.stringify(recipe)
       });
     },
     getFavRecipes: function() {
       return $.ajax({
-        url: "/api/authors/" + authorId,
-        type: "GET"
-      });
-    },
-    getAllRecipes: function() {
-      return $.ajax({
-        url: "/api/recipes" + authorId,
+        url: "/api/favorites/" + userId,
         type: "GET"
       });
     }
   };
 
+  //SHOW FAVORITE RECIPES**
+  //SHOW CREATED RECIPE**
+
+  /*
+  HOW TO EFFICENTLY MANAGE THIS MySQL CONFLICT......
+  userId = id of the user that bookmarks a recipe
+  authorId = id of the user that creates a recipe.
+ */
+
+  /*
   //populates the recipe cards based on the parameter `column name` i.e made recipes or favorite recipes.
   var showFavRecipes = function(cardList) {
     API.getFavRecipes().then(function(data) {
@@ -174,12 +237,24 @@ $(document).ready(function() {
   //   });
   // });
   iRevealFavRecipe.on("click", showFavRecipes(favRecipesList));
-  iRevealMadeRecipe.on("click", showMadeRecipes(madeRecipesList));
-
+  iRevealMadeRecipe.on("click", showMadeRecipes(madeRecipesList));*/
+  var handleFormSubmit = function(event) {
+    event.preventDefault();
+    console.log("The modal enters the form correctly!!!");
+    var recipeFormData = {
+      recipe_name: recipeName.val().trim(),
+      comments: recipeComments.val().trim(),
+      imgUrl: recipeImgUrl.val().trim()
+    };
+    console.log(recipeFormData);
+    API.addMyRecipe(recipeFormData).done(function(response) {
+      console.log(response);
+    });
+  };
+  //Add event listener to submit button
+  //   $("#modal1").on("click", buttonSubmitRecipe, handleFormSubmit);
+  buttonSubmitRecipe.on("click", handleFormSubmit);
   //MAKE SURE THAT THE DATABASE HAS COLUMN NAMES `favorite` and `made`......
   //WORK ON THE ELEMENTS FOR THE LISTS favorite and made. DONE
-  //WORK ON THE SUMBIT FORM AND ITS ELEMENTS. DONE
-});
-$(document).ready(function() {
-  $(".sidenav").sidenav();
+  //WORK ON THE SUMBIT FORM AND ITS ELEMENTS. DONE*/
 });

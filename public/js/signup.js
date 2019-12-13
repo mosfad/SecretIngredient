@@ -29,12 +29,12 @@ $(document).ready(function() {
         password: password
       }
     })
-      .then(function(data) {
+      .done(function(data) {
         console.log("Welcome to your new account");
         //Set location to appropropriate route on successful signup
         window.location.replace(data);
       })
-      .catch(handleLoginError);
+      .fail(handleLoginError);
   }
 
   function handleLoginError(error) {

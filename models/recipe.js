@@ -10,11 +10,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
 
-    owner: {
+    /*owner: {
       type:
-        DataTypes.STRING /*not sure of datatype to use. Boolean should work since we have author's ID!!!*/,
-      allowNull: false
-    },
+        DataTypes.STRING ...not sure of datatype to use. Boolean should work since we have author's ID!!!,
+      allowNull: true
+    },*/
 
     imgUrl: {
       type: DataTypes.STRING,
@@ -39,13 +39,13 @@ module.exports = function(sequelize, DataTypes) {
 
     Recipe.hasMany(models.Ingredient, {
       foreignKey: {
-        allowNull: false
+        allowNull: true
       }
     });
 
     Recipe.hasMany(models.Step, {
       foreignKey: {
-        allowNull: false
+        allowNull: true
       }
     });
   };

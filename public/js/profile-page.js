@@ -17,30 +17,46 @@ $(document).ready(function() {
   authorId = sessionStorage.getItem("userIdSession");
   // The API object contains methods for each kind of request we'll make
   var API = {
-    addRecipes: function(recipe) {
+    addMyRecipe: function(recipe) {
       return $.ajax({
         headers: {
           "Content-Type": "application/json"
         },
         type: "POST",
-        url: "/api/recipes" + authorId,
+        url: "/api/recipes/" + authorId,
+        data: JSON.stringify(recipe)
+      });
+    },
+    addFavRecipe: function(recipe) {
+      return $.ajax({
+        headers: {
+          "Content-Type": "application/json"
+        },
+        type: "POST",
+        url: "/api/recipes/" + userId + "/" + recipeId,
         data: JSON.stringify(recipe)
       });
     },
     getFavRecipes: function() {
       return $.ajax({
-        url: "/api/authors/" + authorId,
+        url: "/api/favorites/" + userId,
         type: "GET"
       });
     },
-    getAllRecipes: function() {
+    getMyRecipes: function() {
       return $.ajax({
-        url: "/api/recipes" + authorId,
+        url: "/api/recipes/" + authorId,
         type: "GET"
       });
     }
   };
+API.
 
+  /*
+  HOW TO EFFICENTLY MANAGE THIS MySQL CONFLICT......
+  userId = id of the user that bookmarks a recipe
+  authorId = id of the user that creates a recipe.
+  */
   //populates the recipe cards based on the parameter `column name` i.e made recipes or favorite recipes.
   var showFavRecipes = function(cardList) {
     API.getFavRecipes().then(function(data) {
@@ -152,3 +168,16 @@ $(document).ready(function() {
 $(document).ready(function() {
   $(".sidenav").sidenav();
 });
+
+
+
+
+addDirections: function(directions) {
+  return $.ajax({
+      headers: {
+          "Content-Type": "application/json"
+      },
+      type: "POST",
+      url: "/api/recipe/directions/" + recipeId
+  })
+},

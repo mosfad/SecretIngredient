@@ -52,6 +52,59 @@ module.exports = function(app) {
     }
   });
 
+  //Route for creating a recipe
+  app.post("/api/recipes/:id", function(req, res) {
+    console.log("Successfully executing route...");
+    var recipeInput = {
+      recipe_name: req.body.recipe_name,
+      comments: req.body.comments,
+      imgUrl: req.body.imgUrl,
+      AuthorId: req.params.id
+    };
+    db.Recipe.create(recipeInput).then(function(dbRecipe) {
+      res.json(dbRecipe);
+    });
+  });
+
+  //Route for getting all recipes
+  app.get("/api/recipes", function(req, res) {
+    if (!req.user) {
+      // The user is not logged in, send back an empty object
+      res.json({});
+    } else {
+      // Otherwise send back the user's email and id
+      // Here we add an "include" property to our options in our findOne query
+      // We set the value to an array of the models we want to include in a left outer join
+      // In this case, just db.favorite
+      db.Author.findAll().then(function(dbRecipes) {
+        res.json(dbRecipes);
+      });
+    }
+  });
+
+  //Route for getting info on a created recipe
+  app.get("/api/recipes/:name", function(req, res) {
+    if (!req.user) {
+      // The user is not logged in, send back an empty object
+      res.json({});
+    } else {
+      // Otherwise send back the user's email and id
+      // Here we add an "include" property to our options in our findOne query
+      // We set the value to an array of the models we want to include in a left outer join
+      // In this case, just db.favorite
+      db.Author.findOne({
+        where: {
+          recipe_name: req.params.id
+        },
+        include: [db.Favorite, db.Recipe, db.Ingredients, db.Steps]
+      }).then(function(dbRecipe) {
+        res.json(dbRecipe);
+      });
+    }
+  });
+
+  //Route for getting favorite recipes
+
   //Route for getting favorite recipes and created recipes.
   app.get("/api/authors/:id", function(req, res) {
     // Here we add an "include" property to our options in our findOne query

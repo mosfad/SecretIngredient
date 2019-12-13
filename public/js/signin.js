@@ -3,7 +3,7 @@ $(document).ready(function() {
   var passwordInput = $("#user-password");
 
   //When user clicks login button, we validate the email and password are not blank.
-  $("#user-signin").on("submit", function(event) {
+  $("#user-signin").on("click", function(event) {
     event.preventDefault();
     var userInput = {
       email: emailInput.val().trim(),
@@ -30,13 +30,13 @@ $(document).ready(function() {
         password: password
       }
     })
-      .then(function(data) {
+      .done(function(data) {
         console.log("Welcome to your account");
         //Set location to appropropriate route on successful signup
         window.location.replace(data);
       })
-      .catch(function(err) {
-        console.log(err);
+      .fail(function(jqXHR, textStatus) {
+        console.log(textStatus);
       });
   }
 });
