@@ -33,8 +33,8 @@ $(document).ready(function() {
       authorId = authorData.id;
       console.log(authorId);
     })
-    .fail(function(jqXHR, textStatus) {
-      console.log(textStatus);
+    .fail(function(jqXHR, textStatus, errThrown) {
+      console.log(textStatus + ": " + errThrown);
     });
 
   //=============I AM HERE!!!!==========================================================
@@ -42,12 +42,23 @@ $(document).ready(function() {
   var API = {
     addMyRecipe: function(recipe) {
       return $.ajax({
-        headers: {
-          "Content-Type": "application/json"
-        },
         type: "POST",
+        enctype: "multipart/form-data",
         url: "/api/recipes/" + authorId,
-        data: JSON.stringify(recipe)
+        data: JSON.stringify(recipe),
+        contentType: false,
+        cache: false,
+        /*timeout: 600000,*/
+        success: function(data) {
+          //$("#result").text(data);
+          console.log("SUCCESS : ", data);
+          //$("#btnSubmit").prop("disabled", false);
+        },
+        error: function(e) {
+          //$("#result").text(e.responseText);
+          console.log("ERROR : ", e);
+          //$("#btnSubmit").prop("disabled", false);
+        }
       });
     },
     addIngredients: function(ingredients) {
@@ -241,15 +252,23 @@ $(document).ready(function() {
   var handleFormSubmit = function(event) {
     event.preventDefault();
     console.log("The modal enters the form correctly!!!");
-    var recipeFormData = {
+    var recipeFormData = new FormData($("new-recipe-form")[0]);
+    /*var recipeFormData = {
       recipe_name: recipeName.val().trim(),
+      ingredients: recipeIngredients.val().trim(),
+      steps: recipeSteps.val().trim(),
       comments: recipeComments.val().trim(),
+      ratings: 0,
       imgUrl: recipeImgUrl.val().trim()
-    };
+    };*/
     console.log(recipeFormData);
-    API.addMyRecipe(recipeFormData).done(function(response) {
-      console.log(response);
-    });
+    // API.addMyRecipe(recipeFormData).done(function(response) {
+    //   console.log(response);
+    // });
+    var postRecipe = API.addMyRecipe(recipeFormData);
+    // var postIngredient = postRecipe.then(function(data) {
+    //   API.addFavRecipe;
+    // });
   };
   //Add event listener to submit button
   //   $("#modal1").on("click", buttonSubmitRecipe, handleFormSubmit);

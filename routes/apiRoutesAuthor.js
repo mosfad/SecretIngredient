@@ -1,7 +1,65 @@
+require("dotenv").config();
 var db = require("../models");
 var passport = require("../config/passport");
 
+// route/api/profile.js
+var express = require("express");
+var aws = require("aws-sdk");
+var multerS3 = require("multer-s3");
+var multer = require("multer");
+var path = require("path");
+var url = require("url");
+
 module.exports = function(app) {
+  /* PROFILE IMAGE STORING STARTS
+   */
+  const s3 = new aws.S3({
+    accessKeyId: process.env.ID_KEY,
+    secretAccessKey: process.env.SECRET_KEY,
+    Bucket: process.env.BUCKET_NAME
+  });
+  /**
+   * Single Upload
+   */
+  var profileImgUpload = multer({
+    storage: multerS3({
+      s3: s3,
+      bucket: process.env.BUCKET_NAME,
+      acl: "public-read",
+      key: function(req, file, cb) {
+        cb(
+          null,
+          path.basename(file.originalname, path.extname(file.originalname)) +
+            "-" +
+            Date.now() +
+            path.extname(file.originalname)
+        );
+      }
+    }),
+    limits: { fileSize: 2000000 }, // In bytes: 2000000 bytes = 2 MB
+    fileFilter: function(req, file, cb) {
+      checkFileType(file, cb);
+    }
+  }).single("profileImage");
+  /**
+   * Check File Type
+   * @param file
+   * @param cb
+   * @return {*}
+   */
+  function checkFileType(file, cb) {
+    // Allowed ext
+    var filetypes = /jpeg|jpg|png|gif/;
+    // Check ext
+    var extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+    // Check mime
+    var mimetype = filetypes.test(file.mimetype);
+    if (mimetype && extname) {
+      return cb(null, true);
+    } else {
+      cb("Error: Images Only!");
+    }
+  }
   // Using the passport.authenticate middleware with our local strategy.
   // If the user has valid login credentials, send them to the members page.
   // Otherwise the user will be sent an error
@@ -52,55 +110,82 @@ module.exports = function(app) {
     }
   });
 
-  //Route for creating a recipe
+  //Route for creating a recipe name
   app.post("/api/recipes/:id", function(req, res) {
-    console.log("Successfully executing route...");
-    var recipeInput = {
-      recipe_name: req.body.recipe_name,
-      comments: req.body.comments,
-      imgUrl: req.body.imgUrl,
-      AuthorId: req.params.id
-    };
-    db.Recipe.create(recipeInput).then(function(dbRecipe) {
-      res.json(dbRecipe);
+    //upload image to S3 and retrieve URL to send to database.
+    profileImgUpload(req, res, function(error) {
+      // console.log( 'requestOkokok', req.file );
+      // console.log( 'error', error );
+      if (error) {
+        console.log("errors", error);
+        res.json({ error: error });
+      } else {
+        // If File not found
+        if (req.file === undefined) {
+          console.log("Error: No File Selected!");
+          res.json("Error: No File Selected");
+        } else {
+          // If Success
+          var imageName = req.file.key;
+          var imageLocation = req.file.location;
+          // Save the file name into database into profile model
+          //============================================================================
+          console.log(imageName);
+          console.log(imageLocation);
+          /*
+          res.json({
+            image: imageName,
+            location: imageLocation
+          });*/
+          //==============================================================================
+
+          console.log("Successfully executing route...");
+          var recipeInput = {
+            recipe_name: req.body.recipe_name,
+            ingredients: req.body.ingredients,
+            steps: req.body.steps,
+            comments: req.body.comments,
+            /*imgUrl: req.body.imgUrl,*/
+            imgUrl: imageLocation,
+            AuthorId: req.params.id
+          };
+          db.Recipe.create(recipeInput).then(function(dbRecipe) {
+            res.json(dbRecipe);
+          });
+        }
+      }
     });
   });
 
+  //Route for creating ingredients for a specific recipe
+
+  //Route for creating directions(steps) for a specific recipe
+
   //Route for getting all recipes
   app.get("/api/recipes", function(req, res) {
-    if (!req.user) {
-      // The user is not logged in, send back an empty object
-      res.json({});
-    } else {
-      // Otherwise send back the user's email and id
-      // Here we add an "include" property to our options in our findOne query
-      // We set the value to an array of the models we want to include in a left outer join
-      // In this case, just db.favorite
-      db.Author.findAll().then(function(dbRecipes) {
-        res.json(dbRecipes);
-      });
-    }
+    // Otherwise send back the user's email and id
+    // Here we add an "include" property to our options in our findOne query
+    // We set the value to an array of the models we want to include in a left outer join
+    // In this case, just db.favorite
+    db.Author.findAll().then(function(dbRecipes) {
+      res.json(dbRecipes);
+    });
   });
 
   //Route for getting info on a created recipe
   app.get("/api/recipes/:name", function(req, res) {
-    if (!req.user) {
-      // The user is not logged in, send back an empty object
-      res.json({});
-    } else {
-      // Otherwise send back the user's email and id
-      // Here we add an "include" property to our options in our findOne query
-      // We set the value to an array of the models we want to include in a left outer join
-      // In this case, just db.favorite
-      db.Author.findOne({
-        where: {
-          recipe_name: req.params.id
-        },
-        include: [db.Favorite, db.Recipe, db.Ingredients, db.Steps]
-      }).then(function(dbRecipe) {
-        res.json(dbRecipe);
-      });
-    }
+    // Otherwise send back the user's email and id
+    // Here we add an "include" property to our options in our findOne query
+    // We set the value to an array of the models we want to include in a left outer join
+    // In this case, just db.favorite
+    db.Author.findOne({
+      where: {
+        recipe_name: req.params.name
+      },
+      include: [db.Favorite, db.Recipe, db.Ingredients, db.Steps]
+    }).then(function(dbRecipe) {
+      res.json(dbRecipe);
+    });
   });
 
   //Route for getting favorite recipes

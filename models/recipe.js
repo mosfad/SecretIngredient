@@ -4,18 +4,29 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false
     },
-
+    ingredients: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    steps: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
     comments: {
       type: DataTypes.STRING,
       allowNull: true
+      /*default*/
     },
-
+    ratings: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+      /*default*/
+    },
     /*owner: {
       type:
         DataTypes.STRING ...not sure of datatype to use. Boolean should work since we have author's ID!!!,
       allowNull: true
     },*/
-
     imgUrl: {
       type: DataTypes.STRING,
       allowNull: true
@@ -37,17 +48,17 @@ module.exports = function(sequelize, DataTypes) {
     //   }
     // });
 
-    Recipe.hasMany(models.Ingredient, {
-      foreignKey: {
-        allowNull: true
-      }
-    });
+    // Recipe.hasMany(models.Ingredient, {
+    //   foreignKey: {
+    //     allowNull: true
+    //   }
+    // });
 
-    Recipe.hasMany(models.Step, {
-      foreignKey: {
-        allowNull: true
-      }
-    });
+    // Recipe.hasMany(models.Step, {
+    //   foreignKey: {
+    //     allowNull: true
+    //   }
+    // });
   };
 
   return Recipe;
