@@ -10,6 +10,8 @@ var multer = require("multer");
 var path = require("path");
 var url = require("url");
 
+aws.config.region = "us-east-2";
+
 module.exports = function(app) {
   /* PROFILE IMAGE STORING STARTS
    */
@@ -21,7 +23,7 @@ module.exports = function(app) {
   /**
    * Single Upload
    */
-  var profileImgUpload = multer({
+  var recipeImgUpload = multer({
     storage: multerS3({
       s3: s3,
       bucket: process.env.BUCKET_NAME,
@@ -40,7 +42,7 @@ module.exports = function(app) {
     fileFilter: function(req, file, cb) {
       checkFileType(file, cb);
     }
-  }).single("profileImage");
+  }).single("recipeImg");
   /**
    * Check File Type
    * @param file
@@ -113,7 +115,7 @@ module.exports = function(app) {
   //Route for creating a recipe name
   app.post("/api/recipes/:id", function(req, res) {
     //upload image to S3 and retrieve URL to send to database.
-    profileImgUpload(req, res, function(error) {
+    recipeImgUpload(req, res, function(error) {
       // console.log( 'requestOkokok', req.file );
       // console.log( 'error', error );
       if (error) {
@@ -123,6 +125,7 @@ module.exports = function(app) {
         // If File not found
         if (req.file === undefined) {
           console.log("Error: No File Selected!");
+          console.log(req);
           res.json("Error: No File Selected");
         } else {
           // If Success
@@ -132,6 +135,8 @@ module.exports = function(app) {
           //============================================================================
           console.log(imageName);
           console.log(imageLocation);
+          console.log(req.body);
+          console.log(req.params.id);
           /*
           res.json({
             image: imageName,
@@ -141,17 +146,22 @@ module.exports = function(app) {
 
           console.log("Successfully executing route...");
           var recipeInput = {
-            recipe_name: req.body.recipe_name,
-            ingredients: req.body.ingredients,
-            steps: req.body.steps,
-            comments: req.body.comments,
+            recipe_name: req.body.recipeName,
+            ingredients: req.body.recipeIngredients,
+            steps: req.body.recipeSteps,
+            comments: req.body.recipeComments,
             /*imgUrl: req.body.imgUrl,*/
             imgUrl: imageLocation,
             AuthorId: req.params.id
           };
-          db.Recipe.create(recipeInput).then(function(dbRecipe) {
-            res.json(dbRecipe);
-          });
+          db.Recipe.create(recipeInput)
+            .then(function(dbRecipe) {
+              res.json(dbRecipe);
+            })
+            .catch(function(err) {
+              console.log(err);
+              res.json(err);
+            });
         }
       }
     });
@@ -161,13 +171,17 @@ module.exports = function(app) {
 
   //Route for creating directions(steps) for a specific recipe
 
-  //Route for getting all recipes
-  app.get("/api/recipes", function(req, res) {
+  //Route for getting recipes created by the user.
+  app.get("/api/recipes/:id", function(req, res) {
     // Otherwise send back the user's email and id
     // Here we add an "include" property to our options in our findOne query
     // We set the value to an array of the models we want to include in a left outer join
     // In this case, just db.favorite
-    db.Author.findAll().then(function(dbRecipes) {
+    db.Recipe.findAll({
+      where: {
+        AuthorId: req.params.id
+      }
+    }).then(function(dbRecipes) {
       res.json(dbRecipes);
     });
   });
@@ -178,7 +192,7 @@ module.exports = function(app) {
     // Here we add an "include" property to our options in our findOne query
     // We set the value to an array of the models we want to include in a left outer join
     // In this case, just db.favorite
-    db.Author.findOne({
+    db.Recipe.findOne({
       where: {
         recipe_name: req.params.name
       },

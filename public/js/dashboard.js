@@ -5,25 +5,20 @@ $(document).ready(function() {
   var favRecipesList = $("#favorite-recipes");
   var madeRecipesList = $("#made-recipes");
   //references to form elements
-  var recipeName = $("#recipe-name");
-  var recipeIngredients = $("#recipe-ingredients");
-  var recipeSteps = $("#recipe-steps");
-  var recipeComments = $("#recipe-comments");
-  var recipeImgUrl = $("#recipe-img-url");
+  var recipeName = $("#recipeName");
+  var recipeIngredients = $("#recipeIngredients");
+  var recipeSteps = $("#recipeSteps");
+  var recipeComments = $("#recipeComments");
+  var recipeImgUrl = $("#recipeImg");
   //references to icons and buttons that trigger events
   var buttonSubmitRecipe = $("#submit-recipe"); //now using***
   var modalSubmitRecipe = $("#modal-submit");
   var iRevealMadeRecipe = $("#reveal-made-recipes");
   var iRevealFavRecipe = $("#reveal-fav-recipes");
 
-  //var authorId = sessionStorage.getItem("userIdSession");
   var authorId;
   var recipeId;
-  //   var recipeFormData = {
-  //     recipe_name: recipeName.val().trim(),
-  //     comments: recipeComments.val().trim(),
-  //     imgUrl: recipeImgUrl.val().trim()
-  //   };
+
   $.ajax({
     type: "GET",
     url: "/api/author_data"
@@ -32,12 +27,11 @@ $(document).ready(function() {
       console.log(authorData);
       authorId = authorData.id;
       console.log(authorId);
+      displayMyRecipes();
     })
     .fail(function(jqXHR, textStatus, errThrown) {
       console.log(textStatus + ": " + errThrown);
     });
-
-  //=============I AM HERE!!!!==========================================================
 
   var API = {
     addMyRecipe: function(recipe) {
@@ -45,42 +39,41 @@ $(document).ready(function() {
         type: "POST",
         enctype: "multipart/form-data",
         url: "/api/recipes/" + authorId,
-        data: JSON.stringify(recipe),
+        data: recipe,
+        processData: false,
         contentType: false,
         cache: false,
         /*timeout: 600000,*/
         success: function(data) {
-          //$("#result").text(data);
+          alert("Recipe successfully added!");
           console.log("SUCCESS : ", data);
-          //$("#btnSubmit").prop("disabled", false);
         },
         error: function(e) {
-          //$("#result").text(e.responseText);
+          alert("Recipe was not added! Please try again.");
           console.log("ERROR : ", e);
-          //$("#btnSubmit").prop("disabled", false);
         }
       });
     },
-    addIngredients: function(ingredients) {
-      return $.ajax({
-        headers: {
-          "Content-Type": "application/json"
-        },
-        type: "POST",
-        url: "/api/recipe/ingredients/" + recipeId,
-        data: JSON.stringify(ingredients)
-      });
-    },
-    addDirections: function(directions) {
-      return $.ajax({
-        headers: {
-          "Content-Type": "application/json"
-        },
-        type: "POST",
-        url: "/api/recipe/directions/" + recipeId,
-        data: JSON.stringify(directions)
-      });
-    },
+    // addIngredients: function(ingredients) {
+    //   return $.ajax({
+    //     headers: {
+    //       "Content-Type": "application/json"
+    //     },
+    //     type: "POST",
+    //     url: "/api/recipe/ingredients/" + recipeId,
+    //     data: JSON.stringify(ingredients)
+    //   });
+    // },
+    // addDirections: function(directions) {
+    //   return $.ajax({
+    //     headers: {
+    //       "Content-Type": "application/json"
+    //     },
+    //     type: "POST",
+    //     url: "/api/recipe/directions/" + recipeId,
+    //     data: JSON.stringify(directions)
+    //   });
+    // },
     getMyRecipes: function() {
       return $.ajax({
         type: "GET",
@@ -113,6 +106,15 @@ $(document).ready(function() {
   userId = id of the user that bookmarks a recipe
   authorId = id of the user that creates a recipe.
  */
+  var displayMyRecipes = function() {
+    console.log("I am inside the function");
+    API.getMyRecipes().then(function(data) {
+      console.log("I am inside the API to get my recipes...");
+      console.log(data);
+    });
+  };
+
+  var displayFavRecipes;
 
   /*
   //populates the recipe cards based on the parameter `column name` i.e made recipes or favorite recipes.
@@ -252,7 +254,7 @@ $(document).ready(function() {
   var handleFormSubmit = function(event) {
     event.preventDefault();
     console.log("The modal enters the form correctly!!!");
-    var recipeFormData = new FormData($("new-recipe-form")[0]);
+    var recipeFormData = new FormData($("#new-recipe-form")[0]);
     /*var recipeFormData = {
       recipe_name: recipeName.val().trim(),
       ingredients: recipeIngredients.val().trim(),
@@ -262,6 +264,10 @@ $(document).ready(function() {
       imgUrl: recipeImgUrl.val().trim()
     };*/
     console.log(recipeFormData);
+    for (var pair of recipeFormData.entries()) {
+      console.log(pair[0] + ", " + pair[1]);
+      console.log(pair[1]);
+    }
     // API.addMyRecipe(recipeFormData).done(function(response) {
     //   console.log(response);
     // });

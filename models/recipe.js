@@ -19,7 +19,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     ratings: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: true,
+      defaultValue: 0
       /*default*/
     },
     /*owner: {

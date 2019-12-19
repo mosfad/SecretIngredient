@@ -11,6 +11,7 @@ $(document).ready(function() {
     };
     //Validate the email and password inputs
     if (!userInput.email || !userInput.password) {
+      console.log("Email or password isn't provided.");
       return;
     }
     signin(userInput.email, userInput.password);
