@@ -27,6 +27,7 @@ $(document).ready(function() {
       console.log(authorData);
       authorId = authorData.id;
       console.log(authorId);
+      console.log("Displaying my recipes....");
       displayMyRecipes();
     })
     .fail(function(jqXHR, textStatus, errThrown) {
@@ -111,6 +112,67 @@ $(document).ready(function() {
     API.getMyRecipes().then(function(data) {
       console.log("I am inside the API to get my recipes...");
       console.log(data);
+      var prevRow;
+      data.map(function(recipe, index) {
+        //how do I attach each column(entry) to the previous row or column????****
+        console.log(recipe);
+        console.log(index);
+        //var row = $("<div>").attr("class", "row");
+        var col = $("<div>").attr("class", "col s12 m3");
+        //Give each card unique row and col to appropriately append subsequent card.
+        var numOfRow = Math.floor(index / 4);
+        var numOfCol = index % 4;
+        //row.attr("id", "row" + numOfRow);
+        col.attr("id", "col" + numOfCol);
+        //HOW DO I GET THE CARDS TO LINE UP HORIZONTALLY????!!!!!!!
+        if (index % 4 === 0) {
+          var row = $("<div>").attr("class", "row");
+          $("#recipe-container").append(row);
+          row.append(col);
+        } else {
+          $("#recipe-container .row:last-child").append(col);
+        }
+        //$("#recipe-container").append(row);
+        //row.append(col);
+
+        var card = $("<div>")
+          .attr("class", "card")
+          .appendTo(col);
+        var cardImage = $("<div>")
+          .attr("class", "card-image")
+          .append($("<img>").attr("src", recipe.imgUrl))
+          .appendTo(card);
+        var cardContent = $("<div>")
+          .attr("class", "card-content")
+          .appendTo(card);
+        var recipeTitle = $("<p>")
+          .attr("class", "recipeTitle")
+          .text(recipe.recipe_name)
+          .appendTo(cardContent);
+        var comments = $("<p>")
+          .append($("<span>").attr("class", "comments"))
+          .append($("<strong>").text(recipe.comments))
+          .append($("<br>"))
+          .appendTo(cardContent);
+        //how to use ratings number to set the ratings star
+        //var numRatings = 0;
+        var numRatings = parseInt(recipe.ratings);
+        //need to append each of the star spans to <p> after <br>
+        for (var i = 0; i < 5; i++) {
+          var starSpan = $("<span>");
+          if (numRatings > 0) {
+            starSpan.attr("class", "checked");
+          }
+          starSpan
+            .append(
+              $("<i>")
+                .attr("class", "material-icons")
+                .text("star")
+            )
+            .appendTo(comments);
+          numRatings--;
+        }
+      });
     });
   };
 
