@@ -12,9 +12,9 @@ $(document).ready(function() {
   var recipeImgUrl = $("#recipeImg");
   //references to icons and buttons that trigger events
   var buttonSubmitRecipe = $("#submit-recipe"); //now using***
-  var modalSubmitRecipe = $("#modal-submit");
-  var iRevealMadeRecipe = $("#reveal-made-recipes");
-  var iRevealFavRecipe = $("#reveal-fav-recipes");
+  // var modalSubmitRecipe = $("#modal-submit");
+  // var iRevealMadeRecipe = $("#reveal-made-recipes");
+  // var iRevealFavRecipe = $("#reveal-fav-recipes");
 
   var authorId;
   var recipeId;
@@ -29,6 +29,7 @@ $(document).ready(function() {
       console.log(authorId);
       console.log("Displaying my recipes....");
       displayMyRecipes();
+      //displayFavRecipes();
     })
     .fail(function(jqXHR, textStatus, errThrown) {
       console.log(textStatus + ": " + errThrown);
@@ -112,28 +113,23 @@ $(document).ready(function() {
     API.getMyRecipes().then(function(data) {
       console.log("I am inside the API to get my recipes...");
       console.log(data);
-      var prevRow;
       data.map(function(recipe, index) {
-        //how do I attach each column(entry) to the previous row or column????****
         console.log(recipe);
         console.log(index);
-        //var row = $("<div>").attr("class", "row");
         var col = $("<div>").attr("class", "col s12 m3");
         //Give each card unique row and col to appropriately append subsequent card.
-        var numOfRow = Math.floor(index / 4);
+        //var numOfRow = Math.floor(index / 4);
         var numOfCol = index % 4;
-        //row.attr("id", "row" + numOfRow);
-        col.attr("id", "col" + numOfCol);
-        //HOW DO I GET THE CARDS TO LINE UP HORIZONTALLY????!!!!!!!
-        if (index % 4 === 0) {
+        col.attr("id", "col-entry" + index);
+        if (numOfCol === 0) {
+          //Create and add new row to the DOM to hold next four recipes
           var row = $("<div>").attr("class", "row");
           $("#recipe-container").append(row);
           row.append(col);
         } else {
+          //Add recipe to current row, which an open slot to hold current recipe.
           $("#recipe-container .row:last-child").append(col);
         }
-        //$("#recipe-container").append(row);
-        //row.append(col);
 
         var card = $("<div>")
           .attr("class", "card")
@@ -145,13 +141,19 @@ $(document).ready(function() {
         var cardContent = $("<div>")
           .attr("class", "card-content")
           .appendTo(card);
-        var recipeTitle = $("<p>")
-          .attr("class", "recipeTitle")
+        // var recipeTitle = $("<a>")
+        //   .attr("class", "recipeTitle")
+        //   .text(recipe.recipe_name)
+        //   .appendTo(cardContent);
+        var recipeTitle = $("<a>")
+          .attr("href", "/recipeinfo")
+          .addClass("recipeTitle")
           .text(recipe.recipe_name)
           .appendTo(cardContent);
         var comments = $("<p>")
           .append($("<span>").attr("class", "comments"))
-          .append($("<strong>").text(recipe.comments))
+          .text("-" + recipe.description)
+          /*.append($("<strong>").text(recipe.comments))*/
           .append($("<br>"))
           .appendTo(cardContent);
         //how to use ratings number to set the ratings star
@@ -176,10 +178,78 @@ $(document).ready(function() {
     });
   };
 
-  var displayFavRecipes;
+  var displayFavRecipes = function() {
+    console.log("I am inside the function");
+    API.getFavRecipes().then(function(data) {
+      console.log("I am inside the API to get my recipes...");
+      console.log(data);
+      data.map(function(favorite, index) {
+        console.log(favorite);
+        console.log(index);
+        var col = $("<div>").attr("class", "col s12 m3");
+        //Give each card unique row and col to appropriately append subsequent card.
+        //var numOfRow = Math.floor(index / 4);
+        var numOfCol = index % 4;
+        col.attr("id", "col-entry" + index);
+        if (numOfCol === 0) {
+          //Create and add new row to the DOM to hold next four favorite
+          var row = $("<div>").attr("class", "row");
+          $("#favorite-container").append(row);
+          row.append(col);
+        } else {
+          //Add favorite to current row, which an open slot to hold current favorite.
+          $("#favorite-container .row:last-child").append(col);
+        }
+
+        var card = $("<div>")
+          .attr("class", "card")
+          .appendTo(col);
+        var cardImage = $("<div>")
+          .attr("class", "card-image")
+          .append($("<img>").attr("src", favorite.imgUrl))
+          .appendTo(card);
+        var cardContent = $("<div>")
+          .attr("class", "card-content")
+          .appendTo(card);
+        // var favoriteTitle = $("<p>")
+        //   .attr("class", "favoriteTitle")
+        //   .text(favorite.recipe_name)
+        //   .appendTo(cardContent);
+        var favoriteTitle = $("<a>")
+          .attr("href", "/recipeinfo")
+          .addClass("favoriteTitle")
+          .text(favorite.recipe_name)
+          .appendTo(cardContent);
+        var comments = $("<p>")
+          .append($("<span>").attr("class", "comments"))
+          .text("-" + recipe.comments)
+          /*.append($("<strong>").text(recipe.comments))*/
+          .append($("<br>"))
+          .appendTo(cardContent);
+        //how to use ratings number to set the ratings star
+        //var numRatings = 0;
+        var numRatings = parseInt(favorite.ratings);
+        //need to append each of the star spans to <p> after <br>
+        for (var i = 0; i < 5; i++) {
+          var starSpan = $("<span>");
+          if (numRatings > 0) {
+            starSpan.attr("class", "checked");
+          }
+          starSpan
+            .append(
+              $("<i>")
+                .attr("class", "material-icons")
+                .text("star")
+            )
+            .appendTo(comments);
+          numRatings--;
+        }
+      });
+    });
+  };
 
   /*
-  //populates the recipe cards based on the parameter `column name` i.e made recipes or favorite recipes.
+  //populates the favorite cards based on the parameter `column name` i.e made recipes or favorite recipes.
   var showFavRecipes = function(cardList) {
     API.getFavRecipes().then(function(data) {
       console.log("Here is the data from the server: ");
@@ -313,6 +383,23 @@ $(document).ready(function() {
   // });
   iRevealFavRecipe.on("click", showFavRecipes(favRecipesList));
   iRevealMadeRecipe.on("click", showMadeRecipes(madeRecipesList));*/
+  //
+  var handleRecipeRequest = function(event) {
+    //Prevent default behavior of submitting form.
+    console.log("I am inside the recipe request handler...");
+    event.preventDefault();
+    var recipeName = $(this).text();
+    if (localStorage.getItem("recipeChosen")) {
+      localStorage.clear();
+    }
+    localStorage.setItem("recipeChosen", recipeName);
+
+    //console.log("Selected Recipe is: " + recipeName);
+    //displayRecipeInfo(recipeName);
+    location.href = "/recipeinfo";
+  };
+
+  //
   var handleFormSubmit = function(event) {
     event.preventDefault();
     console.log("The modal enters the form correctly!!!");
@@ -327,13 +414,13 @@ $(document).ready(function() {
     };*/
     console.log(recipeFormData);
     for (var pair of recipeFormData.entries()) {
-      console.log(pair[0] + ", " + pair[1]);
+      console.log(pair[0]);
       console.log(pair[1]);
     }
     // API.addMyRecipe(recipeFormData).done(function(response) {
     //   console.log(response);
     // });
-    var postRecipe = API.addMyRecipe(recipeFormData);
+    API.addMyRecipe(recipeFormData);
     // var postIngredient = postRecipe.then(function(data) {
     //   API.addFavRecipe;
     // });
@@ -341,7 +428,38 @@ $(document).ready(function() {
   //Add event listener to submit button
   //   $("#modal1").on("click", buttonSubmitRecipe, handleFormSubmit);
   buttonSubmitRecipe.on("click", handleFormSubmit);
+  $("#recipe-container").on("click", ".recipeTitle", handleRecipeRequest);
   //MAKE SURE THAT THE DATABASE HAS COLUMN NAMES `favorite` and `made`......
   //WORK ON THE ELEMENTS FOR THE LISTS favorite and made. DONE
   //WORK ON THE SUMBIT FORM AND ITS ELEMENTS. DONE*/
 });
+
+/*
+----------------------------------
+8 slices Brioche bread
+4 Eggs
+1 teaspoon Cinnamon
+1/2 teaspoon Vanilla extract
+1/4 teaspoon Nutmeg
+1/4 cup Milk
+2 tablespoon Sugar
+1/2 cup Maple syrup
+8 tablespoon Coconut oil
+-----------------------------------
+Mix the spices in a big plastic bowl.
+Add the milk, vanilla extract and eggs to the mixture and whisk the mixture.
+Dip each side of the bread for about 15 seconds
+In a 12 quartz pan, add half of the oil and turn the heat to medium.
+Fry 4 slices of bread, turning over when they are golden brown.
+Wipe the pan clean when the first batch is ready and steps 4 - 5 for the second batch.
+--------------------------------------------------------------------------------------
+Hearty and yummy breakfast made with natural and healthy ingredients
+---------------------------------------------------------------------------------------
+15 minutes                                                            :PREP TIME
+-----------------------------------------------------------------------------------------
+30 minutes                                                            :COOK TIME
+-------------------------------------------------------------------------------------------
+4                                                                     :SERVING SIZE
+----------------------------------------------------------------------------------------
+
+*/

@@ -9,12 +9,16 @@
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/materialize.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato&display=swap"
+      rel="stylesheet"
+    />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
+    <link rel="stylesheet" href="css/materialize.css" />
+    <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
     <!--   nav bar   -->
@@ -30,50 +34,45 @@
           <li><a class="nav-text" href="/">Home</a></li>
           <li><a class="nav-text" href="/signin">Sign In</a></li>
           <li><a class="nav-text" href="profile-page.html">Profile</a></li>
+          <!--<li><a class="nav-text" href="/search">Search</a></li>-->
           <li><a class="nav-text" href="/searchAll">Search</a></li>
         </ul>
       </div>
     </nav>
     <!--   hero 1   -->
     <main>
-      <div id="index-banner" class="parallax-container">
-        <div class="no-pad-bot">
-          <div class="container">
-            <br /><br />
-            <h1 class="header center pink-text text-darken-3">
-              Start your search here!
-            </h1>
-            <nav>
-              <div class="nav-wrapper">
-                <form>
-                  <div class="input-field white">
-                    <input id="search-bar" type="search" required />
-                    <label class="label-icon" for="search"
-                      ><i class="material-icons">search</i></label
-                    >
-                    <i class="material-icons">close</i>
-                  </div>
-                </form>
+      <div class="container">
+        <br /><br />
+
+        <nav>
+          <div class="nav-wrapper">
+            <form>
+              <div class="input-field white" id="search-form">
+                <input id="search-bar" type="search" required />
+                <label class="label-icon" for="search"
+                  ><i class="material-icons">search</i></label
+                >
+                <i class="material-icons">close</i>
               </div>
-              <div class="row center">
+              <span>
                 <a
                   id="search-button"
-                  class="pink text-darken-3 waves-effect waves-light btn-large"
+                  class="grey darken-2 waves-effect waves-light btn"
                   type="submit"
                   >Search</a
                 >
-              </div>
-            </nav>
+              </span>
+            </form>
           </div>
-        </div>
-        <div class="parallax top-image">
-          <img src="./images/table.jpg" alt="Unsplashed background img 1" />
-        </div>
+        </nav>
       </div>
-      <div class="section">
-        <!-- <img src="./images/retina_wood.png"> -->
-        <div id="recipe-view"></div>
-      </div>
+      <br />
+      <br />
+      <br />
+      <div id="border-line"></div>
+      <br />
+      <br />
+      <div class="row" id="recipe-view"></div>
     </main>
     <footer class="page-footer pink darken-3">
       <div class="container">
@@ -93,8 +92,6 @@
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="js/materialize.js"></script>
     <!-- <script src="js/init.js"></script> -->
-    <script src="js/recipe.js"></script>
-    <script src="js/index.js"></script>
-    <script src="js/search.js"></script>
+    <script src="js/searchAll.js"></script>
   </body>
 </html>

@@ -12,16 +12,26 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.TEXT,
       allowNull: false
     },
-    comments: {
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    prep_time: {
       type: DataTypes.STRING,
       allowNull: true
-      /*default*/
+    },
+    cook_time: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    serving_size: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     },
     ratings: {
       type: DataTypes.INTEGER,
       allowNull: true,
       defaultValue: 0
-      /*default*/
     },
     /*owner: {
       type:

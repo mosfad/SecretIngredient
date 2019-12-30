@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Recipe</title>
+    <!-- Compiled and minified CSS -->
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+
+    <!--Import Google Icon Font-->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/materialize.css" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body>
+    <nav>
+      <div class="nav-wrapper pink darken-3">
+        <a href="#!" class="brand-logo">
+          <img class="logo" src="images/logo.png" />
+          <div class="logo-name hide-on-med-and-down">
+            Secret Ingredient
+          </div>
+        </a>
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger"
+          ><i class="material-icons">menu</i></a
+        >
+        <ul class="right hide-on-med-and-down">
+          <li><a href="/">Home</a></li>
+          <li><a href="/signin">Sign In</a></li>
+          <li><a href="/logout">Log Out</a></li>
+          <li><a href="dashboard.html">Profile</a></li>
+          <li><a href="/searchAll">Search</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <ul class="sidenav" id="mobile-demo">
+      <li>
+        <a href="/"><b>Secret Ingredient</b></a>
+      </li>
+      <li><a href="/">Home</a></li>
+      <li><a href="/signin">Sign In</a></li>
+      <li><a href="/logout">Log Out</a></li>
+      <li><a href="dashboard.html">Profile</a></li>
+      <li><a href="/searchAll">Search</a></li>
+    </ul>
+
+    <main>
+      <!--
+        <div class="parallax-container">
+            <div class="parallax"><img src="images/Home_Image.jpg"></div>
+        </div> -->
+      <!--
+      <div class="row">
+        <div class="col s12 m12">
+          <div class="card">
+            <div class="card-content dashboard-summary">
+              <span
+                class="card-title center-align"
+                id="dashboard-title"
+                style="
+              padding-bottom: 5px;
+              border-bottom: solid  2px #ffffff;"
+                ><strong
+                  >HI MODUPE! ENJOY & SHARE YOUR SECRET INGREDIENT!
+                </strong>
+                <br />
+                <a
+                  class="waves-effect waves-light btn purple darken-4"
+                  style="margin-left: 30px;"
+                  ><i class="material-icons right">account_circle</i>EDIT
+                  PROFILE</a
+                >
+                <a
+                  class="waves-effect waves-light btn red darken-4"
+                  style="margin-left: 30px;"
+                  ><i class="material-icons right">favorite</i>FIND FAVORITE</a
+                >
+                <-- Modal Trigger --
+                <a
+                  class="waves-effect waves-light btn modal-trigger"
+                  id="modal-submit"
+                  href="#modal1"
+                  >Add New Recipe <i class="material-icons right">add</i></a
+                >
+              </span>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+      <!--Recipe Card Details -->
+      <br />
+      <br />
+
+      <div class="row">
+        <div class="col s12 m8 offset-m2" id="recipe-selected">
+          <div class="card">
+            <div class="card-image" id="recipe-image">
+              <img src="images/brooke-lark-08bOYnH_r_E-unsplash.jpg" />
+
+              <div class="card-content">
+                <p><span id="recipe-name">Name</span><br /></p>
+
+                <p><span id="recipe-description">Description</span><br /></p>
+                <br />
+                <p>
+                  <span id="recipe-ratings"></span>
+                  <span class="recipe-todo">
+                    <a class="waves-effect waves-light btn" id="todo-save"
+                      ><i class="material-icons">favorite</i> SAVE</a
+                    >
+                  </span>
+                  <span class="recipe-todo">
+                    <a class="waves-effect waves-light btn" id="todo-edit"
+                      ><i class="material-icons">edit</i> EDIT</a
+                    >
+                  </span>
+                </p>
+                <br />
+                <p>
+                  <span id="prep-time"></span>
+                  <span id="cook-time"></span>
+                  <span id="serving-size"></span>
+                </p>
+              </div>
+              <div id="border-line"></div>
+              <br />
+              <div class="card-content">
+                <p><span class="recipe-heading">Ingredients:</span><br /></p>
+                <p><span id="recipe-ingredients"></span><br /></p>
+              </div>
+              <div id="border-line"></div>
+              <br />
+              <div class="card-content">
+                <p><span class="recipe-heading">Directions:</span><br /></p>
+                <p><span id="recipe-directions"></span><br /></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <!--Border line -->
+      <div id="border-line"></div>
+      <br />
+    </main>
+
+    <footer class="page-footer pink darken-3">
+      <div class="container">
+        <div class="row"></div>
+      </div>
+      <div class="footer-copyright">
+        <div class="container">
+          © 2019 Copyright Text
+          <a class="grey-text text-lighten-4 right"
+            >Made by Dupe, Mesi, Tiffany, and Ricardo</a
+          >
+        </div>
+      </div>
+    </footer>
+  </body>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/recipeInfo.js"></script>
+  <!--<script src="js/searchAll.js"></script>-->
+  <!--  -->
+  <script src="js/materialize.js"></script>
+</html>

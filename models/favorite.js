@@ -1,16 +1,26 @@
 module.exports = function(sequelize, DataTypes) {
   var Favorite = sequelize.define("Favorite", {
-    recipe_name: {
+    name: {
       type: DataTypes.STRING,
+      allowNull: true
+    },
+    userId: {
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     comments: {
       type: DataTypes.STRING,
       allowNull: true
     },
-    imgUrl: {
+    ratings: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0
+    },
+    favUrl: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: true,
+      defaultValue: ""
     }
   });
 

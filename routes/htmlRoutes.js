@@ -102,9 +102,17 @@ module.exports = function(app) {
     res.sendFile(path.join(__dirname, "../public/dashboard.html"));
   });
 
+  // app.get("/recipes/:name", function(req, res) {
+  //   res.sendFile(path.join(__dirname, "../public/recipes.html"));
+  // });
+  //Send users with page with details of the selected recipes
+  app.get("/recipeinfo", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/recipe-info.html"));
+  });
+
   //All users(even unauthd) can search for recipes
-  app.get("/search", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/search.html"));
+  app.get("/searchAll", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/searchAll.html"));
   });
   // app.get("/author", function(req, res) {
   //   res.sendFile(path.join(__dirname, "../public/author.html"));

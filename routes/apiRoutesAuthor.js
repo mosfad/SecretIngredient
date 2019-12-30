@@ -112,7 +112,7 @@ module.exports = function(app) {
     }
   });
 
-  //Route for creating a recipe name
+  //Route for creating a recipe
   app.post("/api/recipes/:id", function(req, res) {
     //upload image to S3 and retrieve URL to send to database.
     recipeImgUpload(req, res, function(error) {
@@ -149,7 +149,11 @@ module.exports = function(app) {
             recipe_name: req.body.recipeName,
             ingredients: req.body.recipeIngredients,
             steps: req.body.recipeSteps,
-            comments: req.body.recipeComments,
+            description: req.body.recipeDescription,
+            prep_time: req.body.prepTime,
+            cook_time: req.body.cookTime,
+            serving_size: req.body.servingSize,
+
             /*imgUrl: req.body.imgUrl,*/
             imgUrl: imageLocation,
             AuthorId: req.params.id
@@ -167,9 +171,30 @@ module.exports = function(app) {
     });
   });
 
-  //Route for creating ingredients for a specific recipe
+  //Route for adding(bookmarking) a recipe
+  app.post("api/favrecipes/:userid/:recipeid", function(req, res) {
+    var favrecipeInput = {
+      name: req.body.recipeName,
+      userId: req.params.userId,
+      ratings: req.body.ratings,
+      comments: req.body.comments,
+      favUrl: "",
+      authorId: req.body.authorId,
+      recipeId: req.params.recipeId
+    };
+  });
 
-  //Route for creating directions(steps) for a specific recipe
+  //Route for getting all recipes
+  app.get("/api/allrecipes", function(req, res) {
+    // Otherwise send back the user's email and id
+    // Here we add an "include" property to our options in our findOne query
+    // We set the value to an array of the models we want to include in a left outer join
+    // In this case, just db.favorite
+    console.log("I am inside the route to get all the recipes!");
+    db.Recipe.findAll().then(function(dbRecipes) {
+      res.json(dbRecipes);
+    });
+  });
 
   //Route for getting recipes created by the user.
   app.get("/api/recipes/:id", function(req, res) {
@@ -187,24 +212,49 @@ module.exports = function(app) {
   });
 
   //Route for getting info on a created recipe
-  app.get("/api/recipes/:name", function(req, res) {
+  app.get("/api/recipeinfo/:name", function(req, res) {
     // Otherwise send back the user's email and id
     // Here we add an "include" property to our options in our findOne query
     // We set the value to an array of the models we want to include in a left outer join
     // In this case, just db.favorite
+    console.log("This route was requested by " + req.params.name + " recipe");
+    //I AM GETTING ERRORS HERE: Unhandled rejection TypeError: Cannot read property '_pseudo' of undefined
     db.Recipe.findOne({
       where: {
         recipe_name: req.params.name
-      },
-      include: [db.Favorite, db.Recipe, db.Ingredients, db.Steps]
+      }
+      /*include: [db.Favorite, db.Recipe]*/
     }).then(function(dbRecipe) {
       res.json(dbRecipe);
     });
   });
 
-  //Route for getting favorite recipes
+  //Route for getting favorite recipes for a specific user
+  app.get("api/favrecipes/:userid", function(req, res) {
+    db.Favorite.findAll({
+      where: {
+        userId: req.params.userid
+      }
+    }).then(function(dbFavorites) {
+      res.json(dbFavorites);
+    });
+  });
 
-  //Route for getting favorite recipes and created recipes.
+  //Route for getting info on favorite recipe
+  app.get("api/favrecipeinfo/:name", function(req, res) {
+    console.log("This route was requested by " + req.params.name + " recipe");
+    //I AM GETTING ERRORS HERE: Unhandled rejection TypeError: Cannot read property '_pseudo' of undefined
+    db.Favorite.findOne({
+      where: {
+        name: req.params.name
+      },
+      include: [db.Recipe]
+    }).then(function(dbFavorite) {
+      res.json(dbFavorite);
+    });
+  });
+
+  //Route for getting favorite recipes and created recipes for a specific user
   app.get("/api/authors/:id", function(req, res) {
     // Here we add an "include" property to our options in our findOne query
     // We set the value to an array of the models we want to include in a left outer join
@@ -236,199 +286,3 @@ module.exports = function(app) {
 // });
 
 // Route for deleting user account.
-
-//=============================================================================================================
-/*module.exports = function(app) {
-  app.get("/api/authors", function(req, res) {
-    // Here we add an "include" property to our options in our findAll query
-    // We set the value to an array of the models we want to include in a left outer join
-    // In this case, just db.Recipe
-    db.Author.findAll({
-      include: [db.Favorite, db.Recipe]
-    }).then(function(dbAuthor) {
-      res.json(dbAuthor);
-    });
-  });
-
-  app.get("/api/authors/:id", function(req, res) {
-    // Here we add an "include" property to our options in our findOne query
-    // We set the value to an array of the models we want to include in a left outer join
-    // In this case, just db.favorite
-    db.Author.findOne({
-      where: {
-        id: req.params.id
-      },
-      include: [db.Favorite, db.Recipe]
-    }).then(function(dbAuthor) {
-      res.json(dbAuthor);
-    });
-  });
-
-  app.post("/api/authors", function(req, res) {
-    //Adding new author entry to our author model
-    db.Author.create(req.body).then(function(dbAuthor) {
-      res.json(dbAuthor);
-    });
-  });
-
-  //Update author's personal info.
-  app.put("/api/authors/:id", function(req, res) {
-    console.log("Updating author's in");
-    db.Author.update(req.body, {
-      where: {
-        id: req.params.id //should it be req.body.id??????
-      }
-    }).then(function(dbAuthor) {
-      res.json(dbAuthor);
-    });
-  });
-
-  // //Sign into the author's account
-  // app.post("/api/signin", function(req, res) {
-  //   console.log("Signing in by executing the correct route...");
-  //   console.log(req.body);
-  //   db.Author.findOne({
-  //     where: {
-  //       email: req.body.email,
-  //       password: req.body.password
-  //     }
-  //   }).then(function(dbAuthor) {
-  //     console.log(dbAuthor);
-  //     res.json(dbAuthor);
-  //   });
-  // });
-
-  //Sign into the author's account
-  app.post("/api/signin", function(req, res) {
-    console.log("Signing in by executing the correct route...");
-    // console.log(req.body);
-    db.Author.findOne({
-      where: {
-        email: req.body.email,
-        password: req.body.password
-      }
-    }).then(function(dbAuthor) {
-      // console.log(dbAuthor);
-      // res.json(dbAuthor);
-      if (dbAuthor === null) {
-        res.send(false);
-      } else {
-        res.json(dbAuthor);
-      }
-    });
-  });
-
-  app.post("/api/signup", function(req, res) {
-    console.log("signup");
-
-    db.Author.create({
-      email: req.body.email,
-      password: req.body.password
-    }).then(function(dbAuthor) {
-      console.log(dbAuthor);
-      // res.json(dbAuthor);
-      if (dbAuthor === null) {
-        res.send(false);
-      } else {
-        res.json(dbAuthor);
-      }
-    });
-  });
-
-  /*
-  app.delete("/api/authors/:id", function(req, res) {
-    db.Author.destroy({
-      where: {
-        id: req.params.id
-      }
-    }).then(function(dbAuthor) {
-      res.json(dbAuthor);
-    });
-  });*/
-//};
-//=====================================================================================================
-/*module.exports = function(app) {
-  // Get all examples
-  app.post("/api/signin", function(req, res) {
-    console.log(req.body);
-    db.Author.findOne({
-      where: {
-        email: req.body.email,
-        password:req.body.password
-      }
-    })
-      .then(function(dbAuthor) {
-      
-         console.log(dbAuthor);
-        // res.json(dbAuthor);
-        if (dbAuthor === null){
-          return res.status(401).send(false);
-        }else{
-        res.send(true);
-        }
-      });
-  });
-
-
-
-  // Create a new example
-  app.post("/api/signup", function(req, res) {
-    console.log("signup");
-  
-    db.Author.create({
-      email:req.body.email,
-      password:req.body.password
-    }).then(function(dbExample) {
-      
-      res.json(dbExample);
-    });
-  });
-
-  app.post("/api/profile:id", function(req, res) {
-    console.log(req.body);
-    db.Author.findAll({
-      where: {
-        email: req.body.email,
-        password:req.body.password
-      }
-    })
-      .then(function(dbAuthor) {
-      
-         console.log(dbAuthor);
-        // res.json(dbAuthor);
-        if (dbAuthor === null){
-          return res.status(401).send(false);
-        }else{
-        res.send(true);
-        }
-      });
-  });
-
-
-  app.post("/api/profile-page.js", function(req, res) {
-    console.log(req.body);
-    db.Author.findOne({
-      where: {
-        email: req.body.email,
-        password:req.body.password
-      }
-    })
-      .then(function(dbAuthor) {
-      
-         console.log(dbAuthor);
-        // res.json(dbAuthor);
-        if (dbAuthor === null){
-          return res.status(401).send(false);
-        }else{
-        res.send(true);
-        }
-      });
-  });
-
-  // Delete an example by id
-  app.delete("/api/examples/:id", function(req, res) {
-    db.Example.destroy({ where: { id: req.params.id } }).then(function(dbExample) {
-      res.json(dbExample);
-    });
-  });
-};*/

@@ -17,6 +17,10 @@
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="css/materialize.css" />
     <link rel="stylesheet" href="css/style.css" />
   </head>
@@ -38,20 +42,20 @@
           <li><a href="/signin">Sign In</a></li>
           <li><a href="/logout">Log Out</a></li>
           <li><a href="dashboard.html">Profile</a></li>
-          <li><a href="/search">Search</a></li>
+          <li><a href="/searchAll">Search</a></li>
         </ul>
       </div>
     </nav>
 
     <ul class="sidenav" id="mobile-demo">
       <li>
-        <a href="index.html"><b>Secret Ingredient</b></a>
+        <a href="/"><b>Secret Ingredient</b></a>
       </li>
-      <li><a href="index.html">Home</a></li>
+      <li><a href="/">Home</a></li>
       <li><a href="/signin">Sign In</a></li>
       <li><a href="/logout">Log Out</a></li>
       <li><a href="dashboard.html">Profile</a></li>
-      <li><a href="/search">Search</a></li>
+      <li><a href="/searchAll">Search</a></li>
     </ul>
 
     <main>
@@ -80,6 +84,11 @@
                   ><i class="material-icons right">account_circle</i>EDIT
                   PROFILE</a
                 >
+                <a
+                  class="waves-effect waves-light btn red darken-4"
+                  style="margin-left: 30px;"
+                  ><i class="material-icons right">favorite</i>FIND FAVORITE</a
+                >
                 <!-- Modal Trigger -->
                 <a
                   class="waves-effect waves-light btn modal-trigger"
@@ -97,13 +106,32 @@
           <div class="card">
             <div class="card-content">
               <!--Favorite Recipe Cards -->
-              <div class="row">
+              <div class="row" id="favorite-container">
                 <span class="card-title" id="favorite-title"
                   ><strong>Favorite Recipes</strong>
                 </span>
                 <br />
                 <br />
-                <!--     -->
+
+                <div class="row">
+                  <div class="col s12 m3" id="favorite-recipe-row1">
+                    <div class="card">
+                      <div class="card-image">
+                        <img
+                          src="images/brooke-lark-08bOYnH_r_E-unsplash.jpg"
+                        />
+                      </div>
+                      <div class="card-content">
+                        <p>
+                          <span id="no-favorite"
+                            ><strong>NO FAVORITE RECIPES ADDED!</strong></span
+                          ><br />
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- 
                 <div class="row">
                   <div class="col s12 m3" id="favorite-recipe-row1">
                     <div class="card">
@@ -214,10 +242,13 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> -->
               </div>
-
+              <br />
+              <div id="border-line"></div>
+              <br />
               <!--Created Recipe Cards -->
+
               <div class="row" id="recipe-container">
                 <span class="card-title" id="created-title"
                   ><strong>Created Recipes</strong>
@@ -329,11 +360,11 @@
                                     >local_dining</i
                                   >
                                   <textarea
-                                    id="recipe-name"
+                                    id="addrecipe-name"
                                     class="materialize-textarea"
                                     name="recipeName"
                                   ></textarea>
-                                  <label for="recipeName">Recipe</label>
+                                  <label for="addrecipe-name">Recipe</label>
                                 </div>
                               </div>
                               <div class="row">
@@ -342,11 +373,11 @@
                                     >description</i
                                   >
                                   <textarea
-                                    id="recipe-ingredients"
+                                    id="addrecipe-ingredients"
                                     class="materialize-textarea"
                                     name="recipeIngredients"
                                   ></textarea>
-                                  <label for="recipeIngredients"
+                                  <label for="addrecipe-ingredients"
                                     >Ingredients</label
                                   >
                                 </div>
@@ -357,11 +388,11 @@
                                     >directions</i
                                   >
                                   <textarea
-                                    id="recipe-steps"
+                                    id="addrecipe-steps"
                                     class="materialize-textarea"
                                     name="recipeSteps"
                                   ></textarea>
-                                  <label for="recipeSteps">Steps</label>
+                                  <label for="addrecipe-steps">Steps</label>
                                 </div>
                               </div>
                               <div class="row">
@@ -370,11 +401,48 @@
                                     >insert_comment</i
                                   >
                                   <textarea
-                                    id="recipe-comments"
+                                    id="addrecipe-description"
                                     class="materialize-textarea"
-                                    name="recipeComments"
+                                    name="recipeDescription"
                                   ></textarea>
-                                  <label for="recipeComments">Comments</label>
+                                  <label for="addrecipe-description"
+                                    >Description</label
+                                  >
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="input-field col s6">
+                                  <i class="material-icons prefix">schedule</i>
+                                  <textarea
+                                    id="addprep-time"
+                                    class="materialize-textarea"
+                                    name="prepTime"
+                                  ></textarea>
+                                  <label for="addprep-time">Prep Time</label>
+                                </div>
+                                <div class="input-field col s6">
+                                  <i class="material-icons prefix">timer</i>
+                                  <textarea
+                                    id="addcook-time"
+                                    class="materialize-textarea"
+                                    name="cookTime"
+                                  ></textarea>
+                                  <label for="addcook-time">Cook Time</label>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="input-field col s12">
+                                  <i class="material-icons prefix"
+                                    >room_service</i
+                                  >
+                                  <textarea
+                                    id="addserving-size"
+                                    class="materialize-textarea"
+                                    name="servingSize"
+                                  ></textarea>
+                                  <label for="addserving-size"
+                                    >Serving Size</label
+                                  >
                                 </div>
                               </div>
                               <!-- 
