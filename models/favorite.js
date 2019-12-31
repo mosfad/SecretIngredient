@@ -32,6 +32,11 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false
       }
     });
+    Favorite.belongsTo(models.Recipe, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
   };
 
   return Favorite;

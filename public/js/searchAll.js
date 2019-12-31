@@ -25,7 +25,7 @@ $(document).ready(function() {
 
   //
   var displayAllRecipes = function() {
-    console.log("I am inside the function");
+    console.log("I am inside the function that displays all the recipes");
     API.getAllRecipes().then(function(data) {
       console.log("I am inside the API to get my recipes...");
       console.log(data);
@@ -62,9 +62,9 @@ $(document).ready(function() {
           .addClass("recipeTitle")
           .text(recipe.recipe_name)
           .appendTo(cardContent);
-        var comments = $("<p>")
+        var description = $("<p>")
           .append($("<span>").attr("class", "comments"))
-          .text("-" + recipe.comments)
+          .text("-" + recipe.description)
           /*.append($("<strong>").text(recipe.comments))*/
           .append($("<br>"))
           .appendTo(cardContent);
@@ -83,7 +83,7 @@ $(document).ready(function() {
                 .attr("class", "material-icons")
                 .text("star")
             )
-            .appendTo(comments);
+            .appendTo(description);
           numRatings--;
         }
       });
@@ -140,9 +140,9 @@ $(document).ready(function() {
           .addClass("recipeTitle")
           .text(recipe.recipe_name)
           .appendTo(cardContent);
-        var comments = $("<p>")
+        var description = $("<p>")
           .append($("<span>").attr("class", "comments"))
-          .text("-" + recipe.comments)
+          .text("-" + recipe.description)
           /*.append($("<strong>").text(recipe.comments))*/
           .append($("<br>"))
           .appendTo(cardContent);
@@ -161,7 +161,7 @@ $(document).ready(function() {
                 .attr("class", "material-icons")
                 .text("star")
             )
-            .appendTo(comments);
+            .appendTo(description);
           numRatings--;
         }
       });

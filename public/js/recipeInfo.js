@@ -3,15 +3,17 @@ $(document).ready(function() {
   console.log(recipeName);
 
   var userId = "not a user";
+  var authorId;
+  var recipeId;
   //var recipeId;
 
   $.ajax({
     type: "GET",
-    url: "/api/author_data"
+    url: "/api/author_data" /* This should be user*/
   })
     .done(function(authorData) {
       console.log(authorData);
-      authorId = authorData.id;
+      userId = authorData.id; // ***********************
     })
     .fail(function(jqXHR, textStatus, errThrown) {
       console.log(textStatus + ": " + errThrown);
@@ -36,14 +38,14 @@ $(document).ready(function() {
       });
     },
 
-    addFavRecipe: function(recipe) {
+    addFavRecipe: function(favData) {
       return $.ajax({
         headers: {
           "Content-Type": "application/json"
         },
         type: "POST",
-        url: "/api/recipes/" + userId + "/" + recipeId,
-        data: JSON.stringify(recipe)
+        url: "/api/favrecipes/" + userId + "/" + recipeId,
+        data: JSON.stringify(favData)
       });
     }
   };
@@ -93,6 +95,9 @@ $(document).ready(function() {
   var displayRecipeInfo = function() {
     API.getRecipeInfo(recipeName).then(function(recipe) {
       console.log(recipe);
+      //cache recipe and author ids.
+      recipeId = recipe.id; //*****************************************
+      authorId = recipe.AuthorId; //************************************
       $("#recipe-name").text(recipe.recipe_name);
       $("#recipe-description").text(recipe.description);
       $("#prep-time").text("| Prep: " + recipe.prep_time);
@@ -110,9 +115,11 @@ $(document).ready(function() {
     });
   };
   var handleBookmarkRecipe = function() {
-    if (authorId === "not a user") {
+    if (userId === "not a user") {
       alert("Please sign in or sign up to bookmark this recipe!");
     } else {
+      console.log({ name: recipeName, AuthorId: authorId });
+      API.addFavRecipe({ name: recipeName, AuthorId: authorId });
     }
   };
 

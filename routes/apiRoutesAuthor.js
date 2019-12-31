@@ -172,16 +172,24 @@ module.exports = function(app) {
   });
 
   //Route for adding(bookmarking) a recipe
-  app.post("api/favrecipes/:userid/:recipeid", function(req, res) {
+  app.post("/api/favrecipes/:userid/:recipeid", function(req, res) {
+    console.log("I am inside the appropriate route!");
     var favrecipeInput = {
-      name: req.body.recipeName,
-      userId: req.params.userId,
-      ratings: req.body.ratings,
-      comments: req.body.comments,
-      favUrl: "",
-      authorId: req.body.authorId,
-      recipeId: req.params.recipeId
+      name: req.body.name,
+      userId: req.params.userid,
+      // ratings: req.body.ratings,
+      // comments: req.body.comments,
+      AuthorId: req.body.AuthorId,
+      RecipeId: req.params.recipeid
     };
+    db.Favorite.create(favrecipeInput)
+      .then(function(dbFavorite) {
+        res.json(dbFavorite);
+      })
+      .catch(function(err) {
+        console.log(err);
+        res.json(err);
+      });
   });
 
   //Route for getting all recipes
@@ -230,12 +238,14 @@ module.exports = function(app) {
   });
 
   //Route for getting favorite recipes for a specific user
-  app.get("api/favrecipes/:userid", function(req, res) {
+  app.get("/api/favrecipes/:userid", function(req, res) {
     db.Favorite.findAll({
       where: {
         userId: req.params.userid
-      }
+      },
+      include: [db.Author, db.Recipe]
     }).then(function(dbFavorites) {
+      console.log(dbFavorites);
       res.json(dbFavorites);
     });
   });

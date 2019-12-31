@@ -17,6 +17,7 @@ $(document).ready(function() {
   // var iRevealFavRecipe = $("#reveal-fav-recipes");
 
   var authorId;
+  var userId;
   var recipeId;
 
   $.ajax({
@@ -26,10 +27,11 @@ $(document).ready(function() {
     .done(function(authorData) {
       console.log(authorData);
       authorId = authorData.id;
+      userId = authorData.id;
       console.log(authorId);
       console.log("Displaying my recipes....");
       displayMyRecipes();
-      //displayFavRecipes();
+      displayFavRecipes();
     })
     .fail(function(jqXHR, textStatus, errThrown) {
       console.log(textStatus + ": " + errThrown);
@@ -94,7 +96,7 @@ $(document).ready(function() {
     },
     getFavRecipes: function() {
       return $.ajax({
-        url: "/api/favorites/" + userId,
+        url: "/api/favrecipes/" + userId,
         type: "GET"
       });
     }
@@ -181,7 +183,7 @@ $(document).ready(function() {
   var displayFavRecipes = function() {
     console.log("I am inside the function");
     API.getFavRecipes().then(function(data) {
-      console.log("I am inside the API to get my recipes...");
+      console.log("I am inside the API to get my favorite recipes...");
       console.log(data);
       data.map(function(favorite, index) {
         console.log(favorite);
@@ -462,4 +464,30 @@ Hearty and yummy breakfast made with natural and healthy ingredients
 4                                                                     :SERVING SIZE
 ----------------------------------------------------------------------------------------
 
+
+--------------------------------------------------------------------------------------------
+3 Avocados
+1 large Tomato, chopped
+1 Lime
+2 Garlic cloves, minced
+1/2 cup diced Onions
+3 tablespoon Cilantro
+3/4 teaspoon Cayenne pepper
+3/4 teaspoon Paprika
+1 teaspoon Pink Himalayan salt
+-------------------------------------------------------------------------------------
+Scoop the avocado pulp in a bowl and add the lime juice.
+Add the spices to the bowl and mix until you have a smooth mixture.
+Finally, add the tomatoes, onions and garlic and mix thoroughly. 
+Taste the guacamole to see whether you should add more salt or pepper.
+Put the guacamole in the refrigerator for about 2 hours before serving.
+------------------------------------------------------------------------------------
+Healthy and hearty meal or appetizer perfect for a small parties.
+-----------------------------------------------------------------
+20
+--------------------
+10
+---------------------
+6
+----------------------
 */
