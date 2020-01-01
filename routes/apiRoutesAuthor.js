@@ -251,14 +251,14 @@ module.exports = function(app) {
   });
 
   //Route for getting info on favorite recipe
-  app.get("api/favrecipeinfo/:name", function(req, res) {
-    console.log("This route was requested by " + req.params.name + " recipe");
+  app.get("/api/favrecipeinfo/:name/:userid", function(req, res) {
+    console.log("This route was requested by " + req.params.name + " favorite");
     //I AM GETTING ERRORS HERE: Unhandled rejection TypeError: Cannot read property '_pseudo' of undefined
     db.Favorite.findOne({
       where: {
-        name: req.params.name
-      },
-      include: [db.Recipe]
+        name: req.params.name,
+        userId: req.params.userid
+      }
     }).then(function(dbFavorite) {
       res.json(dbFavorite);
     });

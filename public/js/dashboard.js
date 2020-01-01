@@ -185,6 +185,12 @@ $(document).ready(function() {
     API.getFavRecipes().then(function(data) {
       console.log("I am inside the API to get my favorite recipes...");
       console.log(data);
+      if (Array.isArray(data) && data.length) {
+        //if array is not empty then remove favorite card placeholder.
+        $("#favorite-recipe-placeholder").remove();
+      } else {
+        return;
+      }
       data.map(function(favorite, index) {
         console.log(favorite);
         console.log(index);
@@ -208,7 +214,7 @@ $(document).ready(function() {
           .appendTo(col);
         var cardImage = $("<div>")
           .attr("class", "card-image")
-          .append($("<img>").attr("src", favorite.imgUrl))
+          .append($("<img>").attr("src", favorite.Recipe.imgUrl))
           .appendTo(card);
         var cardContent = $("<div>")
           .attr("class", "card-content")
@@ -220,11 +226,11 @@ $(document).ready(function() {
         var favoriteTitle = $("<a>")
           .attr("href", "/recipeinfo")
           .addClass("favoriteTitle")
-          .text(favorite.recipe_name)
+          .text(favorite.Recipe.recipe_name)
           .appendTo(cardContent);
-        var comments = $("<p>")
-          .append($("<span>").attr("class", "comments"))
-          .text("-" + recipe.comments)
+        var description = $("<p>")
+          .append($("<span>").attr("class", "description"))
+          .text("-" + favorite.Recipe.description)
           /*.append($("<strong>").text(recipe.comments))*/
           .append($("<br>"))
           .appendTo(cardContent);
@@ -243,13 +249,32 @@ $(document).ready(function() {
                 .attr("class", "material-icons")
                 .text("star")
             )
-            .appendTo(comments);
+            .appendTo(description);
           numRatings--;
         }
+        var deletebtn = $("<span>")
+          .attr("class", "remove-favcard")
+          .append(
+            $("<a>")
+              .addClass("waves-effect waves-light btn-floating red")
+              .attr("id", "delete-favorite")
+              .append(
+                $("<i>")
+                  .addClass("material-icons")
+                  .text("clear")
+              )
+          );
+
+        deletebtn.appendTo(description);
       });
     });
   };
-
+  /*
+<span class="recipe-todo">
+                    <a class="waves-effect waves-light btn" id="todo-edit"
+                      ><i class="material-icons">edit</i> EDIT</a
+                    >
+                  </span>/
   /*
   //populates the favorite cards based on the parameter `column name` i.e made recipes or favorite recipes.
   var showFavRecipes = function(cardList) {
@@ -401,6 +426,20 @@ $(document).ready(function() {
     location.href = "/recipeinfo";
   };
 
+  var handleFavoriteRequest = function(event) {
+    //Prevent default behavior of submitting form.
+    console.log("I am inside the recipe request handler...");
+    event.preventDefault();
+    var favoriteName = $(this).text();
+    if (localStorage.getItem("recipeChosen")) {
+      localStorage.clear();
+    }
+    localStorage.setItem("recipeChosen", favoriteName);
+
+    console.log("Selected Recipe is: " + favoriteName);
+    location.href = "/recipeinfo";
+  };
+
   //
   var handleFormSubmit = function(event) {
     event.preventDefault();
@@ -431,6 +470,7 @@ $(document).ready(function() {
   //   $("#modal1").on("click", buttonSubmitRecipe, handleFormSubmit);
   buttonSubmitRecipe.on("click", handleFormSubmit);
   $("#recipe-container").on("click", ".recipeTitle", handleRecipeRequest);
+  $("#favorite-container").on("click", ".favoriteTitle", handleFavoriteRequest);
   //MAKE SURE THAT THE DATABASE HAS COLUMN NAMES `favorite` and `made`......
   //WORK ON THE ELEMENTS FOR THE LISTS favorite and made. DONE
   //WORK ON THE SUMBIT FORM AND ITS ELEMENTS. DONE*/

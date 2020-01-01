@@ -37,6 +37,12 @@ $(document).ready(function() {
         url: "/api/recipes/" + searchTerm
       });
     },
+    getFavoriteInfo: function(recipeName) {
+      return $.ajax({
+        type: "GET",
+        url: "/api/favrecipeinfo/" + recipeName + "/" + userId
+      });
+    },
 
     addFavRecipe: function(favData) {
       return $.ajax({
@@ -118,8 +124,20 @@ $(document).ready(function() {
     if (userId === "not a user") {
       alert("Please sign in or sign up to bookmark this recipe!");
     } else {
-      console.log({ name: recipeName, AuthorId: authorId });
-      API.addFavRecipe({ name: recipeName, AuthorId: authorId });
+      API.getFavoriteInfo(recipeName).then(function(dbFavorite) {
+        console.log(dbFavorite);
+        if (dbFavorite.userId) {
+          alert("You have already bookmarked this recipe!");
+          return;
+        } else {
+          console.log({ name: recipeName, AuthorId: authorId });
+          API.addFavRecipe({ name: recipeName, AuthorId: authorId }).then(
+            function(dbFavorite) {
+              alert("Congrats, you have successfully bookmarked this recipe");
+            }
+          );
+        }
+      });
     }
   };
 
