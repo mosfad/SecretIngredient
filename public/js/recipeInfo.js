@@ -1,4 +1,6 @@
 $(document).ready(function() {
+  $(".modal").modal();
+  $(".sidenav").sidenav();
   var recipeName = localStorage.getItem("recipeChosen");
   console.log(recipeName);
 
@@ -126,23 +128,146 @@ $(document).ready(function() {
     } else {
       API.getFavoriteInfo(recipeName).then(function(dbFavorite) {
         console.log(dbFavorite);
-        if (dbFavorite.userId) {
-          alert("You have already bookmarked this recipe!");
-          return;
-        } else {
+        //First check whether DB returns null object
+        if (dbFavorite == null) {
           console.log({ name: recipeName, AuthorId: authorId });
           API.addFavRecipe({ name: recipeName, AuthorId: authorId }).then(
             function(dbFavorite) {
               alert("Congrats, you have successfully bookmarked this recipe");
             }
           );
+        } else {
+          //If user has already bookmarked this recipe, then send an alert.
+          if (dbFavorite.userId === userId) {
+            alert("You have already bookmarked this recipe!");
+            return;
+          } else {
+            //If DB isn't empty, but user hasn't bookmarked this recipe, then do so.
+            API.addFavRecipe({ name: recipeName, AuthorId: authorId }).then(
+              function(dbFavorite) {
+                alert("Congrats, you have successfully bookmarked this recipe");
+              }
+            );
+          }
         }
+        //
       });
     }
   };
 
-  var handleUpdateRecipe = function() {};
+  var handleUpdateForm = function() {
+    //If user didn't create recipe, prevent user from updating this recipe
+    console.log("user id is " + userId);
+    console.log(`author id is ${authorId}`);
+    console.log(`recipe id is ${recipeId}`);
+    if (authorId !== userId) {
+      //User didn't create the recipe; don't allow this user to edit it.
+      alert("Sorry, you can only edit recipes you created.");
+      location.reload();
+    } else {
+      //POPULATE THE TEXT FIELD WITH INFO FROM RECIPE TABLE BEFORE MOVING TO THE NEXT STEP.
+      API.getRecipeInfo(recipeName).then(function(recipe) {
+        console.log(recipe);
+
+        // $("#recipe-name").text(recipe.recipe_name);
+        // $("#recipe-description").text(recipe.description);
+        // $("#prep-time").text("| Prep: " + recipe.prep_time);
+        // $("#cook-time").text(" | Cook: " + recipe.cook_time);
+        // $("#serving-size").text(
+        //   " | Yield: " + recipe.serving_size + " servings |"
+        // );
+        // $("#recipe-image img").attr("src", recipe.imgUrl);
+
+        $("#addrecipe-name").val(recipe.recipe_name);
+        $("#addrecipe-ingredients").val(recipe.ingredients);
+        $("#addrecipe-steps").val(recipe.steps);
+        $("#addrecipe-description").val(recipe.description);
+        $("#addprep-time").val(recipe.prep_time);
+        $("#addcook-time").val(recipe.cook_time);
+        $("#addserving-size").val(recipe.serving_size);
+      });
+    }
+  };
+
+  var handleUpdateSubmit = function(event) {
+    event.preventDefault();
+    var recipeUpdateData = {};
+    var recipeFormData = new FormData($("#update-recipe-form")[0]);
+    API.getRecipeInfo(recipeName).then(function(recipe) {
+      console.log(recipe);
+      var i = 0;
+      console.log(recipeFormData);
+      for (var pair of recipeFormData.entries()) {
+        console.log(pair[0]);
+        console.log(pair[1]);
+        // i++;
+        // console.log(i);
+        // if (i % 2) {
+        //   recipeUpdateData[pair[0]] = pair[1];
+        // }
+        //NEED ANTOTHER WAY TO COMPARE DB INFO TO USER INPUT.
+        switch (pair[1]) {
+          case recipe.recipe_name:
+            recipeUpdateData[pair[0]] = pair[1];
+            break;
+          case recipe.ingredients:
+            recipeUpdateData[pair[0]] = pair[1];
+            break;
+          case recipe.steps:
+            recipeUpdateData[pair[0]] = pair[1];
+            break;
+          case recipe.description:
+            recipeUpdateData[pair[0]] = pair[1];
+            break;
+          case recipe.prep_time:
+            recipeUpdateData[pair[0]] = pair[1];
+            break;
+          case recipe.cook_time:
+            recipeUpdateData[pair[0]] = pair[1];
+            break;
+          case recipe.serving_size:
+            recipeUpdateData[pair[0]] = pair[1];
+            break;
+        }
+
+        // if (pair[1].name === "") {
+        //   //delete recipeFormData.pair[0];
+        //   console.log("No change with image input");
+        // } else if (
+        //   pair[1] !== recipe.recipe_name ||
+        //   pair[1] !== recipe.ingredients ||
+        //   pair[1] !== recipe.steps ||
+        //   pair[1] !== recipe.description ||
+        //   pair[1] !== recipe.prep_time ||
+        //   pair[1] !== recipe.cook_time ||
+        //   pair[1] !== recipe.serving_size
+        // ) {
+        //   //delete recipeFormData.pair[0];
+        //   console.log("text input changed ....");
+        //   recipeUpdateData[pair[0]] = pair[1];
+        // }
+      }
+      console.log(recipeUpdateData);
+    });
+  };
+  //Allow user who created recipe to edit it. MAY NOT REQUIRE UPDATEBTN!!!
+  // var updatebtn = $("<span>").append(
+  //   $("<a>")
+  //     .addClass("waves-effect waves-light btn red")
+  //     .attr("id", "confirm-edit")
+  //     .append(
+  //       $("<i>")
+  //         .addClass("material-icons")
+  //         .text("update")
+  //     )
+  //     .text("Confirm Update")
+  // );
+  // $("#recipe-details")
+  //   .append(updatebtn)
+  //   .append($("<br>"));
+
   displayRecipeInfo();
   $("#todo-save").on("click", handleBookmarkRecipe);
-  $("#todo-edit").on("click", handleUpdateRecipe);
+  $("#todo-edit").on("click", handleUpdateForm);
+  $("#submit-update").on("click", handleUpdateSubmit);
 });

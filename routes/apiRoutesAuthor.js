@@ -171,7 +171,11 @@ module.exports = function(app) {
     });
   });
 
-  //Route for adding(bookmarking) a recipe
+  app.put("/api/recipes/:userid/:recipeid", function(req, res) {
+    console.log("I am inside the update route!");
+  });
+
+  //Route for saving(bookmarking) a recipe
   app.post("/api/favrecipes/:userid/:recipeid", function(req, res) {
     console.log("I am inside the appropriate route!");
     var favrecipeInput = {
@@ -245,7 +249,7 @@ module.exports = function(app) {
       },
       include: [db.Author, db.Recipe]
     }).then(function(dbFavorites) {
-      console.log(dbFavorites);
+      //console.log(dbFavorites);
       res.json(dbFavorites);
     });
   });
@@ -260,6 +264,23 @@ module.exports = function(app) {
         userId: req.params.userid
       }
     }).then(function(dbFavorite) {
+      res.json(dbFavorite);
+    });
+  });
+
+  //Route for deleting favorite recipe
+  app.delete("/api/delete/favrecipe/:userid/:recipeid", function(req, res) {
+    console.log(
+      "This route was requested by " + req.params.recipeid + " favorite"
+    );
+
+    db.Favorite.destroy({
+      where: {
+        RecipeId: req.params.recipeid,
+        userId: req.params.userid
+      }
+    }).then(function(dbFavorite) {
+      console.log("Favorite recipe successfully deleted!");
       res.json(dbFavorite);
     });
   });
