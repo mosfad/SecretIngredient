@@ -27,10 +27,30 @@ $(document).ready(function() {
         url: "/api/recipeinfo/" + recipeName
       });
     },
-    editRecipe: function() {
+    // editRecipe: function() {
+    //   return $.ajax({
+    //     type: "POST",
+    //     url: "/api/recipes/" + searchTerm
+    //   });
+    // },
+    editRecipe: function(recipe) {
       return $.ajax({
-        type: "POST",
-        url: "/api/recipes/" + searchTerm
+        type: "PUT",
+        enctype: "multipart/form-data",
+        url: "/api/recipes/" + userId + "/" + recipeId,
+        data: recipe,
+        //processData: false,
+        //contentType: false,
+        // cache: false,
+        //timeout: 600000,
+        success: function(data) {
+          alert("Recipe successfully added!");
+          console.log("SUCCESS : ", data);
+        },
+        error: function(e) {
+          alert("Recipe was not added! Please try again.");
+          console.log("ERROR : ", e);
+        }
       });
     },
     bookmarkRecipe: function() {
@@ -195,59 +215,97 @@ $(document).ready(function() {
     var recipeFormData = new FormData($("#update-recipe-form")[0]);
     API.getRecipeInfo(recipeName).then(function(recipe) {
       console.log(recipe);
-      var i = 0;
-      console.log(recipeFormData);
+      //console.log(recipeFormData);
       for (var pair of recipeFormData.entries()) {
         console.log(pair[0]);
         console.log(pair[1]);
-        // i++;
-        // console.log(i);
-        // if (i % 2) {
-        //   recipeUpdateData[pair[0]] = pair[1];
+        // if (pair[0] === "servingSize") {
+        //   console.log(recipe.serving_size);
+        //   console.log(typeof recipe.serving_size);
+        //   console.log(typeof pair[0]);
+        //   console.log(typeof pair[1]);
         // }
-        //NEED ANTOTHER WAY TO COMPARE DB INFO TO USER INPUT.
-        switch (pair[1]) {
-          case recipe.recipe_name:
-            recipeUpdateData[pair[0]] = pair[1];
-            break;
-          case recipe.ingredients:
-            recipeUpdateData[pair[0]] = pair[1];
-            break;
-          case recipe.steps:
-            recipeUpdateData[pair[0]] = pair[1];
-            break;
-          case recipe.description:
-            recipeUpdateData[pair[0]] = pair[1];
-            break;
-          case recipe.prep_time:
-            recipeUpdateData[pair[0]] = pair[1];
-            break;
-          case recipe.cook_time:
-            recipeUpdateData[pair[0]] = pair[1];
-            break;
-          case recipe.serving_size:
-            recipeUpdateData[pair[0]] = pair[1];
-            break;
-        }
+        // if (pair[0] === "prepTime") {
+        //   console.log(recipe.prep_time === pair[1]);
+        //   console.log(typeof recipe.prep_time);
+        //   console.log(typeof pair[0]);
+        //   console.log(typeof pair[1]);
+        // }
 
-        // if (pair[1].name === "") {
-        //   //delete recipeFormData.pair[0];
-        //   console.log("No change with image input");
-        // } else if (
-        //   pair[1] !== recipe.recipe_name ||
-        //   pair[1] !== recipe.ingredients ||
-        //   pair[1] !== recipe.steps ||
-        //   pair[1] !== recipe.description ||
-        //   pair[1] !== recipe.prep_time ||
-        //   pair[1] !== recipe.cook_time ||
-        //   pair[1] !== recipe.serving_size
-        // ) {
-        //   //delete recipeFormData.pair[0];
-        //   console.log("text input changed ....");
-        //   recipeUpdateData[pair[0]] = pair[1];
+        // switch (pair[0]) {
+        //   case "recipeName":
+        //     if (pair[1] === recipe.recipe_name) delete recipeFormData[pair[0]];
+        //     break;
+        //   case "recipeIngredients":
+        //     if (pair[1] === recipe.ingredients) delete recipeFormData[pair[0]];
+        //     break;
+        //   case "recipeSteps":
+        //     if (pair[1] === recipe.steps) delete recipeFormData[pair[0]];
+        //     break;
+        //   case "recipeDescription":
+        //     if (pair[1] === recipe.description) delete recipeFormData[pair[0]];
+        //     break;
+        //   case "prepTime":
+        //     if (pair[1] === recipe.prep_time) delete recipeFormData[pair[0]];
+        //     break;
+        //   case "cookTime":
+        //     if (pair[1] === recipe.cook_time) delete recipeFormData[pair[0]];
+        //     break;
+        //   case "servingSize":
+        //     if (pair[1] === recipe.serving_size.toString())
+        //       delete recipeFormData[pair[0]];
+        //     break;
+        //   case "recipeImage":
+        //     if (pair[1].name === "") delete recipeFormData[pair[0]];
+        //     break;
+        //   default:
+        //     console.log("No match here....");
         // }
+
+        switch (pair[0]) {
+          case "recipeName":
+            if (pair[1] !== recipe.recipe_name)
+              recipeUpdateData[pair[0]] = pair[1];
+            break;
+          case "recipeIngredients":
+            if (pair[1] !== recipe.ingredients)
+              recipeUpdateData[pair[0]] = pair[1];
+            break;
+          case "recipeSteps":
+            if (pair[1] !== recipe.steps) recipeUpdateData[pair[0]] = pair[1];
+            break;
+          case "recipeDescription":
+            if (pair[1] !== recipe.description)
+              recipeUpdateData[pair[0]] = pair[1];
+            break;
+          case "prepTime":
+            if (pair[1] !== recipe.prep_time)
+              recipeUpdateData[pair[0]] = pair[1];
+            break;
+          case "cookTime":
+            if (pair[1] !== recipe.cook_time)
+              recipeUpdateData[pair[0]] = pair[1];
+            break;
+          case "servingSize":
+            if (pair[1] !== recipe.serving_size.toString())
+              recipeUpdateData[pair[0]] = pair[1];
+            break;
+          // case "recipeImage":
+          //   if (pair[1].name !== recipe.imgUrl)
+          //     recipeUpdateData[pair[0]] = pair[1];
+          //   break;
+          default:
+            console.log("No match here....");
+        }
       }
+      // for (var pair of recipeFormData.entries()) {
+      //   console.log(pair[0]);
+      //   console.log(pair[1]);
+      // }
       console.log(recipeUpdateData);
+      API.editRecipe(recipeUpdateData).then(function(dbResponse) {
+        console.log(dbResponse);
+      });
     });
   };
   //Allow user who created recipe to edit it. MAY NOT REQUIRE UPDATEBTN!!!

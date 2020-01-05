@@ -173,6 +173,17 @@ module.exports = function(app) {
 
   app.put("/api/recipes/:userid/:recipeid", function(req, res) {
     console.log("I am inside the update route!");
+    console.log("Contents of req.body: ");
+    console.log(req.body);
+    console.log(req.body.recipeIngredients);
+    console.log(req.body.recipeSteps);
+    console.log(req.body.recipeDescription);
+    console.log(req.body.prepTime);
+    console.log(req.body.cookTime);
+    console.log(req.body.servingSize);
+    console.log("Contents of req.params: ");
+    console.log(req.params);
+    res.send("Route to update database was reached!");
   });
 
   //Route for saving(bookmarking) a recipe
