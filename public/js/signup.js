@@ -1,5 +1,6 @@
 $(document).ready(function() {
   //Get references from our form inputs
+  $(".sidenav").sidenav();
   var emailInput = $("#user-email");
   var passwordInput = $("#user-password");
 

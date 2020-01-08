@@ -26,19 +26,32 @@
       <div class="nav-wrapper pink darken-3">
         <a href="index.html" class="brand-logo">
           <img class="logo" src="images/logo.png" />
-          <div class="logo-name">
+          <div class="logo-name hide-on-med-and-down">
             Secret Ingredient
           </div>
         </a>
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger"
+          ><i class="material-icons">menu</i></a
+        >
         <ul id="nav-mobile" class="right hide-on-med-and-down">
           <li><a class="nav-text" href="/">Home</a></li>
-          <li><a class="nav-text" href="/signin">Sign In</a></li>
-          <li><a class="nav-text" href="profile-page.html">Profile</a></li>
+          <li><a class="nav-text signin-nav" href="/signin">Sign In</a></li>
+          <li><a class="nav-text prof-nav" href="/members">Profile</a></li>
           <!--<li><a class="nav-text" href="/search">Search</a></li>-->
           <li><a class="nav-text" href="/searchAll">Search</a></li>
         </ul>
       </div>
     </nav>
+
+    <ul class="sidenav" id="mobile-demo">
+      <li>
+        <a href="/"><b>Secret Ingredient</b></a>
+      </li>
+      <li><a href="/">Home</a></li>
+      <li><a href="/signin">Sign In</a></li>
+      <li><a class="prof-nav" href="/members">Profile</a></li>
+      <li><a href="/searchAll">Search</a></li>
+    </ul>
     <!--   hero 1   -->
     <main>
       <div class="container">
@@ -88,10 +101,9 @@
       </div>
     </footer>
 
-    <!--  Scripts-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="js/materialize.js"></script>
-    <!-- <script src="js/init.js"></script> -->
     <script src="js/searchAll.js"></script>
+    <script src="js/materialize.js"></script>
   </body>
 </html>

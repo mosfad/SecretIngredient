@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>CMS UPDATE RECIPE</title>
+    <title>Sign in</title>
     <!-- Compiled and minified CSS -->
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
@@ -31,12 +31,20 @@
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><a class="nav-text" href="/">Home</a></li>
-            <li><a class="nav-text" href="/signin">Sign In</a></li>
-            <li><a class="nav-text" href="profile-page.html">Profile</a></li>
+            <!-- <li><a class="nav-text" href="/signin">Sign In</a></li> -->
+            <!-- <li><a class="nav-text" href="profile-page.html">Profile</a></li> -->
             <li><a class="nav-text" href="/searchAll">Search</a></li>   
         </ul>
         </div>
     </nav>
+
+    <ul class="sidenav" id="mobile-demo">
+        <li>
+          <a href="/"><b>Secret Ingredient</b></a>
+        </li>
+        <li><a href="/">Home</a></li>
+        <li><a href="/searchAll">Search</a></li>
+      </ul>
 
     <main id="main-settings">
         <!-- Sign Up Card row -->
@@ -65,17 +73,18 @@
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="input-field col m6">
-                                    <button class="btn-large waves-effect waves-light blue right" id="user-signin"
+                            <div class="row center">
+                                <div class="input-field col m12">
+                                    <button class="btn-large waves-effect waves-light blue" id="user-signin"
                                         type="button">
                                         Submit <i class="material-icons right">send</i>
                                     </button>
                                 </div>
                             </div>
 
-                            <a href="/signup" class="center">Create account</a>
-
+                            <p class="center-align">
+                            <a href="/signup">Create account</a>
+                        </p>
                         </form>
                     </div>
 

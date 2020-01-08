@@ -1,6 +1,8 @@
 require("dotenv").config();
 var db = require("../models");
 var passport = require("../config/passport");
+var Sequelize = require("sequelize");
+var Op = Sequelize.Op;
 
 // route/api/profile.js
 var express = require("express");
@@ -16,9 +18,9 @@ module.exports = function(app) {
   /* PROFILE IMAGE STORING STARTS
    */
   const s3 = new aws.S3({
-    accessKeyId: process.env.ID_KEY,
-    secretAccessKey: process.env.SECRET_KEY,
-    Bucket: process.env.BUCKET_NAME
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    Bucket: process.env.S3_BUCKET
   });
   /**
    * Single Upload
@@ -26,7 +28,7 @@ module.exports = function(app) {
   var recipeImgUpload = multer({
     storage: multerS3({
       s3: s3,
-      bucket: process.env.BUCKET_NAME,
+      bucket: process.env.S3_BUCKET,
       acl: "public-read",
       key: function(req, file, cb) {
         cb(
@@ -173,17 +175,91 @@ module.exports = function(app) {
 
   app.put("/api/recipes/:userid/:recipeid", function(req, res) {
     console.log("I am inside the update route!");
-    console.log("Contents of req.body: ");
-    console.log(req.body);
-    console.log(req.body.recipeIngredients);
-    console.log(req.body.recipeSteps);
-    console.log(req.body.recipeDescription);
-    console.log(req.body.prepTime);
-    console.log(req.body.cookTime);
-    console.log(req.body.servingSize);
-    console.log("Contents of req.params: ");
-    console.log(req.params);
-    res.send("Route to update database was reached!");
+
+    //upload image to S3 and retrieve URL to send to database.
+    recipeImgUpload(req, res, function(error) {
+      // console.log( 'requestOkokok', req.file );
+      // console.log( 'error', error );
+      if (error) {
+        console.log("errors", error);
+        res.json({ error: error });
+      } else {
+        var imageLocation = "";
+        // If File not found
+        if (req.file === undefined) {
+          console.log("Error: No File Selected!");
+          //console.log(req);
+          console.log(req.body);
+          console.log(req.params);
+          //res.json("Error: No File Selected");
+        } else {
+          // If Success
+          var imageName = req.file.key;
+          imageLocation = req.file.location;
+          // Save the file name into database into profile model
+          //============================================================================
+          console.log(imageName);
+          console.log(imageLocation);
+          console.log(req.body);
+          console.log(req.params);
+          /*
+          res.json({
+            image: imageName,
+            location: imageLocation
+          });*/
+          //==============================================================================
+        }
+        console.log("Successfully executing route...");
+        var recipeUpdate = {
+          recipe_name: req.body.recipeName,
+          ingredients: req.body.recipeIngredients,
+          steps: req.body.recipeSteps,
+          description: req.body.recipeDescription,
+          prep_time: req.body.prepTime,
+          cook_time: req.body.cookTime,
+          serving_size: req.body.servingSize,
+
+          /*imgUrl: req.body.imgUrl,*/
+          AuthorId: req.params.userid
+        };
+        if (imageLocation !== "") {
+          recipeUpdate["imgUrl"] = imageLocation;
+        }
+        db.Recipe.update(recipeUpdate, {
+          where: {
+            id: req.params.recipeid
+          }
+        })
+          .then(function(arrAffectedRows) {
+            //`update() returns an array with the number of affected rows; array has a length of 1.
+            res.json(arrAffectedRows);
+          })
+          .catch(function(err) {
+            console.log(err);
+            res.json(err);
+          });
+        //NOW YOU SHOULD BE ABLE TO UPDATE THE DATABASE WITHOUT ISSUES.
+        // db.Recipe.create(recipeInput)
+        //   .then(function(dbRecipe) {
+        //     res.json(dbRecipe);
+        //   })
+        //   .catch(function(err) {
+        //     console.log(err);
+        //     res.json(err);
+        //   });
+      }
+    });
+    // console.log("Contents of req.body: ");
+    // console.log(req.body);
+    // console.log(req.body.recipeIngredients);
+    // console.log(req.body.recipeSteps);
+    // console.log(req.body.recipeDescription);
+    // console.log(req.body.prepTime);
+    // console.log(req.body.cookTime);
+    // console.log(req.body.servingSize);
+    // console.log("Contents of req.params: ");
+    // console.log(req.params);
+    // res.send("Route to update database was reached!");
   });
 
   //Route for saving(bookmarking) a recipe
@@ -235,19 +311,21 @@ module.exports = function(app) {
   });
 
   //Route for getting info on a created recipe
-  app.get("/api/recipeinfo/:name", function(req, res) {
+  app.get("/api/recipeinfo/:field", function(req, res) {
     // Otherwise send back the user's email and id
     // Here we add an "include" property to our options in our findOne query
     // We set the value to an array of the models we want to include in a left outer join
     // In this case, just db.favorite
-    console.log("This route was requested by " + req.params.name + " recipe");
+    console.log("This route was requested by " + req.params.field + " recipe");
     //I AM GETTING ERRORS HERE: Unhandled rejection TypeError: Cannot read property '_pseudo' of undefined
     db.Recipe.findOne({
       where: {
-        recipe_name: req.params.name
+        [Op.or]: [{ id: req.params.field }, { recipe_name: req.params.field }]
+        // id: 1
       }
       /*include: [db.Favorite, db.Recipe]*/
     }).then(function(dbRecipe) {
+      //console.log(dbRecipe);
       res.json(dbRecipe);
     });
   });

@@ -214,6 +214,22 @@ main {
   border-radius: 20px 20px 0 0;
 }
 
+.content-card {
+  font-size: 1.15rem;
+  font-weight: 600;
+  font-family: "Lato", sans-serif;
+}
+
+a.link-card {
+  color: #051fb6 !important;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+a.link-card:hover {
+  color: #aaaec6 !important;
+}
+
 a.recipeTitle,
 a.favoriteTitle {
   font-size: 1.3rem;

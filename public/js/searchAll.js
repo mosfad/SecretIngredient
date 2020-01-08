@@ -2,6 +2,26 @@
 // var app = require('../../routes/apiRoutesRecipe')
 
 $(document).ready(function() {
+  $(".sidenav").sidenav();
+  var userId;
+
+  $.ajax({
+    type: "GET",
+    url: "/api/author_data" /* This should be user*/
+  })
+    .done(function(authorData) {
+      userId = authorData.id;
+      //console.log("userId is " + userId); ***
+      if (userId === undefined) {
+        $(".prof-nav").addClass("hide");
+      } else {
+        $(".signin-nav").addClass("hide");
+      }
+    })
+    .fail(function(jqXHR, textStatus, errThrown) {
+      console.log(textStatus + ": " + errThrown);
+    });
+
   var API = {
     getAllRecipes: function() {
       return $.ajax({
@@ -23,18 +43,15 @@ $(document).ready(function() {
     }
   };
 
-  //
+  //Show recipes created by ALL the users.
   var displayAllRecipes = function() {
-    console.log("I am inside the function that displays all the recipes");
     API.getAllRecipes().then(function(data) {
-      console.log("I am inside the API to get my recipes...");
-      console.log(data);
+      //console.log(data);***
       data.map(function(recipe, index) {
-        console.log(recipe);
-        console.log(index);
+        //console.log(recipe); ***
+        //console.log(index); ***
         var col = $("<div>").attr("class", "col s12 m3");
         //Give each card unique row and col to appropriately append subsequent card.
-        //var numOfRow = Math.floor(index / 4);
         var numOfCol = index % 4;
         col.attr("id", "col-entry" + index);
         if (numOfCol === 0) {
@@ -65,7 +82,6 @@ $(document).ready(function() {
         var description = $("<p>")
           .append($("<span>").attr("class", "comments"))
           .text("-" + recipe.description)
-          /*.append($("<strong>").text(recipe.comments))*/
           .append($("<br>"))
           .appendTo(cardContent);
         //how to use ratings number to set the ratings star
@@ -90,29 +106,22 @@ $(document).ready(function() {
     });
   };
 
-  //
+  //Shows all the recipes that contain the search term entered by the user.
   var displaySelectedRecipes = function(searchTerm) {
-    console.log("I am inside the function");
     API.getAllRecipes().then(function(data) {
-      console.log("I am inside the API to get my recipes...");
-      console.log(data);
+      //console.log(data); ***
       searchTerm = searchTerm.toLowerCase();
       clearRecipes();
       var selectedRecipesArr = data.filter(function(recipe, index) {
         return recipe.recipe_name.toLowerCase().includes(searchTerm);
       });
-      console.log(selectedRecipesArr);
-      //Create a function that will take in `recipe` and `index` to build cards
-      /* 
-      var buildRecipeCards = function(recipe, index) { callback function in array.map goes here }
-      */
+      //console.log(selectedRecipesArr); ***
       //If filtered array is empty then the results should be empty.........
       selectedRecipesArr.map(function(recipe, index) {
-        console.log(recipe);
-        console.log(index);
+        // console.log(recipe); ***
+        // console.log(index); ***
         var col = $("<div>").attr("class", "col s12 m3");
         //Give each card unique row and col to appropriately append subsequent card.
-        //var numOfRow = Math.floor(index / 4);
         var numOfCol = index % 4;
         col.attr("id", "col-entry" + index);
         if (numOfCol === 0) {
@@ -143,7 +152,6 @@ $(document).ready(function() {
         var description = $("<p>")
           .append($("<span>").attr("class", "comments"))
           .text("-" + recipe.description)
-          /*.append($("<strong>").text(recipe.comments))*/
           .append($("<br>"))
           .appendTo(cardContent);
         //how to use ratings number to set the ratings star
@@ -176,14 +184,14 @@ $(document).ready(function() {
   };
 
   //Extract recipe info from API and display it.
-  var displayRecipeInfo = function(recipeName) {
-    console.log("Getting the details for the chosen recipe...");
-    API.getRecipeInfo(recipeName).then(function(recipe) {
-      //Maybe use local storage to store selectedRecipe info so that
-      //`recipe-info.html & recipe.js can have access to the info*******************
-      console.log(recipe);
-    });
-  };
+  // var displayRecipeInfo = function(recipeName) {
+  //   console.log("Getting the details for the chosen recipe...");
+  //   API.getRecipeInfo(recipeName).then(function(recipe) {
+  //     //Maybe use local storage to store selectedRecipe info so that
+  //     //`recipe-info.html & recipe.js can have access to the info*******************
+  //     console.log(recipe);
+  //   });
+  // };
 
   //
   displayAllRecipes();
@@ -195,7 +203,7 @@ $(document).ready(function() {
     var searchTerm = $("#search-bar")
       .val()
       .trim();
-    console.log(searchTerm);
+    //console.log(searchTerm); ***
     //If searchTerm is an empty string then reload page.
     if (searchTerm === "") {
       window.location.reload();
@@ -207,77 +215,14 @@ $(document).ready(function() {
 
   var handleRecipeRequest = function(event) {
     //Prevent default behavior of submitting form.
-    console.log("I am inside the recipe request handler...");
     event.preventDefault();
     var recipeName = $(this).text();
     if (localStorage.getItem("recipeChosen")) {
       localStorage.clear();
     }
     localStorage.setItem("recipeChosen", recipeName);
-
-    //consoe.log("Selected Recipe is: " + recipeName);
-    //displayRecipeInfo(recipeName);
     location.href = "/recipeinfo";
   };
   $("#search-button").on("click", handleRecipeSearch);
   $("#recipe-view").on("click", ".recipeTitle", handleRecipeRequest);
 });
-
-// $("#search-button").on("click", function(event) {
-//   event.preventDefault();
-
-//   search = $("#search-bar")
-//     .val()
-//     .trim();
-//   console.log(search);
-//   $.get(`/api/search-keyword/${search}`, { search: search }).then(function(
-//     res
-//   ) {
-//     console.log(res[0].recipe_name);
-//     $("#recipe-view").empty();
-//     $("#recipe-view").append('<ul class="collection with-header"></ul>');
-//     $("#recipe-view").append(
-//       '<ol class="collection-header"><h4>' +
-//         res.length +
-//         " Results for " +
-//         search +
-//         "</h4></ol>"
-//     );
-//     for (var i = 0; i < res.length; i++) {
-//       $("#recipe-view").append(
-//         '<li class="collection-item card-panel" data-name="' +
-//           i +
-//           '">' +
-//           res[i].recipe_name +
-//           "</li>"
-//       );
-//     }
-
-//     $(".collection-item").on("click", function() {
-//       var recipe = $(this).attr("data-name");
-//       $("#recipe-view").empty();
-
-//       $("recipe-view").append(
-//         '<div id="card3" class="card-panel pink darken-3">'
-//       );
-//       $("recipe-view").append(
-//         '<div id="card2" class="card-panel pink darken-3">'
-//       );
-//       // var ingredients = res[].ingredients;
-//       // var
-//       var ingredientsArr = res[recipe].ingredients.split(",");
-//       var stepsArr = res[recipe].steps.split(";");
-//       console.log(ingredientsArr);
-//       $("#recipe-view").append("<h4>Ingridients</h4>");
-//       for (var i = 0; i < ingredientsArr.length; i++) {
-//         console.log(ingredientsArr[i]);
-//         $("#recipe-view").append("<p>-" + ingredientsArr[i] + "</p>");
-//       }
-//       $("#recipe-view").append("<h4>Steps</h4>");
-//       for (var i = 0; i < stepsArr.length; i++) {
-//         console.log(stepsArr[i]);
-//         $("#recipe-view").append("<p>-" + stepsArr[i] + "</p>");
-//       }
-//     });
-//   });
-//});

@@ -14,17 +14,24 @@ $(document).ready(function() {
     url: "/api/author_data" /* This should be user*/
   })
     .done(function(authorData) {
-      console.log(authorData);
-      userId = authorData.id; // ***********************
+      //console.log(authorData);***
+      userId = authorData.id;
+      //console.log("userId is " + userId);***
+      if (userId === undefined) {
+        $(".prof-nav").addClass("hide");
+        $(".logout-nav").addClass("hide");
+      } else {
+        $(".signin-nav").addClass("hide");
+      }
     })
     .fail(function(jqXHR, textStatus, errThrown) {
       console.log(textStatus + ": " + errThrown);
     });
   var API = {
-    getRecipeInfo: function(recipeName) {
+    getRecipeInfo: function(recipeField) {
       return $.ajax({
         type: "GET",
-        url: "/api/recipeinfo/" + recipeName
+        url: "/api/recipeinfo/" + recipeField
       });
     },
     // editRecipe: function() {
@@ -39,12 +46,12 @@ $(document).ready(function() {
         enctype: "multipart/form-data",
         url: "/api/recipes/" + userId + "/" + recipeId,
         data: recipe,
-        //processData: false,
-        //contentType: false,
-        // cache: false,
+        processData: false,
+        contentType: false,
+        cache: false,
         //timeout: 600000,
         success: function(data) {
-          alert("Recipe successfully added!");
+          alert("Recipe successfully updated!");
           console.log("SUCCESS : ", data);
         },
         error: function(e) {
@@ -122,10 +129,10 @@ $(document).ready(function() {
   //
   var displayRecipeInfo = function() {
     API.getRecipeInfo(recipeName).then(function(recipe) {
-      console.log(recipe);
+      //console.log(recipe); ***
       //cache recipe and author ids.
-      recipeId = recipe.id; //*****************************************
-      authorId = recipe.AuthorId; //************************************
+      recipeId = recipe.id;
+      authorId = recipe.AuthorId;
       $("#recipe-name").text(recipe.recipe_name);
       $("#recipe-description").text(recipe.description);
       $("#prep-time").text("| Prep: " + recipe.prep_time);
@@ -147,10 +154,10 @@ $(document).ready(function() {
       alert("Please sign in or sign up to bookmark this recipe!");
     } else {
       API.getFavoriteInfo(recipeName).then(function(dbFavorite) {
-        console.log(dbFavorite);
+        //console.log(dbFavorite);***
         //First check whether DB returns null object
         if (dbFavorite == null) {
-          console.log({ name: recipeName, AuthorId: authorId });
+          //console.log({ name: recipeName, AuthorId: authorId });***
           API.addFavRecipe({ name: recipeName, AuthorId: authorId }).then(
             function(dbFavorite) {
               alert("Congrats, you have successfully bookmarked this recipe");
@@ -235,33 +242,36 @@ $(document).ready(function() {
         // switch (pair[0]) {
         //   case "recipeName":
         //     if (pair[1] === recipe.recipe_name) delete recipeFormData[pair[0]];
+        //     console.log("Match made with " + pair[0]);
         //     break;
         //   case "recipeIngredients":
         //     if (pair[1] === recipe.ingredients) delete recipeFormData[pair[0]];
+        //     console.log("Match made with " + pair[0]);
         //     break;
         //   case "recipeSteps":
         //     if (pair[1] === recipe.steps) delete recipeFormData[pair[0]];
+        //     console.log("Match made with " + pair[0]);
         //     break;
         //   case "recipeDescription":
         //     if (pair[1] === recipe.description) delete recipeFormData[pair[0]];
+        //     console.log("Match made with " + pair[0]);
         //     break;
         //   case "prepTime":
         //     if (pair[1] === recipe.prep_time) delete recipeFormData[pair[0]];
-        //     break;
+        //     console.log("Match made with " + pair[0]);
         //   case "cookTime":
         //     if (pair[1] === recipe.cook_time) delete recipeFormData[pair[0]];
+        //     console.log("Match made with " + pair[0]);
         //     break;
         //   case "servingSize":
         //     if (pair[1] === recipe.serving_size.toString())
         //       delete recipeFormData[pair[0]];
-        //     break;
-        //   case "recipeImage":
-        //     if (pair[1].name === "") delete recipeFormData[pair[0]];
+        //     console.log("Match made with " + pair[0]);
         //     break;
         //   default:
         //     console.log("No match here....");
         // }
-
+        /*FALLBACK CODE IF I'M NOT ABLE TO UPDATE THE IMAGE......
         switch (pair[0]) {
           case "recipeName":
             if (pair[1] !== recipe.recipe_name)
@@ -296,15 +306,33 @@ $(document).ready(function() {
           //   break;
           default:
             console.log("No match here....");
-        }
+        }*/
       }
       // for (var pair of recipeFormData.entries()) {
       //   console.log(pair[0]);
       //   console.log(pair[1]);
       // }
-      console.log(recipeUpdateData);
-      API.editRecipe(recipeUpdateData).then(function(dbResponse) {
-        console.log(dbResponse);
+      //console.log(recipeUpdateData);
+      API.editRecipe(recipeFormData).then(function(arrResponse) {
+        console.log(arrResponse);
+        if (Array.isArray(arrResponse) && arrResponse.length >= 1) {
+          //Check and update recipe name(if necessary), after successful recipe edit.
+          console.log(recipeId);
+          API.getRecipeInfo(recipeId).then(function(dbRecipe) {
+            console.log("Recipe id after update: " + dbRecipe.id);
+            console.log("Recipe name after update: " + dbRecipe.recipe_name);
+            if (recipeName !== dbRecipe.recipe_name) {
+              //if recipe name was changed, then update locally stored recipe name!
+              localStorage.setItem("recipeChosen", dbRecipe.recipe_name);
+              location.reload();
+            }
+          });
+        } else {
+          //Unsuccessful recipe edit!!!
+          alert("Recipe was not updated! Please try again");
+          location.reload();
+        }
+        //
       });
     });
   };
