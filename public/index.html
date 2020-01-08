@@ -26,20 +26,20 @@
             </a>
             <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="sign-in.html">Sign In</a></li>
-                <li><a href="profile-page.html">Profile</a></li>
-                <li><a href="search.html">Search</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a class="user-dashboard" href="/signin">Sign In</a></li>
+                <!-- <li><a href="/profile-page">Profile</a></li> -->
+                <li><a href="/searchAll">Search</a></li>
             </ul>
         </div>
     </nav>
 
     <ul class="sidenav" id="mobile-demo">
-        <li><a href="index.html"><b>Secret Ingredient</b></a></li>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="sign-in.html">Sign In</a></li>
-        <li><a href="profile-page.html">Profile</a></li>
-        <li><a href="search.html">Search</a></li>
+        <li><a href="/"><b>Secret Ingredient</b></a></li>
+        <li><a href="/">Home</a></li>
+        <li><a class="user-dashboard" href="/signin">Sign In</a></li>
+        <!-- <li><a href="/profile-page">Profile</a></li> -->
+        <li><a href="/searchAll">Search</a></li>
     </ul>
 
 
@@ -48,7 +48,7 @@
             <h1 class="header center text-lighten-2"><strong>Welcome to Secret Ingredient</strong></h1>
             <h3 class="center"><strong>Search and Share your Favorite Recipes!</strong></h3>
             <div class="center"><a class="pink text-darken-3 waves-effect waves-light btn-large"
-                    href="sign-in.html">Sign In</a></div><br>
+                    href="/signin">Sign In</a></div><br>
             <div class="parallax top-image"><img alt="home-1" src="images/macaroon.jpg"></div>
         </div>
 
@@ -60,13 +60,13 @@
                         <div class="card">
                             <div class="card-image">
                                 <img src="images/card-1.jpg">
-                                <span class="card-title">Search for recipes</span>
+                                
                             </div>
                             <div class="card-content">
-                                <p>Come and use our website to search your favorite recipes.</p>
+                                <p class="content-card">Come and use our website to search your favorite recipes.</p>
                             </div>
                             <div class="card-action">
-                                <a href="search.html">Search</a>
+                                <a href="/searchAll" class="link-card">Search</a>
                             </div>
                         </div>
                     </div>
@@ -74,14 +74,14 @@
                         <div class="card">
                             <div class="card-image">
                                 <img src="images/card-2-recipe.jpg">
-                                <span class="card-title">Share your recipes</span>
+                             
                             </div>
                             <div class="card-content">
-                                <p>Want to share your culinary creation with the world? Share your recipe and let others
+                                <p class="content-card">Want to share your culinary creation with the world? Share your recipe and let others
                                     enjoy what you created!</p>
                             </div>
                             <div class="card-action">
-                                <a href="sign-in.html">Sign-in</a>
+                                <a href="/signin" class="link-card">Sign-in</a>
                             </div>
                         </div>
                     </div>
@@ -105,7 +105,7 @@
             </div>
             <div class="row container">
                 <a class="center col s12 waves-effect waves-light btn-large pink text-darken-3"
-                    href="sign-up.html">Sign-Up</a>
+                    href="/signup">Sign-Up</a>
             </div>
         </div>
         <div class="parallax-container">

@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Profile</title>
+    <!-- Compiled and minified CSS -->
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+
+    <!--Import Google Icon Font-->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/materialize.css" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body>
+    <nav>
+      <div class="nav-wrapper pink darken-3">
+        <a href="#!" class="brand-logo">
+          <img class="logo" src="images/logo.png" />
+          <div class="logo-name hide-on-med-and-down">
+            Secret Ingredient
+          </div>
+        </a>
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger"
+          ><i class="material-icons">menu</i></a
+        >
+        <ul class="right hide-on-med-and-down">
+          <li><a href="/">Home</a></li>
+          <li><a href="/logout">Log Out</a></li>
+          <li><a href="/members">Profile</a></li>
+          <li><a href="/searchAll">Search</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <ul class="sidenav" id="mobile-demo">
+      <li>
+        <a href="/"><b>Secret Ingredient</b></a>
+      </li>
+      <li><a href="/">Home</a></li>
+      <li><a href="/logout">Log Out</a></li>
+      <li><a href="/members">Profile</a></li>
+      <li><a href="/searchAll">Search</a></li>
+    </ul>
+
+    <main>
+      <!--
+        <div class="parallax-container">
+            <div class="parallax"><img src="images/Home_Image.jpg"></div>
+        </div> -->
+
+      <div class="row">
+        <div class="col s12 m12">
+          <div class="card">
+            <div class="card-content dashboard-summary">
+              <span
+                class="card-title center-align"
+                id="dashboard-title"
+                style="
+              padding-bottom: 5px;
+              border-bottom: solid  2px #ffffff;"
+                ><strong>HI! ENJOY & SHARE YOUR SECRET INGREDIENT! </strong>
+                <br />
+                <!--
+                <a
+                  class="waves-effect waves-light btn purple darken-4"
+                  style="margin-left: 30px;"
+                  ><i class="material-icons right">account_circle</i>EDIT
+                  PROFILE</a
+                >
+                <a
+                  class="waves-effect waves-light btn red darken-4"
+                  style="margin-left: 30px;"
+                  ><i class="material-icons right">favorite</i>FIND FAVORITE</a
+                >-->
+                <!-- Modal Trigger -->
+                <a
+                  class="waves-effect waves-light btn modal-trigger"
+                  id="modal-submit"
+                  href="#modal1"
+                  >Add New Recipe <i class="material-icons right">add</i></a
+                >
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12 m12">
+          <div class="card">
+            <div class="card-content">
+              <!--Favorite Recipe Cards -->
+              <div class="row" id="favorite-container">
+                <span class="card-title" id="favorite-title"
+                  ><strong>Favorite Recipes</strong>
+                </span>
+                <br />
+                <br />
+
+                <div class="row" id="favorite-recipe-placeholder">
+                  <div class="col s12 m3" id="favorite-recipe-row1">
+                    <div class="card">
+                      <div class="card-image">
+                        <img
+                          src="images/brooke-lark-08bOYnH_r_E-unsplash.jpg"
+                        />
+                      </div>
+                      <div class="card-content">
+                        <p>
+                          <span id="no-favorite"
+                            ><strong>NO FAVORITE RECIPES ADDED!</strong></span
+                          ><br />
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- 
+                <div class="row">
+                  <div class="col s12 m3" id="favorite-recipe-row1">
+                    <div class="card">
+                      <div class="card-image">
+                        <img
+                          src="images/brooke-lark-08bOYnH_r_E-unsplash.jpg"
+                        />
+                        <span class="card-title recipe-name"
+                          >Show photo of Favorite Recipe :)</span
+                        >
+                      </div>
+                      <div class="card-content">
+                        <p>
+                          <span class="comments"
+                            ><strong>Comment on favorite recipe:</strong></span
+                          ><br />
+                          <span><i class="material-icons">star</i></span>
+                          <span><i class="material-icons">star</i></span>
+                          <span><i class="material-icons">star</i></span>
+                          <span><i class="material-icons">star</i></span>
+                          <span><i class="material-icons">star</i></span>
+                        </p>
+                      </div>
+                      <div class="card-action">
+                        <a href="#">View Recipe</a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col s12 m3" id="favorite-recipe-row1">
+                    <div class="card">
+                      <div class="card-image">
+                        <img
+                          src="images/brooke-lark-08bOYnH_r_E-unsplash.jpg"
+                        />
+                        <span class="card-title recipe-name"
+                          >Show photo of Favorite Recipe :)</span
+                        >
+                      </div>
+                      <div class="card-content">
+                        <p>
+                          <span class="comments"
+                            ><strong>Comment on favorite recipe:</strong></span
+                          ><br />
+                          <span><i class="material-icons">star</i></span>
+                          <span><i class="material-icons">star</i></span>
+                          <span><i class="material-icons">star</i></span>
+                          <span><i class="material-icons">star</i></span>
+                          <span><i class="material-icons">star</i></span>
+                        </p>
+                      </div>
+                      <div class="card-action">
+                        <a href="#">View Recipe</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col s12 m3" id="favorite-recipe-row1">
+                    <div class="card">
+                      <div class="card-image">
+                        <img
+                          src="images/brooke-lark-08bOYnH_r_E-unsplash.jpg"
+                        />
+                        <span class="card-title recipe-name"
+                          >Show photo of Favorite Recipe :)</span
+                        >
+                      </div>
+                      <div class="card-content">
+                        <p>
+                          <span class="comments"
+                            ><strong>Comment on favorite recipe:</strong></span
+                          ><br />
+                          <span><i class="material-icons">star</i></span>
+                          <span><i class="material-icons">star</i></span>
+                          <span><i class="material-icons">star</i></span>
+                          <span><i class="material-icons">star</i></span>
+                          <span><i class="material-icons">star</i></span>
+                        </p>
+                      </div>
+                      <div class="card-action">
+                        <a href="#">View Recipe</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col s12 m3" id="favorite-recipe-row1">
+                    <div class="card">
+                      <div class="card-image">
+                        <img
+                          src="images/brooke-lark-08bOYnH_r_E-unsplash.jpg"
+                        />
+                        <span class="card-title recipe-name"
+                          >Show photo of Favorite Recipe :)</span
+                        >
+                      </div>
+                      <div class="card-content">
+                        <p>
+                          <span class="comments"
+                            ><strong>Comment on favorite recipe:</strong></span
+                          ><br />
+                          <span><i class="material-icons">star</i></span>
+                          <span><i class="material-icons">star</i></span>
+                          <span><i class="material-icons">star</i></span>
+                          <span><i class="material-icons">star</i></span>
+                          <span><i class="material-icons">star</i></span>
+                        </p>
+                      </div>
+                      <div class="card-action">
+                        <a href="#">View Recipe</a>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+              </div>
+              <br />
+              <div id="border-line"></div>
+              <br />
+              <!--Created Recipe Cards -->
+
+              <div class="row" id="recipe-container">
+                <span class="card-title" id="created-title"
+                  ><strong>Created Recipes</strong>
+                </span>
+                <br />
+                <br />
+                <!--  
+                <div class="row" id="created-recipe-row1">
+                  <div class="col s12 m3">
+                    <div class="card">
+                      <div class="card-image">
+                        <img src="images/frenchToast.jpg" />
+                        <span class="card-title"
+                          >Show photo of Favorite Recipe :)</span
+                        >
+                      </div>
+                      <div class="card-content">
+                        <p>
+                          Rate your favorite recipes and add comments!.
+                        </p>
+                      </div>
+                      <div class="card-action">
+                        <a href="#">Title of your Favorite Recipe</a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col s12 m3">
+                    <div class="card">
+                      <div class="card-image">
+                        <img src="images/frenchToast.jpg" />
+                        <span class="card-title"
+                          >Show photo of Favorite Recipe :)</span
+                        >
+                      </div>
+                      <div class="card-content">
+                        <p>
+                          Rate your favorite recipes and add comments!.
+                        </p>
+                      </div>
+                      <div class="card-action">
+                        <a href="#">Title of your Favorite Recipe</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col s12 m3">
+                    <div class="card">
+                      <div class="card-image">
+                        <img src="images/frenchToast.jpg" />
+                        <span class="card-title"
+                          >Show photo of Favorite Recipe :)</span
+                        >
+                      </div>
+                      <div class="card-content">
+                        <p>
+                          Rate your favorite recipes and add comments!.
+                        </p>
+                      </div>
+                      <div class="card-action">
+                        <a href="#">Title of your Favorite Recipe</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col s12 m3">
+                    <div class="card">
+                      <div class="card-image">
+                        <img src="images/frenchToast.jpg" />
+                        <span class="card-title"
+                          >Show photo of Favorite Recipe :)</span
+                        >
+                      </div>
+                      <div class="card-content">
+                        <p>
+                          Rate your favorite recipes and add comments!.
+                        </p>
+                      </div>
+                      <div class="card-action">
+                        <a href="#">Title of your Favorite Recipe</a>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+              </div>
+
+              <div class="row">
+                <!-- Add Recipe Form-->
+
+                <div class="row"></div>
+                <br />
+                <!-- Modal Structure -->
+                <div id="modal1" class="modal">
+                  <div class="modal-content">
+                    <div class="row">
+                      <div class="col s12 m10 offset-m1">
+                        <div class="card">
+                          <div class="card-content black-text">
+                            <span class="card-title center-align">
+                              <strong>Add New Recipe!</strong>
+                            </span>
+                            <form
+                              method="POST"
+                              class="container"
+                              enctype="multipart/form-data"
+                              id="new-recipe-form"
+                            >
+                              <div class="row">
+                                <div class="input-field col s12">
+                                  <i class="material-icons prefix"
+                                    >local_dining</i
+                                  >
+                                  <textarea
+                                    id="addrecipe-name"
+                                    class="materialize-textarea"
+                                    name="recipeName"
+                                  ></textarea>
+                                  <label for="addrecipe-name">Recipe</label>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="input-field col s12">
+                                  <i class="material-icons prefix"
+                                    >description</i
+                                  >
+                                  <textarea
+                                    id="addrecipe-ingredients"
+                                    class="materialize-textarea"
+                                    name="recipeIngredients"
+                                  ></textarea>
+                                  <label for="addrecipe-ingredients"
+                                    >Ingredients</label
+                                  >
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="input-field col s12">
+                                  <i class="material-icons prefix"
+                                    >directions</i
+                                  >
+                                  <textarea
+                                    id="addrecipe-steps"
+                                    class="materialize-textarea"
+                                    name="recipeSteps"
+                                  ></textarea>
+                                  <label for="addrecipe-steps">Steps</label>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="input-field col s12">
+                                  <i class="material-icons prefix"
+                                    >insert_comment</i
+                                  >
+                                  <textarea
+                                    id="addrecipe-description"
+                                    class="materialize-textarea"
+                                    name="recipeDescription"
+                                  ></textarea>
+                                  <label for="addrecipe-description"
+                                    >Description</label
+                                  >
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="input-field col s6">
+                                  <i class="material-icons prefix">schedule</i>
+                                  <textarea
+                                    id="addprep-time"
+                                    class="materialize-textarea"
+                                    name="prepTime"
+                                  ></textarea>
+                                  <label for="addprep-time">Prep Time</label>
+                                </div>
+                                <div class="input-field col s6">
+                                  <i class="material-icons prefix">timer</i>
+                                  <textarea
+                                    id="addcook-time"
+                                    class="materialize-textarea"
+                                    name="cookTime"
+                                  ></textarea>
+                                  <label for="addcook-time">Cook Time</label>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="input-field col s12">
+                                  <i class="material-icons prefix"
+                                    >room_service</i
+                                  >
+                                  <textarea
+                                    id="addserving-size"
+                                    class="materialize-textarea"
+                                    name="servingSize"
+                                  ></textarea>
+                                  <label for="addserving-size"
+                                    >Serving Size</label
+                                  >
+                                </div>
+                              </div>
+                              <!-- 
+                              <div class="row">
+                                <div class="input-field col s12">
+                                  <i class="material-icons prefix">image</i>
+                                  <textarea
+                                    id="recipe-img-url"
+                                    class="materialize-textarea"
+                                  ></textarea>
+                                  <label for="recipe-img-url">Image URL</label>
+                                </div>
+                              </div>-->
+                              <div class="row">
+                                <div class="file-field input-field col s12">
+                                  <div class="btn">
+                                    <span>File</span>
+                                    <input name="recipeImg" type="file" />
+                                  </div>
+                                  <div class="file-path-wrapper">
+                                    <input
+                                      class="file-path validate"
+                                      type="text"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="input-field col m12 center-align">
+                                  <button
+                                    class="btn modal-close waves-effect waves-light "
+                                    id="submit-recipe"
+                                    type="submit"
+                                    name="action"
+                                  >
+                                    Submit
+                                    <i class="material-icons right"
+                                      >create_new_folder</i
+                                    >
+                                  </button>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--
+        <div class="parallax-container">
+            <div class="parallax"><img src="images/Home_Image_2.jpg"></div>
+        </div> -->
+      <!-- put the cards here!-->
+
+      <!-- Sign Up Card row -->
+
+      <!-- End of Sign Up Card row -->
+
+      <!-- 
+        <div class="parallax-container">
+            <div class="parallax"><img src="images/Home_Image_3.jpg"></div>
+        </div> -->
+    </main>
+
+    <footer class="page-footer pink darken-3">
+      <div class="container">
+        <div class="row"></div>
+      </div>
+      <div class="footer-copyright">
+        <div class="container">
+          © 2019 Copyright Text
+          <a class="grey-text text-lighten-4 right"
+            >Made by Dupe, Mesi, Tiffany, and Ricardo</a
+          >
+        </div>
+      </div>
+    </footer>
+  </body>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/materialize.js"></script>
+</html>

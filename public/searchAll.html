@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Seach</title>
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="css/materialize.css" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!--   nav bar   -->
+    <nav>
+      <div class="nav-wrapper pink darken-3">
+        <a href="index.html" class="brand-logo">
+          <img class="logo" src="images/logo.png" />
+          <div class="logo-name hide-on-med-and-down">
+            Secret Ingredient
+          </div>
+        </a>
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger"
+          ><i class="material-icons">menu</i></a
+        >
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a class="nav-text" href="/">Home</a></li>
+          <li><a class="nav-text signin-nav" href="/signin">Sign In</a></li>
+          <li><a class="nav-text prof-nav" href="/members">Profile</a></li>
+          <!--<li><a class="nav-text" href="/search">Search</a></li>-->
+          <li><a class="nav-text" href="/searchAll">Search</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <ul class="sidenav" id="mobile-demo">
+      <li>
+        <a href="/"><b>Secret Ingredient</b></a>
+      </li>
+      <li><a href="/">Home</a></li>
+      <li><a href="/signin">Sign In</a></li>
+      <li><a class="prof-nav" href="/members">Profile</a></li>
+      <li><a href="/searchAll">Search</a></li>
+    </ul>
+    <!--   hero 1   -->
+    <main>
+      <div class="container">
+        <br /><br />
+
+        <nav>
+          <div class="nav-wrapper">
+            <form>
+              <div class="input-field white" id="search-form">
+                <input id="search-bar" type="search" required />
+                <label class="label-icon" for="search"
+                  ><i class="material-icons">search</i></label
+                >
+                <i class="material-icons">close</i>
+              </div>
+              <span>
+                <a
+                  id="search-button"
+                  class="grey darken-2 waves-effect waves-light btn"
+                  type="submit"
+                  >Search</a
+                >
+              </span>
+            </form>
+          </div>
+        </nav>
+      </div>
+      <br />
+      <br />
+      <br />
+      <div id="border-line"></div>
+      <br />
+      <br />
+      <div class="row" id="recipe-view"></div>
+    </main>
+    <footer class="page-footer pink darken-3">
+      <div class="container">
+        <div class="row"></div>
+      </div>
+      <div class="footer-copyright">
+        <div class="container">
+          © 2019 Copyright Text
+          <a class="grey-text text-lighten-4 right"
+            >Made by Dupe, Mesi, Tiffany, and Ricardo</a
+          >
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="js/searchAll.js"></script>
+    <script src="js/materialize.js"></script>
+  </body>
+</html>
