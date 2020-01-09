@@ -47,7 +47,7 @@ var syncOptions = { force: true };
 // Starting the server, syncing our models ------------------------------------/
 db.sequelize
   .sync({
-    force: false
+    force: true
   })
   .then(function() {
     app.listen(PORT, function() {
