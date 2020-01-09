@@ -147,6 +147,8 @@ $(document).ready(function() {
       // $("#recipe-directions").text(recipe.steps);
       $("#recipe-image img").attr("src", recipe.imgUrl);
       //find a system to calculate overall ratings.
+      //unhide the recipe card here so that the recipe card, including the imgUrl, loads smoothly!!!!
+      $("#recipe-selected").removeClass("hide");
     });
   };
   var handleBookmarkRecipe = function() {

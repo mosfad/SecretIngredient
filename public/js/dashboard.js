@@ -44,6 +44,7 @@ $(document).ready(function() {
         success: function(data) {
           alert("Recipe successfully added!");
           console.log("SUCCESS : ", data);
+          location.reload();
         },
         error: function(e) {
           alert("Recipe was not added! Please try again.");
