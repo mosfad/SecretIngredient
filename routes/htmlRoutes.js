@@ -70,7 +70,7 @@ module.exports = function(app) {
   //Routes...
   // Each of the below routes just handles the HTML page that the user gets sent to.
 
-  // index route loads view.html
+  //
   app.get("/", function(req, res) {
     // If the user already has an account send them to the members page
     if (req.user) {
@@ -79,7 +79,7 @@ module.exports = function(app) {
     res.sendFile(path.join(__dirname, "../public/index.html"));
   });
 
-  // index route loads view.html
+  //
   app.get("/signup", function(req, res) {
     // If the user already has an account send them to the members page
     if (req.user) {
@@ -90,7 +90,9 @@ module.exports = function(app) {
 
   app.get("/signin", function(req, res) {
     // If the user already has an account send them to the members page
+    console.log("I am in the signin html route...");
     if (req.user) {
+      console.log("Now redirecting...");
       res.redirect("/members");
     }
     res.sendFile(path.join(__dirname, "../public/sign-in.html"));
@@ -102,9 +104,6 @@ module.exports = function(app) {
     res.sendFile(path.join(__dirname, "../public/dashboard.html"));
   });
 
-  // app.get("/recipes/:name", function(req, res) {
-  //   res.sendFile(path.join(__dirname, "../public/recipes.html"));
-  // });
   //Send users with page with details of the selected recipes
   app.get("/recipeinfo", function(req, res) {
     res.sendFile(path.join(__dirname, "../public/recipe-info.html"));
