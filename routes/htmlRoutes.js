@@ -83,7 +83,7 @@ module.exports = function(app) {
   app.get("/signup", function(req, res) {
     // If the user already has an account send them to the members page
     if (req.user) {
-      res.redirect("/members");
+      return res.redirect("/members");
     }
     res.sendFile(path.join(__dirname, "../public/sign-up.html"));
   });
@@ -93,7 +93,7 @@ module.exports = function(app) {
     //console.log("I am in the signin html route...");
     if (req.user) {
       //console.log("Now redirecting...");
-      res.redirect("/members");
+      return res.redirect("/members");
     }
     res.sendFile(path.join(__dirname, "../public/sign-in.html"));
   });
