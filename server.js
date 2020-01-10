@@ -33,7 +33,6 @@ app.use(passport.session());
 
 // Requiring our routes
 require("./routes/apiRoutesAuthor")(app);
-require("./routes/apiRoutesRecipe")(app);
 require("./routes/htmlRoutes")(app);
 
 var syncOptions = { force: true };

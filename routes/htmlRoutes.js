@@ -90,9 +90,9 @@ module.exports = function(app) {
 
   app.get("/signin", function(req, res) {
     // If the user already has an account send them to the members page
-    console.log("I am in the signin html route...");
+    //console.log("I am in the signin html route...");
     if (req.user) {
-      console.log("Now redirecting...");
+      //console.log("Now redirecting...");
       res.redirect("/members");
     }
     res.sendFile(path.join(__dirname, "../public/sign-in.html"));
