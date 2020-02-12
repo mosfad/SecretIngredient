@@ -9,12 +9,12 @@ SecretIngredient allows all users to search for all the recipes availabe on the 
 
 ### Technologies used
 
-jQuery
-Node.js
-Express.js
-MySQL/Sequelize(ORM)
-Passport.js(Authentication)
-AWS S3(Data storage)
+- jQuery
+- Node.js
+- Express.js
+- MySQL/Sequelize(ORM)
+- Passport.js(Authentication)
+- AWS S3(Data storage)
 
 ## Instructions
 
