@@ -16,13 +16,26 @@ $(document).ready(function() {
     .done(function(authorData) {
       //console.log(authorData);***
       userId = authorData.id;
-      //console.log("userId is " + userId);***
+      console.log("userId is " + userId);
       if (userId === undefined) {
         $(".prof-nav").addClass("hide");
         $(".logout-nav").addClass("hide");
+        $("#todo-edit").addClass("hide");
       } else {
         $(".signin-nav").addClass("hide");
       }
+      // HOW TO EXTRACT authorId FROM getRecipeInfo!!!
+      $.ajax({
+        type: "GET",
+        url: "/api/recipeinfo/" + recipeName
+      }).done(function(recipeData) {
+        //Extract the authorId(user who created recipe) from recipe data.
+        authorId = recipeData.AuthorId;
+        //Only show the edit button for the user who created the recipe.
+        if (authorId !== userId) {
+          $("#todo-edit").addClass("hide");
+        }
+      });
     })
     .fail(function(jqXHR, textStatus, errThrown) {
       console.log(textStatus + ": " + errThrown);
@@ -32,6 +45,9 @@ $(document).ready(function() {
       return $.ajax({
         type: "GET",
         url: "/api/recipeinfo/" + recipeField
+      }).done(function(recipeData) {
+        //I AM HERE.........
+        return recipeData.AuthorId; //?????????????
       });
     },
     // editRecipe: function() {
@@ -84,6 +100,13 @@ $(document).ready(function() {
       });
     }
   };
+
+  // console.log("authorId is " + authorId);
+  // console.log("userId is " + userId);
+  // //hide the trigger button if the user did not create the recipe.
+  // if (authorId === undefined || authorId !== userId) {
+  //   $("#todo-edit").hide();
+  // }
 
   var processIngredients = function(ingredients) {
     var ingredientsArray = ingredients.split("\n");
