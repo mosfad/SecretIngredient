@@ -36,6 +36,7 @@ SecretIngredient allows all users to search for all the recipes availabe on the 
 - Notes
   - Please click on the demo provided to help you navigate this app.
   - Only the user who created a recipe is allowed to modify it.
+  - Please download your preferred recipe image to your device, before creating a recipe.
   - Future goals include adding real-time chat capabilities to connect users, so that they can share and improve the recipes.
 
 ## Deployed App

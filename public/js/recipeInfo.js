@@ -192,7 +192,7 @@ $(document).ready(function() {
     if (authorId !== userId) {
       //User didn't create the recipe; don't allow this user to edit it.
       alert("Sorry, you can only edit recipes you created.");
-      location.reload();
+      location.reload(true);
     } else {
       //POPULATE THE TEXT FIELD WITH INFO FROM RECIPE TABLE BEFORE MOVING TO THE NEXT STEP.
       API.getRecipeInfo(recipeName).then(function(recipe) {
