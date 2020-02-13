@@ -18,17 +18,18 @@ SecretIngredient allows all users to search for all the recipes availabe on the 
 
 ## Instructions
 
-### [Demo](https://drive.google.com/file/d/1j0IBdSy5WOqXpVvezPKjMLdDRoG_COk1/view)
+### [Demo](https://drive.google.com/file/d/1AJK0AjUp0J0b8kY5Uh4ey_FWjTl56o7b/view)
 
 1. To only view all the recipes on the platform, click on 'Search' navigation bar link.
 2. To create an account, scroll to the bottom of the home page and click on the 'SIGN-UP' button. Alternatively, click on the 'create account' link on the sign up page.
-3. After successfully logging in, you can manage your account by
+3. After successfully logging in, you can manage your account by performing any of the actions listed below.
 
-- clicking on 'ADD NEW RECIPE' modal to create a new recipe.
-- clicking on 'X' button to delete favorite recipes
-- clicking on recipe name link to edit or save a recipe
+   - clicking on 'ADD NEW RECIPE' modal to create a new recipe.
+   - clicking on 'X' button to delete favorite recipes
+   - clicking on recipe name link to edit or save a recipe
 
 4. To edit a recipe, you must have created that recipe.
+   - The form to edit the recipe includes the recipe data from storage, so carefully update this form before submitting it.
 5. Use this test account to enjoy the features available to authenticated users:
    - test username: _jroland@gmail.com_
    - test password: _@123_456_
