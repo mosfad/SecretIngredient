@@ -175,7 +175,8 @@ $(document).ready(function() {
     });
   };
   var handleBookmarkRecipe = function() {
-    if (userId === "not a user") {
+    console.log("userId is " + userId);
+    if (userId === undefined || userId === "not a user") {
       alert("Please sign in or sign up to bookmark this recipe!");
     } else {
       API.getFavoriteInfo(recipeName).then(function(dbFavorite) {
