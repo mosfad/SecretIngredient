@@ -18,7 +18,7 @@ SecretIngredient allows all users to search for all the recipes availabe on the 
 
 ## Instructions
 
-### [Demo](https://drive.google.com/file/d/1AJK0AjUp0J0b8kY5Uh4ey_FWjTl56o7b/view)
+### ![Demo](https://raw.githubusercontent.com/mosfad/secretIngredient/master/secretIngredient_optimizedDemo.gif)
 
 1. To only view all the recipes on the platform, click on 'Search' navigation bar link.
 2. To create an account, scroll to the bottom of the home page and click on the 'SIGN-UP' button. Alternatively, click on the 'create account' link on the sign up page.
